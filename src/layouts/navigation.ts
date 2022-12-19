@@ -1,38 +1,50 @@
 const sideLayoutNavigation = [
 	{
-		title: "Resources",
-		href: "/resources",
+		title: "Career advisory",
+		href: "/career-advisory",
 	},
 	{
-		title: "Portfolio",
-		href: "/portfolio",
+		title: "CV services",
+		href: "/cv-services",
 	},
 	{
-		title: "Latest news",
-		href: "/blog",
+		title: "Find a job",
+		href: "/find-a-job",
 	},
 	{
-		title: "Settings",
-		href: "/account",
+		title: "Post a job (Free)",
+		href: "/post-a-job",
+	},
+	{
+		title: "Find candidates",
+		href: "/find-candidates",
 	},
 ];
 
 const mainLayoutNavigation = [
 	{
-		title: "Resources",
-		href: "/resources",
+		title: "Career advisory",
+		href: "/career-advisory",
 	},
 	{
-		title: "Store",
-		href: "/store",
+		title: "CV services",
+		href: "/cv-services",
 	},
 	{
-		title: "Our Latest",
-		href: "/news",
+		title: "Find a job",
+		href: "/find-a-job",
 	},
 	{
-		title: "Contact",
-		href: "/contact",
+		title: "Post a job (Free)",
+		href: "/post-a-job",
+	},
+	{
+		title: "Find candidates",
+		href: "/find-candidates",
+	},
+	{
+		title: "Employers",
+		href: "/employers",
 	},
 ];
 
