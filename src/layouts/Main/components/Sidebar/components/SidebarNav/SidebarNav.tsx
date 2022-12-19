@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 import packageJson from "../../../../../../../package.json";
 import Container from "../../../../../../components/Container";
-import Logo from "../../../../../../svg/Logo";
+import Logo from "../../../../../../components/Logo";
 import NavItem from "./components/NavItem";
 
 interface Props {
@@ -78,7 +78,7 @@ const SidebarNav = ({ onClose, handleContactModal }: Props): JSX.Element => {
 				justifyContent="space-between"
 				marginLeft={2}
 			>
-				{<Logo />}
+				<Logo />
 				<Box display={"flex"} justifyContent={"flex-end"} onClick={onClose}>
 					<IconButton>
 						<CloseIcon fontSize="medium" />

@@ -1,25 +1,19 @@
 // components
 import { Menu } from "@mui/icons-material";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import Logo from "../../../../svg/Logo";
+import Logo from "../../../../components/Logo";
 import fancyId from "../../../../utils/fancyId";
 import { mainLayoutNavigation } from "../../../navigation";
 
 interface Props {
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	onSidebarOpen: () => void;
-	handleContactModal: () => void;
-	colorInvert?: boolean;
 }
 
-const Topbar = ({
-	onSidebarOpen,
-	handleContactModal,
-	colorInvert = false,
-}: Props): JSX.Element => {
+const Topbar = ({ onSidebarOpen }: Props): JSX.Element => {
 	const [activeLink, setActiveLink] = useState("");
 	// const { pathname } = useRouter();
 	//
@@ -30,6 +24,26 @@ const Topbar = ({
 	// 		setActiveLink("");
 	// 	}
 	// }, [pathname]);
+
+	const renderAuthButtons = () => (
+		<Box sx={{ display: { xs: "none", md: "flex" } }}>
+			<Button component={Link} to="login" variant="text" color="primary">
+				Login
+			</Button>
+			<Button
+				component={Link}
+				to="sign-up"
+				variant="contained"
+				color="primary"
+				sx={{
+					marginLeft: 2,
+					paddingY: 0.5,
+				}}
+			>
+				Sign up
+			</Button>
+		</Box>
+	);
 
 	return (
 		<Box
@@ -66,6 +80,7 @@ const Topbar = ({
 			</Box>
 
 			<Box sx={{ display: "flex" }} alignItems={"center"}>
+				{renderAuthButtons()}
 				<Box sx={{ display: { xs: "flex", md: "none" } }} alignItems={"center"}>
 					<IconButton
 						onClick={onSidebarOpen}

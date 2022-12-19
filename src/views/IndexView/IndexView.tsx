@@ -12,7 +12,6 @@ import {
 	Hero,
 	Jobs,
 	Newsletter,
-	Partners,
 	Process,
 	PromoNumbers,
 	Questions,
@@ -22,12 +21,7 @@ import {
 const IndexView = (): JSX.Element => {
 	return (
 		<Main>
-			<Container>
-				<Hero />
-			</Container>
-			<Container>
-				<Partners />
-			</Container>
+			<Hero />
 			<Box bgcolor={"alternate.main"}>
 				<Container>
 					<Questions />
