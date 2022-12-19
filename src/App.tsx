@@ -1,13 +1,19 @@
-import './App.css';
+import "react-lazy-load-image-component/src/effects/blur.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "aos/dist/aos.css";
 
-import { useState } from 'react';
+import { RouterProvider } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <h3>Staff Scouts</h3>
-    </div>
-  );
-}
+import Page from "./components/Page";
+import router from "./routes";
+
+const App = (): JSX.Element => {
+	return (
+		<Page>
+			<RouterProvider router={router} />
+		</Page>
+	);
+};
 
 export default App;
