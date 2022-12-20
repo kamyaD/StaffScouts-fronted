@@ -13,19 +13,17 @@ import { useInView } from "react-intersection-observer";
 const mock = [
 	{
 		title: 300,
-		subtitle:
-			"300 + component compositions, which will help you to build any page easily.",
+		subtitle: "300 + candidates applying for their dream jobs.",
 		suffix: "+",
 	},
 	{
 		title: 45,
-		subtitle:
-			"45 + landing and supported pages to Build a professional website.",
+		subtitle: "45 + partners putting up job listings on our platform.",
 		suffix: "+",
 	},
 	{
 		title: 99,
-		subtitle: "99% of our customers rated 5-star our themes over 5 years.",
+		subtitle: "99% of our customers rated 5-star on our services offered.",
 		suffix: "%",
 	},
 ];
@@ -102,40 +100,6 @@ const PromoNumbers = (): JSX.Element => {
 							fullWidth={!isMd}
 						>
 							Explore
-						</Box>
-						<Box
-							component={Button}
-							color="primary"
-							size="large"
-							fullWidth={!isMd}
-							marginTop={{ xs: 1, sm: 0 }}
-							marginLeft={{ sm: 2 }}
-							startIcon={
-								<Box
-									component={"svg"}
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									width={24}
-									height={24}
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-									/>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-									/>
-								</Box>
-							}
-						>
-							Watch the video
 						</Box>
 					</Box>
 				</CardContent>

@@ -26,7 +26,7 @@ const Footer = (): JSX.Element => {
 									variant="text"
 									size="small"
 								>
-									Home
+									Ouick links
 								</Button>
 							</Link>
 						</Box>
@@ -59,7 +59,7 @@ const Footer = (): JSX.Element => {
 			</Grid>
 			<Grid item xs={12}>
 				<Typography align={"center"} variant={"subtitle2"} gutterBottom>
-					&copy; almond {dayjs().format("YYYY")}. All rights reserved
+					&copy; staff scout {dayjs().format("YYYY")}. All rights reserved
 				</Typography>
 				<Typography align={"center"} variant={"caption"} component={"p"}>
 					When you visit or interact with our sites, services or tools, we or
