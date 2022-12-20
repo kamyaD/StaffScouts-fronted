@@ -1,17 +1,19 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { InputAdornment } from "@mui/material";
+import { InputAdornment, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 /* eslint-disable react/no-unescaped-entities */
 import * as yup from "yup";
 
 import { FormInputText } from "../../../../components/FormInput";
+import fancyId from "../../../../utils/fancyId";
+import { candidatesChoice, employerChoice } from "../../../../utils/fixtures";
 
 const validationSchema = yup.object({
 	email: yup
@@ -31,8 +33,12 @@ type IFormInput = {
 };
 
 const Form = (): JSX.Element => {
+	const [alignment, setAlignment] = useState("candidate");
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
+
+	const accountType = () =>
+		alignment === "candidate" ? candidatesChoice : employerChoice;
 
 	const initialValues = {
 		email: "",
@@ -49,6 +55,13 @@ const Form = (): JSX.Element => {
 		return values;
 	};
 
+	const handleFormTypeChange = (
+		event: MouseEvent<HTMLElement>,
+		newAlignment: string,
+	) => {
+		setAlignment(newAlignment);
+	};
+
 	return (
 		<Box>
 			<Box marginBottom={4}>
@@ -63,9 +76,43 @@ const Form = (): JSX.Element => {
 				<Typography color="text.secondary">
 					Fill out the form to get started.
 				</Typography>
+				<ToggleButtonGroup
+					fullWidth
+					size="small"
+					color="secondary"
+					value={alignment}
+					exclusive
+					onChange={handleFormTypeChange}
+					aria-label="Work"
+				>
+					<ToggleButton value="candidate">Candidate</ToggleButton>
+					<ToggleButton value="employer">Employer</ToggleButton>
+				</ToggleButtonGroup>
 			</Box>
 			<form method="post" onSubmit={handleSubmit(onSubmit)}>
 				<Grid container spacing={4}>
+					<Grid item xs={12}>
+						<FormInputText
+							select
+							autoFocus
+							margin="dense"
+							name="experience"
+							placeholder=""
+							size="medium"
+							control={control}
+							label="Experience"
+							type="text"
+							SelectProps={{
+								native: true,
+							}}
+						>
+							{accountType()?.map((item: any) => (
+								<option key={fancyId()} value={item}>
+									{item}
+								</option>
+							))}
+						</FormInputText>
+					</Grid>
 					<Grid item xs={12}>
 						<FormInputText
 							required

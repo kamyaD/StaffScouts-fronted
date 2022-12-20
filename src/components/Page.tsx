@@ -3,8 +3,11 @@ import Paper from "@mui/material/Paper";
 import { ThemeProvider } from "@mui/material/styles";
 import AOS from "aos";
 import { ReactNode, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
+import { RootState } from "../store";
 import getTheme from "../theme";
+import SnackBar from "./SnackBar";
 
 export const useDarkMode = (): [string, () => void, boolean] => {
 	const [themeMode, setTheme] = useState("light");
@@ -59,6 +62,7 @@ export default function Page({ children }: Props): JSX.Element {
 	}, []);
 
 	const [themeMode, themeToggler, mountedComponent] = useDarkMode();
+	const snack = useSelector((store: RootState) => store.snack);
 
 	useEffect(() => {
 		AOS.refresh();
@@ -69,6 +73,7 @@ export default function Page({ children }: Props): JSX.Element {
 			{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 			<CssBaseline />
 			<Paper elevation={0}>{children}</Paper>
+			<SnackBar snack={snack} />
 		</ThemeProvider>
 	);
 }

@@ -5,6 +5,8 @@ import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
 
+import fancyId from "../../../../utils/fancyId";
+
 const Footer = (): JSX.Element => {
 	const theme = useTheme();
 	return (
@@ -45,13 +47,12 @@ const Footer = (): JSX.Element => {
 								"About us",
 								"Private policy",
 							].map((item) => (
-								<ListItem disableGutters>
+								<ListItem key={fancyId()} disableGutters>
 									<ListItemText primary={item} />
 								</ListItem>
 							))}
 						</List>
 					</Box>
-
 					<Box marginLeft={3}>
 						<Typography>Find us</Typography>
 						<List dense>
@@ -61,18 +62,18 @@ const Footer = (): JSX.Element => {
 								"Bosto villas",
 								"Karen, Nairobi",
 							].map((item) => (
-								<ListItem disableGutters>
+								<ListItem key={fancyId()} disableGutters>
 									<ListItemText primary={item} />
 								</ListItem>
 							))}
 						</List>
 					</Box>
-
+					()
 					<Box marginLeft={3}>
 						<Typography>Contact us</Typography>
 						<List dense>
 							{["cc@staffscout.co.ke", "+254727517071"].map((item) => (
-								<ListItem disableGutters>
+								<ListItem key={fancyId()} disableGutters>
 									<ListItemText primary={item} />
 								</ListItem>
 							))}

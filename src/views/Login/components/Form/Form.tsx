@@ -6,12 +6,14 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 /* eslint-disable react/no-unescaped-entities */
 import * as yup from "yup";
 
 import { FormInputText } from "../../../../components/FormInput";
+import { useLoginUserMutation } from "../../../../store/services/users";
 
 const validationSchema = yup.object({
 	email: yup
@@ -34,6 +36,12 @@ const Form = (): JSX.Element => {
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
+	const isAuthenticated = useIsAuthenticated();
+	const signIn = useSignIn();
+	const navigate = useNavigate();
+
+	const [loginUser] = useLoginUserMutation();
+
 	const initialValues = {
 		email: "",
 		password: "",
@@ -41,12 +49,38 @@ const Form = (): JSX.Element => {
 
 	const { handleSubmit, control, reset, formState } = useForm<IFormInput>({
 		resolver: yupResolver(validationSchema),
-		defaultValues: initialValues,
+		// defaultValues: initialValues,
 		mode: "onChange",
 	});
 
-	const onSubmit = (values: any) => {
-		return values;
+	const onSubmit = async (values: any) => {
+		console.log("Class: , Function: onSubmit, Line 69 values():", values);
+		const appHeaders = new Headers();
+		appHeaders.append("Content-Type", "application/json");
+		const requestOptions = {
+			headers: appHeaders,
+			method: "POST",
+			body: values,
+		};
+
+		const response = await fetch("http://localhost:8000/login", requestOptions);
+		const result = await response.json();
+
+		// const result = await loginUser(values);
+
+		console.log("Class: , Function: onSubmit, Line 66 result():", result);
+
+		// if (result) {
+		// 	signIn({
+		// 		token: "35v3443bn368367n306306wbn407qn420b436b4",
+		// 		tokenType: "Bearer",
+		// 		authState: { name: "React User", uid: 123456 },
+		// 		expiresIn: 120,
+		// 	});
+		// 	navigate("/login");
+		// } else {
+		// 	alert("Error Occurred. Try Again");
+		// }
 	};
 
 	return (
@@ -64,7 +98,7 @@ const Form = (): JSX.Element => {
 					Login to manage your account.
 				</Typography>
 			</Box>
-			<form method="post" onSubmit={handleSubmit(onSubmit)}>
+			<form name="login-form" method="post" onSubmit={handleSubmit(onSubmit)}>
 				<Grid container spacing={4}>
 					<Grid item xs={12}>
 						<FormInputText
@@ -75,7 +109,7 @@ const Form = (): JSX.Element => {
 							control={control}
 							label="Email"
 							type="email"
-							placeholder="Email"
+							placeholder="blah@email.com"
 						/>
 					</Grid>
 					<Grid item xs={12}>

@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 import "./assets/css/app.css";
 import "./assets/css/fonts.css";
 
+import { AuthProvider } from "react-auth-kit";
 import { RouterProvider } from "react-router-dom";
 
 import Page from "./components/Page";
@@ -14,7 +15,9 @@ import router from "./routes";
 const App = (): JSX.Element => {
 	return (
 		<Page>
-			<RouterProvider router={router} />
+			<AuthProvider authName={"_auth"} authType={"cookie"}>
+				<RouterProvider router={router} />
+			</AuthProvider>
 		</Page>
 	);
 };

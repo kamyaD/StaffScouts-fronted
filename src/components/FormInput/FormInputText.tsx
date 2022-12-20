@@ -1,11 +1,7 @@
-import { InputAdornment, TextField } from "@mui/material";
-import { Controller, FieldError } from "react-hook-form";
+import { TextField } from "@mui/material";
+import { Controller } from "react-hook-form";
 
 import { FormInputProps } from "./FormInputProps";
-
-interface IconProps {
-	[x: string]: any;
-}
 
 const FormInputText = ({
 	name,
@@ -15,34 +11,6 @@ const FormInputText = ({
 	iconPosition,
 	...rest
 }: FormInputProps) => {
-	const IconAdornment = ({ ...rest }: IconProps): JSX.Element => {
-		// @ts-ignore
-		return <Icon {...rest} />;
-	};
-
-	const returnIcon = (error: FieldError | undefined) => {
-		switch (iconPosition) {
-			case "start":
-				return {
-					startAdornment: (
-						<InputAdornment position="start">
-							<IconAdornment color={error ? "error" : "primary"} />
-						</InputAdornment>
-					),
-				};
-			case "end":
-				return {
-					endAdornment: (
-						<InputAdornment position="end">
-							<IconAdornment color={error ? "error" : "primary"} />
-						</InputAdornment>
-					),
-				};
-			default:
-				return null;
-		}
-	};
-
 	return (
 		<Controller
 			name={name}
@@ -62,7 +30,6 @@ const FormInputText = ({
 						fullWidth
 						label={label}
 						variant="outlined"
-						// InputProps={returnIcon(error)}
 						{...rest}
 					/>
 				);

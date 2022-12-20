@@ -31,9 +31,7 @@ const Login = (): JSX.Element => {
 								<Box height={1} width={1} maxWidth={500}>
 									<Box
 										component={"img"}
-										src={
-											"https://assets.maccarianagency.com/svg/illustrations/drawkit-illustration2.svg"
-										}
+										src={"/img/login.svg"}
 										width={1}
 										height={1}
 										sx={{
