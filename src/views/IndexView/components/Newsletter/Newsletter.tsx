@@ -29,19 +29,11 @@ const Newsletter = (): JSX.Element => {
 							gutterBottom
 							sx={{
 								fontWeight: 700,
-								color: theme.palette.common.white,
 							}}
 						>
 							Subscribe to our newsletter
 						</Typography>
-						<Typography
-							variant="h6"
-							align={"center"}
-							sx={{
-								color: theme.palette.common.white,
-							}}
-							data-aos={"fade-up"}
-						>
+						<Typography variant="h6" align={"center"} data-aos={"fade-up"}>
 							Don't lose a chance to be among the firsts to know about our
 							upcoming news and updates.
 						</Typography>
@@ -55,20 +47,20 @@ const Newsletter = (): JSX.Element => {
 								width: 1,
 								"& .MuiOutlinedInput-root": {
 									"& fieldset": {
-										borderColor: "white",
+										borderColor: "black",
 									},
 									"&:hover fieldset": {
-										borderColor: "white",
+										borderColor: "black",
 									},
 									"&.Mui-focused fieldset": {
-										borderColor: "white",
+										borderColor: "black",
 									},
 								},
 								"& .MuiInputBase-root": {
-									color: "white",
+									color: "black",
 								},
 								"& .MuiInputAdornment-root svg": {
-									color: "white !important",
+									color: "black !important",
 								},
 							}}
 							data-aos="fade-up"

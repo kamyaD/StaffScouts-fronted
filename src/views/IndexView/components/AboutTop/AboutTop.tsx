@@ -74,9 +74,7 @@ const AboutTop = (): JSX.Element => {
 					<Box maxWidth={500} width={1}>
 						<Box
 							component={"img"}
-							src={
-								"https://assets.maccarianagency.com/svg/illustrations/drawkit-illustration3.svg"
-							}
+							src={"/img/career-advisory.svg"}
 							width={1}
 							height={1}
 							sx={{

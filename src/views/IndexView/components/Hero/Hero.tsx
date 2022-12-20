@@ -28,7 +28,7 @@ const Hero = (): JSX.Element => {
 				>
 					Where talent{" "}
 					<Typography
-						color={"primary"}
+						color={"secondary"}
 						component={"span"}
 						variant={"inherit"}
 						sx={{
@@ -58,6 +58,24 @@ const Hero = (): JSX.Element => {
 					color="primary"
 					size="large"
 					fullWidth={!isMd}
+					endIcon={
+						<Box
+							component={"svg"}
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							width={24}
+							height={24}
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M17 8l4 4m0 0l-4 4m4-4H3"
+							/>
+						</Box>
+					}
 				>
 					Get started
 				</Button>
@@ -111,10 +129,10 @@ const Hero = (): JSX.Element => {
 			>
 				<Slider {...sliderOpts}>
 					{[
-						"https://assets.maccarianagency.com/backgrounds/img1.jpg",
-						"https://assets.maccarianagency.com/backgrounds/img3.jpg",
-						"https://assets.maccarianagency.com/backgrounds/img24.jpg",
-						"https://assets.maccarianagency.com/backgrounds/img25.jpg",
+						"/img/home1.jpeg",
+						"/img/home2.jpeg",
+						"/img/home3.jpeg",
+						"/img/home4.jpeg",
 					].map((item) => (
 						<Box
 							key={item}

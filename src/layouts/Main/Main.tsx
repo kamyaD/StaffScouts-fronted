@@ -123,9 +123,7 @@ const Main = ({
 				open={open}
 				variant="temporary"
 			/>
-			<main style={{ paddingBottom: isMd ? "247px" : "300px" }}>
-				{children}
-			</main>
+			<main>{children}</main>
 			<ScrollTop>
 				<Fab color="secondary" size="small" aria-label="scroll back to top">
 					<KeyboardArrowUpRounded />

@@ -68,7 +68,6 @@ const Footer = (): JSX.Element => {
 							))}
 						</List>
 					</Box>
-					()
 					<Box marginLeft={3}>
 						<Typography>Contact us</Typography>
 						<List dense>
