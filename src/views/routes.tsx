@@ -1,4 +1,8 @@
-import { IndexView as HomeView, Login as LoginView } from "./index";
+import {
+	IndexView as HomeView,
+	Login as LoginView,
+	Register as RegisterView,
+} from "./index";
 
 const routes = [
 	{
@@ -8,6 +12,10 @@ const routes = [
 	{
 		path: "/login",
 		element: <LoginView />,
+	},
+	{
+		path: "/register",
+		element: <RegisterView />,
 	},
 ];
 

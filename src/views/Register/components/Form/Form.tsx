@@ -58,14 +58,50 @@ const Form = (): JSX.Element => {
 						fontWeight: 700,
 					}}
 				>
-					Welcome back
+					Create an account
 				</Typography>
 				<Typography color="text.secondary">
-					Login to manage your account.
+					Fill out the form to get started.
 				</Typography>
 			</Box>
 			<form method="post" onSubmit={handleSubmit(onSubmit)}>
 				<Grid container spacing={4}>
+					<Grid item xs={12}>
+						<FormInputText
+							required
+							name="firstName"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="First name"
+							type="text"
+							placeholder="First name"
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<FormInputText
+							required
+							name="lastName"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="Last name"
+							type="text"
+							placeholder="Last name"
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<FormInputText
+							required
+							name="phoneNumber"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="Phone number"
+							type="tel"
+							placeholder="Phone number"
+						/>
+					</Grid>
 					<Grid item xs={12}>
 						<FormInputText
 							required
@@ -79,23 +115,6 @@ const Form = (): JSX.Element => {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<Box
-							display="flex"
-							flexDirection={{ xs: "column", sm: "row" }}
-							alignItems={{ xs: "stretched", sm: "center" }}
-							justifyContent={"flex-end"}
-							width={1}
-							marginBottom={0}
-						>
-							<Button
-								component={Link}
-								to="/password-reset-cover"
-								variant="text"
-								color="secondary"
-							>
-								Forgot your password?
-							</Button>
-						</Box>
 						<FormInputText
 							required
 							name="password"
@@ -130,21 +149,45 @@ const Form = (): JSX.Element => {
 						>
 							<Box marginBottom={{ xs: 1, sm: 0 }}>
 								<Typography variant={"subtitle2"}>
-									Don't have an account yet?{" "}
+									Already have an account?{" "}
 									<Button
 										component={Link}
-										to="/register"
+										to="/login"
 										variant="text"
 										color="secondary"
 									>
-										Sign up here.
+										Login.
 									</Button>
 								</Typography>
 							</Box>
 							<Button size={"large"} variant={"contained"} type={"submit"}>
-								Login
+								Sign up
 							</Button>
 						</Box>
+					</Grid>
+					<Grid
+						item
+						container
+						xs={12}
+						justifyContent={"left"}
+						alignItems={"left"}
+					>
+						<Typography
+							variant={"subtitle2"}
+							color={"text.secondary"}
+							align={"left"}
+						>
+							By clicking "Sign up" button you agree with our
+							<Button
+								component={Link}
+								to="/company-terms"
+								variant="text"
+								color="secondary"
+								sx={{ marginY: 0, paddingY: 0 }}
+							>
+								terms and conditions.
+							</Button>
+						</Typography>
 					</Grid>
 				</Grid>
 			</form>
