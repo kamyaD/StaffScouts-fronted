@@ -27,7 +27,7 @@ const Topbar = ({ onSidebarOpen }: Props): JSX.Element => {
 
 	const renderAuthButtons = () => (
 		<Box sx={{ display: { xs: "none", md: "flex" } }}>
-			<Button component={Link} to="login" variant="text" color="primary">
+			<Button component={Link} to="login" variant="text" color="inherit">
 				Login
 			</Button>
 			<Button

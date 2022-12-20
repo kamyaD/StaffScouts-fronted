@@ -32,11 +32,6 @@ const IndexView = (): JSX.Element => {
 					<Reviews />
 				</Container>
 			</Box>
-			<Box bgcolor={"alternate.main"}>
-				<Container>
-					<AboutTop />
-				</Container>
-			</Box>
 			<Container>
 				<Jobs />
 			</Container>
