@@ -1,10 +1,9 @@
+import { List, ListItem, ListItemText } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
 
 const Footer = (): JSX.Element => {
 	const theme = useTheme();
@@ -14,46 +13,70 @@ const Footer = (): JSX.Element => {
 				<Box
 					display={"flex"}
 					justifyContent={"space-between"}
-					alignItems={"center"}
+					alignItems={"flex-start"}
 					width={1}
-					flexDirection={{ xs: "column" }}
+					flexDirection={{ xs: "column", sm: "row" }}
 				>
-					<Box display="flex" flexWrap={"wrap"} alignItems={"center"}>
-						<Box marginLeft={3}>
-							<Link to="/">
-								<Button
-									sx={{ color: "common.white" }}
-									variant="text"
-									size="small"
-								>
-									Ouick links
-								</Button>
-							</Link>
-						</Box>
+					<Box
+						display={"flex"}
+						component="a"
+						href="/"
+						title="theFront"
+						width={80}
+					>
+						<Box
+							component={"img"}
+							src={"/img/logo.jpeg"}
+							height={1}
+							width={1}
+						/>
+					</Box>
+					<Box marginLeft={3} display={"flex"} flexDirection={"column"}>
+						<Typography>Quick links</Typography>
 
-						<Box marginLeft={3}>
-							<Link to="/resources">
-								<Button
-									sx={{ color: "common.white" }}
-									variant="text"
-									size="small"
-								>
-									Resources
-								</Button>
-							</Link>
-						</Box>
+						<List dense>
+							{[
+								"Pricing",
+								"Customized hiring",
+								"Job candidates",
+								"Job listing",
+								"Career advisory",
+								"Blogs",
+								"About us",
+								"Private policy",
+							].map((item) => (
+								<ListItem disableGutters>
+									<ListItemText primary={item} />
+								</ListItem>
+							))}
+						</List>
+					</Box>
 
-						<Box marginLeft={3}>
-							<Link to="/store">
-								<Button
-									variant="text"
-									size="small"
-									sx={{ color: "common.white" }}
-								>
-									Store
-								</Button>
-							</Link>
-						</Box>
+					<Box marginLeft={3}>
+						<Typography>Find us</Typography>
+						<List dense>
+							{[
+								"Staff scout Ltd",
+								"Comboni road",
+								"Bosto villas",
+								"Karen, Nairobi",
+							].map((item) => (
+								<ListItem disableGutters>
+									<ListItemText primary={item} />
+								</ListItem>
+							))}
+						</List>
+					</Box>
+
+					<Box marginLeft={3}>
+						<Typography>Contact us</Typography>
+						<List dense>
+							{["cc@staffscout.co.ke", "+254727517071"].map((item) => (
+								<ListItem disableGutters>
+									<ListItemText primary={item} />
+								</ListItem>
+							))}
+						</List>
 					</Box>
 				</Box>
 			</Grid>

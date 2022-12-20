@@ -14,23 +14,23 @@ import React from "react";
 const mock = [
 	{
 		feedback:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		name: "Clara Bertoletti",
-		title: "MUI lover",
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		name: "Martha",
+		title: "Customer service executive",
 		avatar: "https://assets.maccarianagency.com/avatars/img1.jpg",
 	},
 	{
 		feedback:
-			"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-		name: "Jhon Anderson",
-		title: "Senior Frontend Developer",
+			"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+		name: "Margaret",
+		title: "Busines development",
 		avatar: "https://assets.maccarianagency.com/avatars/img2.jpg",
 	},
 	{
 		feedback:
-			"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		name: "Chary Smith",
-		title: "SEO at Comoti",
+			"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		name: "Douglas",
+		title: "Driver - Cars and ight vans",
 		avatar: "https://assets.maccarianagency.com/avatars/img3.jpg",
 	},
 ];

@@ -113,11 +113,7 @@ const Main = ({
 					paddingY={{ xs: 2, md: 1 }}
 					paddingX={{ xs: 1, md: 4 }}
 				>
-					<Topbar
-						onSidebarOpen={handleSidebarOpen}
-						handleContactModal={handleContactModal}
-						colorInvert={trigger ? false : colorInvert}
-					/>
+					<Topbar onSidebarOpen={handleSidebarOpen} />
 				</Container>
 			</AppBar>
 			<div id="back-to-top-anchor" />
@@ -138,16 +134,15 @@ const Main = ({
 			<Container
 				maxWidth={1}
 				paddingX={4}
-				paddingY={8}
+				paddingY={4}
 				sx={{
 					backgroundColor: "common.black",
 					color: "common.white",
-					position: "absolute",
-					bottom: 0,
-					height: isMd ? "247px" : "300px",
 				}}
 			>
-				<Footer />
+				<Container>
+					<Footer />
+				</Container>
 			</Container>
 		</Box>
 	);
