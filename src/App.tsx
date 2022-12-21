@@ -15,6 +15,7 @@ import { Main } from "./layouts";
 import { Fallback, NoMatch } from "./routes";
 import {
 	IndexView as HomeView,
+	JobListingView,
 	Login as LoginView,
 	Register as RegisterView,
 } from "./views";
@@ -32,6 +33,10 @@ let routes: RouteObject[] = [
 			{
 				path: "/register",
 				element: <RegisterView />,
+			},
+			{
+				path: "/job-listing",
+				element: <JobListingView />,
 			},
 			{ path: "*", element: <NoMatch /> },
 		],
