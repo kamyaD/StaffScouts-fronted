@@ -2,10 +2,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
 import { ThemeProvider } from "@mui/material/styles";
 import AOS from "aos";
-import { ReactNode, useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { RootState } from "../store";
+import type { RootState } from "../store";
 import getTheme from "../theme";
 import SnackBar from "./SnackBar";
 

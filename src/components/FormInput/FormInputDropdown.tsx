@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 
-import { FormInputProps } from "./FormInputProps";
+import type { FormInputProps } from "./FormInputProps";
 
 const options = [
 	{
@@ -15,15 +15,12 @@ const options = [
 ];
 
 function FormInputDropdown({ name, control, label }: FormInputProps) {
-	const generateSingleOptions = () => {
-		return options.map((option: any) => {
-			return (
-				<MenuItem key={option.value} value={option.value}>
-					{option.label}
-				</MenuItem>
-			);
-		});
-	};
+	const generateSingleOptions = () =>
+		options.map((option: any) => (
+			<MenuItem key={option.value} value={option.value}>
+				{option.label}
+			</MenuItem>
+		));
 
 	return (
 		<FormControl size="small">

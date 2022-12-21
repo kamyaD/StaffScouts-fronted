@@ -40,33 +40,31 @@ function SidebarNav({ onClose, handleContactModal }: Props): JSX.Element {
 		</Box>
 	);
 
-	const accountAvatar = () => {
-		return (
-			<Stack
-				direction="row"
-				alignItems="center"
-				justifyContent="space-between"
-				spacing={2}
-			>
-				<Chip
-					size="medium"
-					label="Anonymous User"
-					variant="outlined"
-					color="primary"
-					avatar={
-						<Avatar
-							alt="Anonymous User"
-							src="https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg"
-							aria-describedby="menu-popover"
-							aria-controls="menu-popover"
-							aria-haspopup="true"
-							typeof="button"
-						/>
-					}
-				/>
-			</Stack>
-		);
-	};
+	const accountAvatar = () => (
+		<Stack
+			direction="row"
+			alignItems="center"
+			justifyContent="space-between"
+			spacing={2}
+		>
+			<Chip
+				size="medium"
+				label="Anonymous User"
+				variant="outlined"
+				color="primary"
+				avatar={
+					<Avatar
+						alt="Anonymous User"
+						src="https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg"
+						aria-describedby="menu-popover"
+						aria-controls="menu-popover"
+						aria-haspopup="true"
+						typeof="button"
+					/>
+				}
+			/>
+		</Stack>
+	);
 
 	return (
 		<Box>

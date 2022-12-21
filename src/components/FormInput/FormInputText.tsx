@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
-import { FormInputProps } from "./FormInputProps";
+import type { FormInputProps } from "./FormInputProps";
 
 function FormInputText({
 	name,
@@ -19,21 +19,19 @@ function FormInputText({
 				field: { onChange, value },
 				fieldState: { error },
 				formState,
-			}) => {
-				return (
-					<TextField
-						helperText={error ? error.message : null}
-						size="small"
-						error={!!error}
-						onChange={onChange}
-						value={value}
-						fullWidth
-						label={label}
-						variant="outlined"
-						{...rest}
-					/>
-				);
-			}}
+			}) => (
+				<TextField
+					helperText={error ? error.message : null}
+					size="small"
+					error={!!error}
+					onChange={onChange}
+					value={value}
+					fullWidth
+					label={label}
+					variant="outlined"
+					{...rest}
+				/>
+			)}
 		/>
 	);
 }

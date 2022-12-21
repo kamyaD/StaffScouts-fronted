@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import Box from "@mui/material/Box";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface Props {
 	children: ReactNode;

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { RootState } from "../index";
-import { User, authApi } from "../services/auth";
+import type { RootState } from "../index";
+import type { User } from "../services/auth";
+import { authApi } from "../services/auth";
 
 type AuthState = {
 	user: User | null;
@@ -17,7 +18,6 @@ export const authSlice = createSlice({
 			authApi.endpoints.login.matchFulfilled,
 			(state, { payload }) => {
 				state.token = payload.token;
-				delete payload.token;
 				state.user = payload;
 			},
 		);

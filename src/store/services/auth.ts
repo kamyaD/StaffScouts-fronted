@@ -11,8 +11,10 @@ export interface User {
 }
 
 export interface UserResponse {
-	user: Partial<User>;
-	token: string;
+	data: {
+		user: Partial<User>;
+		token: string;
+	};
 }
 
 export interface LoginRequest {

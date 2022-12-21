@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 
-import { FormInputProps } from "./FormInputProps";
+import type { FormInputProps } from "./FormInputProps";
 
 function FormInputMultiCheckbox({
 	name,
@@ -44,28 +44,24 @@ function FormInputMultiCheckbox({
 			<FormLabel component="legend">{label}</FormLabel>
 
 			<div>
-				{options?.map((option: any) => {
-					return (
-						<FormControlLabel
-							control={
-								<Controller
-									name={name}
-									control={control}
-									render={({}) => {
-										return (
-											<Checkbox
-												checked={selectedItems?.includes(option.value)}
-												onChange={() => handleSelect(option.value)}
-											/>
-										);
-									}}
-								/>
-							}
-							label={option.label}
-							key={option.value}
-						/>
-					);
-				})}
+				{options?.map((option: any) => (
+					<FormControlLabel
+						control={
+							<Controller
+								name={name}
+								control={control}
+								render={({}) => (
+									<Checkbox
+										checked={selectedItems?.includes(option.value)}
+										onChange={() => handleSelect(option.value)}
+									/>
+								)}
+							/>
+						}
+						label={option.label}
+						key={option.value}
+					/>
+				))}
 			</div>
 		</FormControl>
 	);

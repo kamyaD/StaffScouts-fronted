@@ -1,6 +1,8 @@
-import { Theme, responsiveFontSizes } from "@mui/material";
-import { ComponentsOverrides, createTheme } from "@mui/material/styles";
-import { CSSProperties } from "react";
+import type { Theme } from "@mui/material";
+import { responsiveFontSizes } from "@mui/material";
+import type { ComponentsOverrides } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
+import type { CSSProperties } from "react";
 
 import { dark, light } from "./palette";
 import shadows from "./shadows";

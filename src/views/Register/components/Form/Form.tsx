@@ -5,7 +5,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { MouseEvent, useState } from "react";
+import type { MouseEvent } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 /* eslint-disable react/no-unescaped-entities */
@@ -51,9 +52,7 @@ function Form(): JSX.Element {
 		mode: "onChange",
 	});
 
-	const onSubmit = (values: any) => {
-		return values;
-	};
+	const onSubmit = (values: any) => values;
 
 	const handleFormTypeChange = (
 		event: MouseEvent<HTMLElement>,

@@ -1,4 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface Notifications {
 	id: string;
@@ -25,14 +26,14 @@ export const notificationsSlice = createSlice({
 			state.notifications.push(action.payload);
 		},
 		readNotification(state, action: PayloadAction<Partial<Notifications>>) {
-			state.notifications = [...state.notifications].map((notification) => {
-				return notification.id === action.payload.id
+			state.notifications = [...state.notifications].map((notification) =>
+				notification.id === action.payload.id
 					? {
 							...notification,
 							read: true,
 					  }
-					: notification;
-			});
+					: notification,
+			);
 		},
 	},
 });

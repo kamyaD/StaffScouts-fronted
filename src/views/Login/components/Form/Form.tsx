@@ -36,7 +36,7 @@ function Form(): JSX.Element {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	const [loginUser] = useLoginMutation();
+	const [loginUser, { data }] = useLoginMutation();
 
 	const initialValues = {
 		email: "",
@@ -50,38 +50,21 @@ function Form(): JSX.Element {
 	});
 
 	const onSubmit = async (values: any) => {
-		console.log("Class: , Function: onSubmit, Line 69 values():", values);
-		// const appHeaders = new Headers();
-		// appHeaders.append("Content-Type", "application/json");
-		// appHeaders.append("Access-Control-Allow-Origin", "*");
-		// const requestOptions = {
-		// 	headers: appHeaders,
-		// 	method: "POST",
-		// 	body: values,
-		// };
-		//
-		// const response = await fetch(
-		// 	"http://localhost:8000/api-user-login",
-		// 	requestOptions,
-		// );
-		// const result = await response.json();
-
 		const result = await loginUser(values);
 
-		if (result) {
-			console.log("Class: , Function: onSubmit, Line 66 result():", result);
+		if (result && !isAuthenticated()) {
 			dispatch(
 				displaySnackMessage({
 					message: "Login successful",
 				}),
 			);
 			signIn({
-				token: "35v3443bn368367n306306wbn407qn420b436b4",
+				token: result.data.token as string,
 				tokenType: "Bearer",
-				authState: { name: "React User", uid: 123456 },
+				authState: { name: result.data.username, uid: result.data.id },
 				expiresIn: 120,
 			});
-			navigate("/login");
+			navigate("/profile");
 		} else {
 			dispatch(
 				displaySnackMessage({

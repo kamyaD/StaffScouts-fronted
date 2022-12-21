@@ -8,7 +8,7 @@ import {
 import { Controller } from "react-hook-form";
 
 import fancyId from "../../utils/fancyId";
-import { FormInputProps } from "./FormInputProps";
+import type { FormInputProps } from "./FormInputProps";
 
 const options = [
 	{
@@ -22,8 +22,8 @@ const options = [
 ];
 
 function FormInputRadio({ name, control, label }: FormInputProps) {
-	const generateRadioOptions = () => {
-		return options.map((singleOption) => (
+	const generateRadioOptions = () =>
+		options.map((singleOption) => (
 			<FormControlLabel
 				key={fancyId()}
 				value={singleOption.value}
@@ -31,7 +31,6 @@ function FormInputRadio({ name, control, label }: FormInputProps) {
 				control={<Radio />}
 			/>
 		));
-	};
 
 	return (
 		<FormControl component="fieldset">

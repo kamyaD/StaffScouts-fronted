@@ -6,7 +6,8 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import clsx from "clsx";
 import errorStack from "error-stack-parser";
-import React, { ElementType, ReactNode, useState } from "react";
+import type { ElementType, ReactNode } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Container from "./Container";
