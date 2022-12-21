@@ -4,6 +4,7 @@ import { alpha, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import type { MouseEvent, ReactElement, ReactNode } from "react";
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 import Container from "../../components/Container";
 import { Footer, Sidebar, Topbar } from "./components";
@@ -59,11 +60,7 @@ const ScrollTop = ({ window, children }: ScrollTopProps) => {
 	);
 };
 
-const Main = ({
-	children,
-	colorInvert = false,
-	bgcolor = "transparent",
-}: Props): JSX.Element => {
+const Main = (): JSX.Element => {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -99,7 +96,7 @@ const Main = ({
 				position={"sticky"}
 				sx={{
 					top: 0,
-					backgroundColor: trigger ? "hsla(0,0%,100%,.8)" : bgcolor,
+					backgroundColor: trigger ? "hsla(0,0%,100%,.8)" : "transparent",
 					backdropFilter: trigger ? "blur(15px)" : "none",
 					borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
 					// borderBottom: trigger
@@ -123,7 +120,8 @@ const Main = ({
 				open={open}
 				variant="temporary"
 			/>
-			<main>{children}</main>
+			<Outlet />
+			{/*<main>{children}</main>*/}
 			<ScrollTop>
 				<Fab color="secondary" size="small" aria-label="scroll back to top">
 					<KeyboardArrowUpRounded />

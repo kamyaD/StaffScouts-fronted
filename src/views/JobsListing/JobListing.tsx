@@ -7,7 +7,7 @@ import React from "react";
 import Container from "../../components/Container";
 import { Form } from "./components";
 
-const Register = (): JSX.Element => {
+const JobListing = (): JSX.Element => {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -58,4 +58,4 @@ const Register = (): JSX.Element => {
 	);
 };
 
-export default Register;
+export default JobListing;

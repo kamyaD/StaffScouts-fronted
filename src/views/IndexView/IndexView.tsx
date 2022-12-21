@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import React from "react";
 
 import Container from "../../components/Container";
-import { Main } from "../../layouts";
 import {
 	AboutTop,
 	Hero,
@@ -15,7 +14,7 @@ import {
 
 const IndexView = (): JSX.Element => {
 	return (
-		<Main>
+		<>
 			<Box bgcolor={"alternate.main"}>
 				<Hero />
 			</Box>
@@ -43,7 +42,7 @@ const IndexView = (): JSX.Element => {
 			<Container>
 				<Newsletter />
 			</Container>
-		</Main>
+		</>
 	);
 };
 

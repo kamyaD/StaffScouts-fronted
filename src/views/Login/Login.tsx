@@ -5,7 +5,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
 
 import Container from "../../components/Container";
-import { Main } from "../../layouts";
 import { Form } from "./components";
 
 const Login = (): JSX.Element => {
@@ -15,7 +14,7 @@ const Login = (): JSX.Element => {
 	});
 
 	return (
-		<Main>
+		<>
 			<Box
 				position={"relative"}
 				minHeight={"calc(100vh - 247px)"}
@@ -57,7 +56,7 @@ const Login = (): JSX.Element => {
 					</Grid>
 				</Container>
 			</Box>
-		</Main>
+		</>
 	);
 };
 
