@@ -14,6 +14,7 @@ import Page from "./components/Page";
 import { Main } from "./layouts";
 import { Fallback, NoMatch } from "./routes";
 import {
+	AccountSettingsView,
 	ContingencyHiringView,
 	IndexView as HomeView,
 	JobListingView,
@@ -42,6 +43,10 @@ const routes: RouteObject[] = [
 			{
 				path: "/contingency-hiring",
 				element: <ContingencyHiringView />,
+			},
+			{
+				path: "/account",
+				element: <AccountSettingsView />,
 			},
 			{ path: "*", element: <NoMatch /> },
 		],

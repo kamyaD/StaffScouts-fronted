@@ -47,11 +47,6 @@ function UserAvatar(): JSX.Element {
 		},
 	];
 
-	console.log(
-		"Class: UserAvatar, Function: UserAvatar, Line 50 authUser()():",
-		authUser(),
-	);
-
 	return (
 		<>
 			<Tooltip title={authUser()?.name ?? "Anonymous User"}>

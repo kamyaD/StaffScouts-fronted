@@ -64,7 +64,7 @@ function Form(): JSX.Element {
 				authState: { name: result.data.username, uid: result.data.id },
 				expiresIn: 120,
 			});
-			navigate("/profile");
+			navigate("/");
 		} else {
 			dispatch(
 				displaySnackMessage({
