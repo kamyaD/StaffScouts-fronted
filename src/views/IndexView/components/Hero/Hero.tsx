@@ -16,6 +16,7 @@ function Hero(): JSX.Element {
 		defaultMatches: true,
 	});
 
+	// eslint-disable-next-line react/no-unstable-nested-components
 	function LeftSide() {
 		return (
 			<Box data-aos={isMd ? "fade-right" : "fade-up"}>
@@ -85,14 +86,17 @@ function Hero(): JSX.Element {
 		);
 	}
 
+	// eslint-disable-next-line react/no-unstable-nested-components
 	function RightSide(): JSX.Element {
 		const sliderOpts = {
 			dots: false,
 			infinite: true,
-			speed: 500,
+			speed: 4000,
 			slidesToShow: 1,
 			slidesToScroll: 1,
+			autoplay: true,
 			arrows: true,
+			fade: true,
 		};
 
 		return (
@@ -129,6 +133,7 @@ function Hero(): JSX.Element {
 					},
 				}}
 			>
+				{/* eslint-disable-next-line react/jsx-props-no-spreading */}
 				<Slider {...sliderOpts}>
 					{[
 						"/img/home1.jpeg",

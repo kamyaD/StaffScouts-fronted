@@ -1,3 +1,8 @@
+import {
+	ConstructionTwoTone,
+	PixTwoTone,
+	WorkTwoTone,
+} from "@mui/icons-material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -6,73 +11,31 @@ import { alpha, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
+import { Link } from "react-router-dom";
+
+import fancyId from "../../../../utils/fancyId";
 
 const mock = [
 	{
-		title: "Complete your application",
+		title: "Find a job",
 		subtitle:
 			"Fill out our standardized application on our platform. Most applicants finish in under an hour.",
-		icon: (
-			<svg
-				height={24}
-				width={24}
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-			>
-				<path
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					strokeWidth={2}
-					d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-				/>
-			</svg>
-		),
+		icon: <WorkTwoTone fontSize="large" color="action" />,
+		href: "/job-listing",
 	},
 	{
-		title: "Select companies",
+		title: "Get a professional",
 		subtitle:
 			"We'll immediately match you with any relevant openings and you get to pick which ones you're interested in.",
-		icon: (
-			<svg
-				height={24}
-				width={24}
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-			>
-				<path
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					strokeWidth={2}
-					d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
-				/>
-			</svg>
-		),
+		icon: <ConstructionTwoTone fontSize="large" color="action" />,
+		href: "/job-listing",
 	},
 	{
-		title: "Choose your offer",
+		title: "General and technical",
 		subtitle:
 			"After 3 days all of your offers will arrive and you will have another 7 days to select your new company.",
-		icon: (
-			<svg
-				height={24}
-				width={24}
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-			>
-				<path
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					strokeWidth={2}
-					d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-				/>
-			</svg>
-		),
+		icon: <PixTwoTone fontSize="large" color="action" />,
+		href: "/job-listing",
 	},
 ];
 
@@ -101,6 +64,8 @@ function Process(): JSX.Element {
 				</Typography>
 				<Box marginTop={3} display="flex" justifyContent="center">
 					<Button
+						component={Link}
+						to="/job-listing"
 						variant="contained"
 						color="primary"
 						size="large"
@@ -129,8 +94,10 @@ function Process(): JSX.Element {
 			<Box>
 				<Grid container spacing={4}>
 					{mock.map((item, i) => (
-						<Grid item xs={12} md={4} key={i}>
+						<Grid item xs={12} md={4} key={fancyId()}>
 							<Box
+								component={Link}
+								to={item.href}
 								display="flex"
 								flexDirection="column"
 								alignItems="center"
@@ -144,7 +111,7 @@ function Process(): JSX.Element {
 									width={60}
 									height={60}
 									marginBottom={2}
-									bgcolor={alpha(theme.palette.primary.main, 0.1)}
+									bgcolor={alpha(theme.palette.primary.main, 0.3)}
 									color={theme.palette.primary.main}
 									variant="rounded"
 									borderRadius={2}
@@ -154,6 +121,7 @@ function Process(): JSX.Element {
 								<Typography
 									variant="h6"
 									gutterBottom
+									color="text.primary"
 									sx={{ fontWeight: 500 }}
 									align="center"
 								>

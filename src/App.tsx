@@ -14,10 +14,11 @@ import Page from "./components/Page";
 import { Main } from "./layouts";
 import { Fallback, NoMatch } from "./routes";
 import {
+	ContingencyHiringView,
 	IndexView as HomeView,
 	JobListingView,
-	Login as LoginView,
-	Register as RegisterView,
+	LoginView,
+	RegisterView,
 } from "./views";
 
 const routes: RouteObject[] = [
@@ -37,6 +38,10 @@ const routes: RouteObject[] = [
 			{
 				path: "/job-listing",
 				element: <JobListingView />,
+			},
+			{
+				path: "/contingency-hiring",
+				element: <ContingencyHiringView />,
 			},
 			{ path: "*", element: <NoMatch /> },
 		],

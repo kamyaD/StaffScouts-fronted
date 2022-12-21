@@ -1,5 +1,12 @@
 import { KeyboardArrowUpRounded } from "@mui/icons-material";
-import { AppBar, Box, Fab, Zoom, useScrollTrigger } from "@mui/material";
+import {
+	AppBar,
+	Box,
+	Divider,
+	Fab,
+	Zoom,
+	useScrollTrigger,
+} from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import type { MouseEvent, ReactElement, ReactNode } from "react";
@@ -121,24 +128,15 @@ function Main(): JSX.Element {
 				variant="temporary"
 			/>
 			<Outlet />
+			<Divider />
 			{/* <main>{children}</main> */}
 			<ScrollTop>
 				<Fab color="secondary" size="small" aria-label="scroll back to top">
 					<KeyboardArrowUpRounded />
 				</Fab>
 			</ScrollTop>
-			<Container
-				maxWidth={1}
-				paddingX={4}
-				paddingY={4}
-				sx={{
-					backgroundColor: "common.black",
-					color: "common.white",
-				}}
-			>
-				<Container>
-					<Footer />
-				</Container>
+			<Container paddingY={4}>
+				<Footer />
 			</Container>
 		</Box>
 	);

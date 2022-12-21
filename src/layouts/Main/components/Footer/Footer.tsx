@@ -1,21 +1,18 @@
-import { List, ListItem, ListItemText } from "@mui/material";
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
-
-import fancyId from "../../../../utils/fancyId";
+import { Link } from "react-router-dom";
 
 function Footer(): JSX.Element {
-	const theme = useTheme();
 	return (
 		<Grid container spacing={2}>
 			<Grid item xs={12}>
 				<Box
 					display="flex"
 					justifyContent="space-between"
-					alignItems="flex-start"
+					alignItems="center"
 					width={1}
 					flexDirection={{ xs: "column", sm: "row" }}
 				>
@@ -28,50 +25,19 @@ function Footer(): JSX.Element {
 					>
 						<Box component="img" src="/img/logo.jpeg" height={1} width={1} />
 					</Box>
-					<Box marginLeft={3} display="flex" flexDirection="column">
-						<Typography>Quick links</Typography>
-
-						<List dense>
-							{[
-								"Pricing",
-								"Customized hiring",
-								"Job candidates",
-								"Job listing",
-								"Career advisory",
-								"Blogs",
-								"About us",
-								"Private policy",
-							].map((item) => (
-								<ListItem key={fancyId()} disableGutters>
-									<ListItemText primary={item} />
-								</ListItem>
-							))}
-						</List>
-					</Box>
-					<Box marginLeft={3}>
-						<Typography>Find us</Typography>
-						<List dense>
-							{[
-								"Staff scout Ltd",
-								"Comboni road",
-								"Bosto villas",
-								"Karen, Nairobi",
-							].map((item) => (
-								<ListItem key={fancyId()} disableGutters>
-									<ListItemText primary={item} />
-								</ListItem>
-							))}
-						</List>
-					</Box>
-					<Box marginLeft={3}>
-						<Typography>Contact us</Typography>
-						<List dense>
-							{["cc@staffscout.co.ke", "+254727517071"].map((item) => (
-								<ListItem key={fancyId()} disableGutters>
-									<ListItemText primary={item} />
-								</ListItem>
-							))}
-						</List>
+					<Box display="flex" flexWrap="wrap" alignItems="center">
+						<Button component={Link} to="/" color="inherit">
+							Pricing
+						</Button>
+						<Button component={Link} to="/" color="inherit">
+							Hiring
+						</Button>
+						<Button component={Link} to="/" color="inherit">
+							Candidates
+						</Button>
+						<Button component={Link} to="/" color="inherit">
+							Listing
+						</Button>
 					</Box>
 				</Box>
 			</Grid>

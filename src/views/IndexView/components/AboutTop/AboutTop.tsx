@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
+import { Link } from "react-router-dom";
 
 function AboutTop(): JSX.Element {
 	const theme = useTheme();
@@ -38,6 +39,8 @@ function AboutTop(): JSX.Element {
 							the best career advice for your growth.
 						</Typography>
 						<Button
+							component={Link}
+							to="/contingency-hiring"
 							variant="contained"
 							size="large"
 							endIcon={
