@@ -13,7 +13,7 @@ interface Props {
 	items: Array<PageItem>;
 }
 
-const NavItem = ({ title, id, items }: Props): JSX.Element => {
+function NavItem({ title, id, items }: Props): JSX.Element {
 	const theme = useTheme();
 
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -37,8 +37,8 @@ const NavItem = ({ title, id, items }: Props): JSX.Element => {
 	return (
 		<Box>
 			<Box
-				display={"flex"}
-				alignItems={"center"}
+				display="flex"
+				alignItems="center"
 				aria-describedby={id}
 				sx={{ cursor: "pointer" }}
 				onClick={(e) => handleClick(e, id)}
@@ -100,7 +100,7 @@ const NavItem = ({ title, id, items }: Props): JSX.Element => {
 									<Grid item xs={6} key={i}>
 										<Link
 											variant="body2"
-											component={"a"}
+											component="a"
 											href={p.href}
 											color={activeLink === p.href ? "primary" : "text.primary"}
 											sx={{
@@ -123,6 +123,6 @@ const NavItem = ({ title, id, items }: Props): JSX.Element => {
 			</Popover>
 		</Box>
 	);
-};
+}
 
 export default NavItem;

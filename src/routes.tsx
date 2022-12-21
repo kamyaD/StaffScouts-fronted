@@ -3,12 +3,14 @@ import { useLocation, useMatches, useRouteError } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
 
 export function RootErrorBoundary() {
-	let error = useRouteError() as Error;
+	const error = useRouteError() as Error;
+	const handleBackToHome = () => (window.location.href = "/");
+
 	return (
 		<div>
 			<h1>Uh oh, something went terribly wrong 😩</h1>
 			<pre>{error.message || JSON.stringify(error)}</pre>
-			<button onClick={() => (window.location.href = "/")}>
+			<button type="button" onClick={handleBackToHome}>
 				Click here to reload the app
 			</button>
 		</div>
@@ -16,7 +18,7 @@ export function RootErrorBoundary() {
 }
 
 export function Fallback() {
-	return <p>Performing initial data "load"</p>;
+	return <p>Performing initial data &quot;load&quot;</p>;
 }
 
 export function ServerError({ error }: { error?: Error }) {

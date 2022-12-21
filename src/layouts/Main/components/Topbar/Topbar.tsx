@@ -13,7 +13,7 @@ interface Props {
 	onSidebarOpen: () => void;
 }
 
-const Topbar = ({ onSidebarOpen }: Props): JSX.Element => {
+function Topbar({ onSidebarOpen }: Props): JSX.Element {
 	const [activeLink, setActiveLink] = useState("");
 	// const { pathname } = useRouter();
 	//
@@ -47,15 +47,15 @@ const Topbar = ({ onSidebarOpen }: Props): JSX.Element => {
 
 	return (
 		<Box
-			display={"flex"}
-			justifyContent={"space-between"}
-			alignItems={"center"}
+			display="flex"
+			justifyContent="space-between"
+			alignItems="center"
 			width={1}
 		>
-			<Box sx={{ display: { xs: "flex" } }} alignItems={"center"}>
+			<Box sx={{ display: { xs: "flex" } }} alignItems="center">
 				<Logo />
 			</Box>
-			<Box sx={{ display: { xs: "none", md: "flex" } }} alignItems={"center"}>
+			<Box sx={{ display: { xs: "none", md: "flex" } }} alignItems="center">
 				{mainLayoutNavigation.map((page, index) => (
 					<Box key={fancyId()} marginLeft={index === 0 ? 0 : 4}>
 						<Link to={page.href}>
@@ -79,20 +79,20 @@ const Topbar = ({ onSidebarOpen }: Props): JSX.Element => {
 				))}
 			</Box>
 
-			<Box sx={{ display: "flex" }} alignItems={"center"}>
+			<Box sx={{ display: "flex" }} alignItems="center">
 				{renderAuthButtons()}
-				<Box sx={{ display: { xs: "flex", md: "none" } }} alignItems={"center"}>
+				<Box sx={{ display: { xs: "flex", md: "none" } }} alignItems="center">
 					<IconButton
 						onClick={onSidebarOpen}
 						aria-label="Menu"
 						sx={{ padding: 0, margin: 0 }}
 					>
-						<Menu fontSize={"medium"} />
+						<Menu fontSize="medium" />
 					</IconButton>
 				</Box>
 			</Box>
 		</Box>
 	);
-};
+}
 
 export default Topbar;

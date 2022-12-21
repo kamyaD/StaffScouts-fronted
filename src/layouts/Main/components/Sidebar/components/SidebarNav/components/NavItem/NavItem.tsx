@@ -12,7 +12,7 @@ interface Props {
 	handleContactModal: () => void;
 }
 
-const NavItem = ({ handleContactModal }: Props): JSX.Element => {
+function NavItem({ handleContactModal }: Props): JSX.Element {
 	const theme = useTheme();
 	const [activeLink, setActiveLink] = useState("");
 	useEffect(() => {
@@ -71,6 +71,6 @@ const NavItem = ({ handleContactModal }: Props): JSX.Element => {
 			</Box>
 		</Box>
 	);
-};
+}
 
 export default NavItem;

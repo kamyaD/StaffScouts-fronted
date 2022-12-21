@@ -14,17 +14,17 @@ const mock = [
 	"https://assets.maccarianagency.com/svg/logos/paypal-original.svg",
 ];
 
-const TrustedCompanies = (): JSX.Element => {
+function TrustedCompanies(): JSX.Element {
 	const theme = useTheme();
 	return (
 		<Box>
 			<Grid container spacing={4}>
 				<Grid item xs={12} md={6}>
 					<Box>
-						<Typography variant={"h4"} gutterBottom sx={{ fontWeight: 700 }}>
+						<Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
 							Trusted by you favorite companies
 						</Typography>
-						<Typography variant={"h6"} component={"p"} color={"text.secondary"}>
+						<Typography variant="h6" component="p" color="text.secondary">
 							We are registered as a distributor with AMFI,
 							<br />
 							investment advisor with SEBI and platform partners with BSE.
@@ -33,7 +33,7 @@ const TrustedCompanies = (): JSX.Element => {
 				</Grid>
 				<Grid item xs={12} md={6}>
 					<Box>
-						<Box display="flex" flexWrap="wrap" justifyContent={"flex-start"}>
+						<Box display="flex" flexWrap="wrap" justifyContent="flex-start">
 							{mock.map((item, i) => (
 								<Box maxWidth={90} marginTop={2} marginRight={4} key={i}>
 									<Box
@@ -57,6 +57,6 @@ const TrustedCompanies = (): JSX.Element => {
 			</Grid>
 		</Box>
 	);
-};
+}
 
 export default TrustedCompanies;

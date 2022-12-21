@@ -35,7 +35,7 @@ const mock = [
 	},
 ];
 
-const Reviews = (): JSX.Element => {
+function Reviews(): JSX.Element {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -71,11 +71,11 @@ const Reviews = (): JSX.Element => {
 				},
 			}}
 		>
-			<Box position={"relative"} zIndex={2}>
+			<Box position="relative" zIndex={2}>
 				<Box marginBottom={4}>
 					<Typography
 						variant="h4"
-						align={"center"}
+						align="center"
 						gutterBottom
 						sx={{
 							fontWeight: 700,
@@ -84,14 +84,14 @@ const Reviews = (): JSX.Element => {
 					>
 						Take a look what our latest candidates
 					</Typography>
-					<Box marginTop={2} display={"flex"} justifyContent={"center"}>
+					<Box marginTop={2} display="flex" justifyContent="center">
 						<Button
 							variant="contained"
 							color="primary"
 							size="large"
 							endIcon={
 								<Box
-									component={"svg"}
+									component="svg"
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
@@ -118,16 +118,16 @@ const Reviews = (): JSX.Element => {
 							<Box
 								width={1}
 								height={1}
-								data-aos={"fade-up"}
+								data-aos="fade-up"
 								data-aos-delay={i * 100}
 								data-aos-offset={100}
 								data-aos-duration={600}
 								component={Card}
-								display={"flex"}
-								flexDirection={"column"}
-								alignItems={"center"}
+								display="flex"
+								flexDirection="column"
+								alignItems="center"
 								boxShadow={0}
-								variant={"outlined"}
+								variant="outlined"
 								borderRadius={2}
 							>
 								<CardContent
@@ -145,7 +145,7 @@ const Reviews = (): JSX.Element => {
 											<ListItemAvatar sx={{ marginRight: 3 }}>
 												<Avatar
 													src={item.avatar}
-													variant={"rounded"}
+													variant="rounded"
 													sx={{ width: 100, height: 100, borderRadius: 2 }}
 												/>
 											</ListItemAvatar>
@@ -167,6 +167,6 @@ const Reviews = (): JSX.Element => {
 			</Box>
 		</Box>
 	);
-};
+}
 
 export default Reviews;

@@ -27,7 +27,7 @@ interface ScrollTopProps {
 	children: ReactElement;
 }
 
-const ScrollTop = ({ window, children }: ScrollTopProps) => {
+function ScrollTop({ window, children }: ScrollTopProps) {
 	const trigger = useScrollTrigger({
 		target: window ? window() : undefined,
 		disableHysteresis: true,
@@ -58,9 +58,9 @@ const ScrollTop = ({ window, children }: ScrollTopProps) => {
 			</Box>
 		</Zoom>
 	);
-};
+}
 
-const Main = (): JSX.Element => {
+function Main(): JSX.Element {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -91,9 +91,9 @@ const Main = (): JSX.Element => {
 	});
 
 	return (
-		<Box position={"relative"} minHeight={"100vh"}>
+		<Box position="relative" minHeight="100vh">
 			<AppBar
-				position={"sticky"}
+				position="sticky"
 				sx={{
 					top: 0,
 					backgroundColor: trigger ? "hsla(0,0%,100%,.8)" : "transparent",
@@ -121,7 +121,7 @@ const Main = (): JSX.Element => {
 				variant="temporary"
 			/>
 			<Outlet />
-			{/*<main>{children}</main>*/}
+			{/* <main>{children}</main> */}
 			<ScrollTop>
 				<Fab color="secondary" size="small" aria-label="scroll back to top">
 					<KeyboardArrowUpRounded />
@@ -142,6 +142,6 @@ const Main = (): JSX.Element => {
 			</Container>
 		</Box>
 	);
-};
+}
 
 export default Main;

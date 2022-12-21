@@ -7,7 +7,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 
-const AboutTop = (): JSX.Element => {
+function AboutTop(): JSX.Element {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -22,27 +22,27 @@ const AboutTop = (): JSX.Element => {
 					xs={12}
 					md={6}
 					data-aos={isMd ? "fade-right" : "fade-up"}
-					alignItems={"center"}
+					alignItems="center"
 				>
 					<Box>
-						<Typography variant={"h4"} gutterBottom sx={{ fontWeight: 700 }}>
+						<Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
 							Career Advisory Services for Candidates
 						</Typography>
 						<Typography
-							variant={"h6"}
-							component={"p"}
-							color={"text.secondary"}
+							variant="h6"
+							component="p"
+							color="text.secondary"
 							gutterBottom
 						>
 							For information and bookings, call +254 727 517 071 We'll give you
 							the best career advice for your growth.
 						</Typography>
 						<Button
-							variant={"contained"}
-							size={"large"}
+							variant="contained"
+							size="large"
 							endIcon={
 								<Box
-									component={"svg"}
+									component="svg"
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
@@ -73,8 +73,8 @@ const AboutTop = (): JSX.Element => {
 				>
 					<Box maxWidth={500} width={1}>
 						<Box
-							component={"img"}
-							src={"/img/career-advisory.svg"}
+							component="img"
+							src="/img/career-advisory.svg"
 							width={1}
 							height={1}
 							sx={{
@@ -87,6 +87,6 @@ const AboutTop = (): JSX.Element => {
 			</Grid>
 		</Box>
 	);
-};
+}
 
 export default AboutTop;

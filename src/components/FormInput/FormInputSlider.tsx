@@ -4,12 +4,7 @@ import { Controller } from "react-hook-form";
 
 import { FormInputProps } from "./FormInputProps";
 
-const FormInputSlider = ({
-	name,
-	control,
-	setValue,
-	label,
-}: FormInputProps) => {
+function FormInputSlider({ name, control, setValue, label }: FormInputProps) {
 	const [sliderValue, setSliderValue] = useState<number>(30);
 
 	useEffect(() => {
@@ -39,6 +34,6 @@ const FormInputSlider = ({
 			/>
 		</>
 	);
-};
+}
 
 export default FormInputSlider;

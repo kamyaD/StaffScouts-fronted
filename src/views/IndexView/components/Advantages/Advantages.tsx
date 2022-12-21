@@ -79,29 +79,29 @@ const mock = [
 	},
 ];
 
-const Advantages = (): JSX.Element => {
+function Advantages(): JSX.Element {
 	return (
 		<Box>
 			<Box marginBottom={4}>
 				<Typography
-					variant={"h4"}
+					variant="h4"
 					gutterBottom
-					align={"center"}
+					align="center"
 					sx={{ fontWeight: 700 }}
 				>
 					Our process to find you a new job is fast
 				</Typography>
 				<Typography
-					variant={"h6"}
-					component={"p"}
-					color={"text.secondary"}
-					align={"center"}
+					variant="h6"
+					component="p"
+					color="text.secondary"
+					align="center"
 				>
 					Fill out our standardized application on our platform.
 					<br />
 					Most applicants finish in under an hour.
 				</Typography>
-				<Box marginTop={3} display={"flex"} justifyContent={"center"}>
+				<Box marginTop={3} display="flex" justifyContent="center">
 					<Button
 						variant="contained"
 						color="primary"
@@ -133,9 +133,9 @@ const Advantages = (): JSX.Element => {
 					{mock.map((item, i) => (
 						<Grid item xs={12} md={4} key={i}>
 							<Box
-								display={"flex"}
-								flexDirection={"column"}
-								data-aos={"fade-up"}
+								display="flex"
+								flexDirection="column"
+								data-aos="fade-up"
 								data-aos-delay={i * 100}
 								data-aos-offset={100}
 								data-aos-duration={600}
@@ -144,19 +144,15 @@ const Advantages = (): JSX.Element => {
 									component={Avatar}
 									height={80}
 									marginBottom={2}
-									bgcolor={"transparent"}
+									bgcolor="transparent"
 									color={item.color}
-									variant={"square"}
+									variant="square"
 									paddingX={0}
 									borderBottom={`2px solid ${item.color}`}
 								>
 									{item.icon}
 								</Box>
-								<Typography
-									variant={"h5"}
-									gutterBottom
-									sx={{ fontWeight: 700 }}
-								>
+								<Typography variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
 									{item.title}
 								</Typography>
 								<Typography color="text.secondary">{item.subtitle}</Typography>
@@ -167,6 +163,6 @@ const Advantages = (): JSX.Element => {
 			</Box>
 		</Box>
 	);
-};
+}
 
 export default Advantages;

@@ -27,7 +27,7 @@ type IFormInput = {
 	password: string;
 };
 
-const Form = (): JSX.Element => {
+function Form(): JSX.Element {
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 
@@ -121,7 +121,7 @@ const Form = (): JSX.Element => {
 							display="flex"
 							flexDirection={{ xs: "column", sm: "row" }}
 							alignItems={{ xs: "stretched", sm: "center" }}
-							justifyContent={"flex-end"}
+							justifyContent="flex-end"
 							width={1}
 							marginBottom={0}
 						>
@@ -161,13 +161,13 @@ const Form = (): JSX.Element => {
 							display="flex"
 							flexDirection={{ xs: "column", sm: "row" }}
 							alignItems={{ xs: "stretched", sm: "center" }}
-							justifyContent={"space-between"}
+							justifyContent="space-between"
 							width={1}
 							maxWidth={600}
-							margin={"0 auto"}
+							margin="0 auto"
 						>
 							<Box marginBottom={{ xs: 1, sm: 0 }}>
-								<Typography variant={"subtitle2"}>
+								<Typography variant="subtitle2">
 									Don't have an account yet?{" "}
 									<Button
 										component={Link}
@@ -179,7 +179,7 @@ const Form = (): JSX.Element => {
 									</Button>
 								</Typography>
 							</Box>
-							<Button size={"large"} variant={"contained"} type={"submit"}>
+							<Button size="large" variant="contained" type="submit">
 								Login
 							</Button>
 						</Box>
@@ -188,6 +188,6 @@ const Form = (): JSX.Element => {
 			</form>
 		</Box>
 	);
-};
+}
 
 export default Form;

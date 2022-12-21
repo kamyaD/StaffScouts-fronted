@@ -7,33 +7,28 @@ import dayjs from "dayjs";
 
 import fancyId from "../../../../utils/fancyId";
 
-const Footer = (): JSX.Element => {
+function Footer(): JSX.Element {
 	const theme = useTheme();
 	return (
 		<Grid container spacing={2}>
 			<Grid item xs={12}>
 				<Box
-					display={"flex"}
-					justifyContent={"space-between"}
-					alignItems={"flex-start"}
+					display="flex"
+					justifyContent="space-between"
+					alignItems="flex-start"
 					width={1}
 					flexDirection={{ xs: "column", sm: "row" }}
 				>
 					<Box
-						display={"flex"}
+						display="flex"
 						component="a"
 						href="/"
 						title="theFront"
 						width={80}
 					>
-						<Box
-							component={"img"}
-							src={"/img/logo.jpeg"}
-							height={1}
-							width={1}
-						/>
+						<Box component="img" src="/img/logo.jpeg" height={1} width={1} />
 					</Box>
-					<Box marginLeft={3} display={"flex"} flexDirection={"column"}>
+					<Box marginLeft={3} display="flex" flexDirection="column">
 						<Typography>Quick links</Typography>
 
 						<List dense>
@@ -81,10 +76,10 @@ const Footer = (): JSX.Element => {
 				</Box>
 			</Grid>
 			<Grid item xs={12}>
-				<Typography align={"center"} variant={"subtitle2"} gutterBottom>
+				<Typography align="center" variant="subtitle2" gutterBottom>
 					&copy; staff scout {dayjs().format("YYYY")}. All rights reserved
 				</Typography>
-				<Typography align={"center"} variant={"caption"} component={"p"}>
+				<Typography align="center" variant="caption" component="p">
 					When you visit or interact with our sites, services or tools, we or
 					our authorised service providers may use cookies for storing
 					information to help provide you with a better, faster and safer
@@ -93,6 +88,6 @@ const Footer = (): JSX.Element => {
 			</Grid>
 		</Grid>
 	);
-};
+}
 
 export default Footer;

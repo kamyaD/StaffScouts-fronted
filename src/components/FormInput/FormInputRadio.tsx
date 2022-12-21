@@ -21,7 +21,7 @@ const options = [
 	},
 ];
 
-const FormInputRadio = ({ name, control, label }: FormInputProps) => {
+function FormInputRadio({ name, control, label }: FormInputProps) {
 	const generateRadioOptions = () => {
 		return options.map((singleOption) => (
 			<FormControlLabel
@@ -51,6 +51,6 @@ const FormInputRadio = ({ name, control, label }: FormInputProps) => {
 			/>
 		</FormControl>
 	);
-};
+}
 
 export default FormInputRadio;

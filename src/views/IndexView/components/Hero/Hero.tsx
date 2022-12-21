@@ -10,80 +10,82 @@ import Slider from "react-slick";
 
 import Container from "../../../../components/Container";
 
-const Hero = (): JSX.Element => {
+function Hero(): JSX.Element {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
 	});
 
-	const LeftSide = () => (
-		<Box data-aos={isMd ? "fade-right" : "fade-up"}>
-			<Box marginBottom={2}>
-				<Typography
-					variant="h3"
-					color="text.primary"
-					sx={{
-						fontWeight: 700,
-					}}
-				>
-					Where talent{" "}
+	function LeftSide() {
+		return (
+			<Box data-aos={isMd ? "fade-right" : "fade-up"}>
+				<Box marginBottom={2}>
 					<Typography
-						color={"secondary"}
-						component={"span"}
-						variant={"inherit"}
+						variant="h3"
+						color="text.primary"
 						sx={{
-							background: `linear-gradient(180deg, transparent 82%, ${alpha(
-								theme.palette.secondary.main,
-								0.3,
-							)} 0%)`,
+							fontWeight: 700,
 						}}
 					>
-						meets opportunity
-					</Typography>
-				</Typography>
-			</Box>
-			<Box marginBottom={3}>
-				<Typography variant="h6" component="p" color="text.secondary">
-					Looking for work? Organize your search, stand out to employers, and
-					track your progress here. Let's get to work.
-				</Typography>
-			</Box>
-			<Box
-				display="flex"
-				flexDirection={{ xs: "column", sm: "row" }}
-				alignItems={{ xs: "stretched", sm: "flex-start" }}
-			>
-				<Button
-					variant="contained"
-					color="primary"
-					size="large"
-					fullWidth={!isMd}
-					endIcon={
-						<Box
-							component={"svg"}
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							width={24}
-							height={24}
+						Where talent{" "}
+						<Typography
+							color="secondary"
+							component="span"
+							variant="inherit"
+							sx={{
+								background: `linear-gradient(180deg, transparent 82%, ${alpha(
+									theme.palette.secondary.main,
+									0.3,
+								)} 0%)`,
+							}}
 						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M17 8l4 4m0 0l-4 4m4-4H3"
-							/>
-						</Box>
-					}
+							meets opportunity
+						</Typography>
+					</Typography>
+				</Box>
+				<Box marginBottom={3}>
+					<Typography variant="h6" component="p" color="text.secondary">
+						Looking for work? Organize your search, stand out to employers, and
+						track your progress here. Let's get to work.
+					</Typography>
+				</Box>
+				<Box
+					display="flex"
+					flexDirection={{ xs: "column", sm: "row" }}
+					alignItems={{ xs: "stretched", sm: "flex-start" }}
 				>
-					Get started
-				</Button>
+					<Button
+						variant="contained"
+						color="primary"
+						size="large"
+						fullWidth={!isMd}
+						endIcon={
+							<Box
+								component="svg"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								width={24}
+								height={24}
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M17 8l4 4m0 0l-4 4m4-4H3"
+								/>
+							</Box>
+						}
+					>
+						Get started
+					</Button>
+				</Box>
 			</Box>
-		</Box>
-	);
+		);
+	}
 
-	const RightSide = (): JSX.Element => {
+	function RightSide(): JSX.Element {
 		const sliderOpts = {
 			dots: false,
 			infinite: true,
@@ -148,7 +150,7 @@ const Hero = (): JSX.Element => {
 				</Slider>
 			</Box>
 		);
-	};
+	}
 
 	return (
 		<Box
@@ -160,16 +162,16 @@ const Hero = (): JSX.Element => {
 		>
 			<Container paddingX={0} paddingY={0} maxWidth={{ sm: 1, md: 1236 }}>
 				<Box
-					display={"flex"}
+					display="flex"
 					flexDirection={{ xs: "column", md: "row" }}
-					position={"relative"}
+					position="relative"
 					minHeight={{ xs: "auto", md: 600 }}
 				>
 					<Box
 						width={1}
 						order={{ xs: 2, md: 1 }}
-						display={"flex"}
-						alignItems={"center"}
+						display="flex"
+						alignItems="center"
 					>
 						<Container>
 							<LeftSide />
@@ -224,6 +226,6 @@ const Hero = (): JSX.Element => {
 			<Divider />
 		</Box>
 	);
-};
+}
 
 export default Hero;

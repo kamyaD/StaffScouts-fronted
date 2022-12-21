@@ -9,23 +9,23 @@ import React from "react";
 
 import Container from "../../../../components/Container";
 
-const Newsletter = (): JSX.Element => {
+function Newsletter(): JSX.Element {
 	const theme = useTheme();
 
 	return (
-		<Box bgcolor={"primary.main"} borderRadius={2}>
+		<Box bgcolor="primary.main" borderRadius={2}>
 			<Container>
 				<Box
-					display={"flex"}
-					flexDirection={"column"}
-					justifyContent={"center"}
-					alignItems={"center"}
+					display="flex"
+					flexDirection="column"
+					justifyContent="center"
+					alignItems="center"
 				>
 					<Box marginBottom={4}>
 						<Typography
 							variant="h4"
-							align={"center"}
-							data-aos={"fade-up"}
+							align="center"
+							data-aos="fade-up"
 							gutterBottom
 							sx={{
 								fontWeight: 700,
@@ -33,12 +33,12 @@ const Newsletter = (): JSX.Element => {
 						>
 							Subscribe to our newsletter
 						</Typography>
-						<Typography variant="h6" align={"center"} data-aos={"fade-up"}>
+						<Typography variant="h6" align="center" data-aos="fade-up">
 							Don't lose a chance to be among the firsts to know about our
 							upcoming news and updates.
 						</Typography>
 					</Box>
-					<Box width={1} display={"flex"} justifyContent={"center"}>
+					<Box width={1} display="flex" justifyContent="center">
 						<FormControl
 							fullWidth
 							variant="outlined"
@@ -93,6 +93,6 @@ const Newsletter = (): JSX.Element => {
 			</Container>
 		</Box>
 	);
-};
+}
 
 export default Newsletter;

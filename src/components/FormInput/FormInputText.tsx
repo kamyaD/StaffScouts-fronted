@@ -3,14 +3,14 @@ import { Controller } from "react-hook-form";
 
 import { FormInputProps } from "./FormInputProps";
 
-const FormInputText = ({
+function FormInputText({
 	name,
 	control,
 	label,
 	Icon,
 	iconPosition,
 	...rest
-}: FormInputProps) => {
+}: FormInputProps) {
 	return (
 		<Controller
 			name={name}
@@ -36,6 +36,6 @@ const FormInputText = ({
 			}}
 		/>
 	);
-};
+}
 
 export default FormInputText;

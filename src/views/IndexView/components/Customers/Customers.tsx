@@ -35,7 +35,7 @@ const mock = [
 	},
 ];
 
-const Customers = (): JSX.Element => {
+function Customers(): JSX.Element {
 	const theme = useTheme();
 
 	return (
@@ -43,8 +43,8 @@ const Customers = (): JSX.Element => {
 			<Box marginBottom={4}>
 				<Typography
 					variant="h4"
-					align={"center"}
-					data-aos={"fade-up"}
+					align="center"
+					data-aos="fade-up"
 					gutterBottom
 					sx={{
 						fontWeight: 700,
@@ -54,9 +54,9 @@ const Customers = (): JSX.Element => {
 				</Typography>
 				<Typography
 					variant="h6"
-					align={"center"}
-					color={"text.secondary"}
-					data-aos={"fade-up"}
+					align="center"
+					color="text.secondary"
+					data-aos="fade-up"
 				>
 					Take a quick glance at some of our past projects.
 					<br />
@@ -70,14 +70,14 @@ const Customers = (): JSX.Element => {
 						<Box
 							width={1}
 							height={1}
-							data-aos={"fade-up"}
+							data-aos="fade-up"
 							data-aos-delay={i * 100}
 							data-aos-offset={100}
 							data-aos-duration={600}
 							component={Card}
-							display={"flex"}
-							flexDirection={"column"}
-							alignItems={"center"}
+							display="flex"
+							flexDirection="column"
+							alignItems="center"
 							boxShadow={0}
 						>
 							<CardContent
@@ -95,11 +95,11 @@ const Customers = (): JSX.Element => {
 										marginBottom={2}
 										bgcolor={alpha(theme.palette.primary.main, 0.1)}
 										color={theme.palette.primary.main}
-										variant={"rounded"}
+										variant="rounded"
 										borderRadius={2}
 									>
 										<Box
-											component={"svg"}
+											component="svg"
 											width={48}
 											height={48}
 											xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +117,7 @@ const Customers = (): JSX.Element => {
 										</Box>
 									</Box>
 								</Box>
-								<Typography align={"center"} color="text.secondary">
+								<Typography align="center" color="text.secondary">
 									{item.feedback}
 								</Typography>
 							</CardContent>
@@ -140,6 +140,6 @@ const Customers = (): JSX.Element => {
 			</Grid>
 		</Box>
 	);
-};
+}
 
 export default Customers;

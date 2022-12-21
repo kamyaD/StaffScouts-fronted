@@ -14,7 +14,7 @@ const options = [
 	},
 ];
 
-const FormInputDropdown = ({ name, control, label }: FormInputProps) => {
+function FormInputDropdown({ name, control, label }: FormInputProps) {
 	const generateSingleOptions = () => {
 		return options.map((option: any) => {
 			return (
@@ -26,7 +26,7 @@ const FormInputDropdown = ({ name, control, label }: FormInputProps) => {
 	};
 
 	return (
-		<FormControl size={"small"}>
+		<FormControl size="small">
 			<InputLabel>{label}</InputLabel>
 			<Controller
 				render={({ field: { onChange, value } }) => (
@@ -39,6 +39,6 @@ const FormInputDropdown = ({ name, control, label }: FormInputProps) => {
 			/>
 		</FormControl>
 	);
-};
+}
 
 export default FormInputDropdown;

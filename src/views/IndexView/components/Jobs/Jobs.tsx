@@ -53,11 +53,11 @@ const mock = [
 	},
 ];
 
-const Jobs = (): JSX.Element => {
+function Jobs(): JSX.Element {
 	return (
 		<Box>
 			<Box marginBottom={4}>
-				<Typography variant={"h4"} gutterBottom sx={{ fontWeight: 700 }}>
+				<Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
 					Our latest jobs
 				</Typography>
 			</Box>
@@ -65,15 +65,15 @@ const Jobs = (): JSX.Element => {
 				{mock.map((job) => (
 					<JobCard key={fancyId()} job={job} />
 				))}
-				<Grid item container justifyContent={"center"} xs={12}>
+				<Grid item container justifyContent="center" xs={12}>
 					<Button
 						component={Link}
 						to="/job-listing"
-						variant={"contained"}
-						size={"large"}
+						variant="contained"
+						size="large"
 						endIcon={
 							<Box
-								component={"svg"}
+								component="svg"
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
 								viewBox="0 0 24 24"
@@ -96,6 +96,6 @@ const Jobs = (): JSX.Element => {
 			</Grid>
 		</Box>
 	);
-};
+}
 
 export default Jobs;

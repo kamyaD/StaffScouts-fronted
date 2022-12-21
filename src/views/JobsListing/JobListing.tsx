@@ -1,4 +1,5 @@
-import { Button, Card, InputAdornment, TextField } from "@mui/material";
+import { Search } from "@mui/icons-material";
+import { Button, Divider, IconButton, InputBase, Paper } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
@@ -56,7 +57,7 @@ const mock = [
 	},
 ];
 
-const JobListing = (): JSX.Element => {
+function JobListing(): JSX.Element {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -64,11 +65,7 @@ const JobListing = (): JSX.Element => {
 
 	return (
 		<>
-			<Box
-				bgcolor={"alternate.main"}
-				padding={{ xs: 2, md: 4 }}
-				borderRadius={2}
-			>
+			<Box bgcolor="alternate.main" padding={{ xs: 2, md: 4 }} borderRadius={2}>
 				<Container>
 					<Grid container spacing={4}>
 						<Grid
@@ -76,14 +73,14 @@ const JobListing = (): JSX.Element => {
 							container
 							xs={12}
 							md={6}
-							alignItems={"center"}
+							alignItems="center"
 							sx={{ position: "relative" }}
 						>
 							<Box data-aos={isMd ? "fade-right" : "fade-up"} marginBottom={4}>
 								<Box marginBottom={2}>
 									<Typography
 										variant="h3"
-										component={"h3"}
+										component="h3"
 										sx={{
 											fontWeight: 700,
 										}}
@@ -96,173 +93,173 @@ const JobListing = (): JSX.Element => {
 										Productivity tools can either help you or get in the way.
 									</Typography>
 								</Box>
-								<Box
-									padding={2}
-									width={1}
-									component={Card}
-									boxShadow={4}
-									marginBottom={4}
-									variant="outlined"
-								>
-									<form noValidate autoComplete="off">
-										<Box display="flex" alignItems={"center"}>
-											<Box width={1} marginRight={1}>
-												<TextField
-													sx={{
-														height: 54,
-														"& .MuiOutlinedInput-notchedOutline": {
-															border: "0 !important",
-														},
-													}}
-													variant="outlined"
-													color="primary"
-													size="medium"
-													placeholder="Search an article"
-													fullWidth
-													InputProps={{
-														startAdornment: (
-															<InputAdornment position="start">
-																<Box
-																	component={"svg"}
-																	xmlns="http://www.w3.org/2000/svg"
-																	fill="none"
-																	viewBox="0 0 24 24"
-																	stroke="currentColor"
-																	width={24}
-																	height={24}
-																	color={"text.secondary"}
-																>
-																	<path
-																		strokeLinecap="round"
-																		strokeLinejoin="round"
-																		strokeWidth={2}
-																		d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-																	/>
-																</Box>
-															</InputAdornment>
-														),
-													}}
-												/>
-											</Box>
-											<Box
-												display={{ xs: "none", sm: "block" }}
-												marginRight={2}
-											>
-												<Typography
-													color={"text.secondary"}
-													variant={"subtitle2"}
-													sx={{ whiteSpace: "nowrap" }}
-												>
-													123 Results
-												</Typography>
-											</Box>
-											<Box>
-												<Button
-													sx={{
-														height: 54,
-														minWidth: 100,
-														whiteSpace: "nowrap",
-													}}
-													variant="contained"
-													color="primary"
-													size="medium"
-													fullWidth
-												>
-													Search
-												</Button>
-											</Box>
-										</Box>
-									</form>
 
-									{/*<Box*/}
-									{/*	component={"form"}*/}
-									{/*	noValidate*/}
-									{/*	autoComplete="off"*/}
-									{/*	sx={{*/}
-									{/*		"& .MuiInputBase-input.MuiOutlinedInput-input": {*/}
-									{/*			bgcolor: "background.paper",*/}
-									{/*		},*/}
-									{/*	}}*/}
-									{/*>*/}
-									{/*	<Box*/}
-									{/*		display="flex"*/}
-									{/*		flexDirection={{ xs: "column", md: "row" }}*/}
-									{/*		alignItems={{ xs: "center", md: "flex-start" }}*/}
-									{/*		justifyContent={{ xs: "center" }}*/}
-									{/*	>*/}
-									{/*		<Box*/}
-									{/*			flex={"1 1 auto"}*/}
-									{/*			component={TextField}*/}
-									{/*			label="Search job title"*/}
-									{/*			variant="outlined"*/}
-									{/*			color="primary"*/}
-									{/*			fullWidth*/}
-									{/*		/>*/}
-									{/*		<Box*/}
-									{/*			component={Button}*/}
-									{/*			variant="contained"*/}
-									{/*			color="primary"*/}
-									{/*			size="large"*/}
-									{/*			marginTop={{ xs: 2, md: 0 }}*/}
-									{/*			marginLeft={{ md: 2 }}*/}
-									{/*		>*/}
-									{/*			Search*/}
-									{/*		</Box>*/}
-									{/*	</Box>*/}
-									{/*</Box>*/}
-								</Box>
+								<Paper
+									component="form"
+									noValidate
+									autoComplete="off"
+									sx={{
+										p: "2px 4px",
+										display: "flex",
+										alignItems: "center",
+										width: "auto",
+									}}
+								>
+									<IconButton sx={{ p: "10px" }} aria-label="menu">
+										<Search />
+									</IconButton>
+									<InputBase
+										sx={{ ml: 1, flex: 1 }}
+										placeholder="Search jobs"
+										inputProps={{ "aria-label": "search google maps" }}
+									/>
+									<Typography
+										color="text.secondary"
+										variant="subtitle2"
+										sx={{ whiteSpace: "nowrap" }}
+									>
+										123 Results
+									</Typography>
+									<Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+									<Button
+										sx={{
+											height: 54,
+											minWidth: 50,
+											whiteSpace: "nowrap",
+										}}
+										variant="contained"
+										color="primary"
+										size="medium"
+									>
+										Search
+									</Button>
+								</Paper>
+
+								{/* <Box */}
+								{/*	padding={2} */}
+								{/*	width={1} */}
+								{/*	component={Card} */}
+								{/*	boxShadow={4} */}
+								{/*	marginBottom={4} */}
+								{/*	variant="outlined" */}
+								{/* > */}
+								{/*	<form noValidate autoComplete="off"> */}
+								{/*		<Box display="flex" alignItems={"center"}> */}
+								{/*			<Box width={1} marginRight={1}> */}
+								{/*				<TextField */}
+								{/*					sx={{ */}
+								{/*						height: 54, */}
+								{/*						"& .MuiOutlinedInput-notchedOutline": { */}
+								{/*							border: "0 !important", */}
+								{/*						}, */}
+								{/*					}} */}
+								{/*					variant="outlined" */}
+								{/*					color="primary" */}
+								{/*					size="medium" */}
+								{/*					placeholder="Search an article" */}
+								{/*					fullWidth */}
+								{/*					InputProps={{ */}
+								{/*						startAdornment: ( */}
+								{/*							<InputAdornment position="start"> */}
+								{/*								<Box */}
+								{/*									component={"svg"} */}
+								{/*									xmlns="http://www.w3.org/2000/svg" */}
+								{/*									fill="none" */}
+								{/*									viewBox="0 0 24 24" */}
+								{/*									stroke="currentColor" */}
+								{/*									width={24} */}
+								{/*									height={24} */}
+								{/*									color={"text.secondary"} */}
+								{/*								> */}
+								{/*									<path */}
+								{/*										strokeLinecap="round" */}
+								{/*										strokeLinejoin="round" */}
+								{/*										strokeWidth={2} */}
+								{/*										d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" */}
+								{/*									/> */}
+								{/*								</Box> */}
+								{/*							</InputAdornment> */}
+								{/*						), */}
+								{/*					}} */}
+								{/*				/> */}
+								{/*			</Box> */}
+								{/*			<Box */}
+								{/*				display={{ xs: "none", sm: "block" }} */}
+								{/*				marginRight={2} */}
+								{/*			> */}
+								{/*				<Typography */}
+								{/*					color={"text.secondary"} */}
+								{/*					variant={"subtitle2"} */}
+								{/*					sx={{ whiteSpace: "nowrap" }} */}
+								{/*				> */}
+								{/*					123 Results */}
+								{/*				</Typography> */}
+								{/*			</Box> */}
+								{/*			<Box> */}
+								{/*				<Button */}
+								{/*					sx={{ */}
+								{/*						height: 54, */}
+								{/*						minWidth: 100, */}
+								{/*						whiteSpace: "nowrap", */}
+								{/*					}} */}
+								{/*					variant="contained" */}
+								{/*					color="primary" */}
+								{/*					size="medium" */}
+								{/*					fullWidth */}
+								{/*				> */}
+								{/*					Search */}
+								{/*				</Button> */}
+								{/*			</Box> */}
+								{/*		</Box> */}
+								{/*	</form> */}
+								{/* </Box> */}
 							</Box>
-							{/*<Box*/}
-							{/*	sx={{*/}
-							{/*		width: "100%",*/}
-							{/*		background: theme.palette.background.paper,*/}
-							{/*		[theme.breakpoints.up("md")]: {*/}
-							{/*			position: "absolute",*/}
-							{/*			bottom: 0,*/}
-							{/*			transform: "translateY(100%)",*/}
-							{/*		},*/}
-							{/*		"& .MuiOutlinedInput-notchedOutline": {*/}
-							{/*			border: "0 !important",*/}
-							{/*		},*/}
-							{/*	}}*/}
-							{/*>*/}
-							{/*	<FormControl fullWidth variant="outlined" data-aos="fade-up">*/}
-							{/*		<OutlinedInput*/}
-							{/*			sx={{*/}
-							{/*				background: theme.palette.background.paper,*/}
-							{/*				boxShadow: 4,*/}
-							{/*			}}*/}
-							{/*			startAdornment={*/}
-							{/*				<InputAdornment position="start">*/}
-							{/*					<Box*/}
-							{/*						component={"svg"}*/}
-							{/*						xmlns="http://www.w3.org/2000/svg"*/}
-							{/*						fill="none"*/}
-							{/*						viewBox="0 0 24 24"*/}
-							{/*						stroke="currentColor"*/}
-							{/*						width={24}*/}
-							{/*						height={24}*/}
-							{/*					>*/}
-							{/*						<path*/}
-							{/*							strokeLinecap="round"*/}
-							{/*							strokeLinejoin="round"*/}
-							{/*							strokeWidth={2}*/}
-							{/*							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"*/}
-							{/*						/>*/}
-							{/*					</Box>*/}
-							{/*				</InputAdornment>*/}
-							{/*			}*/}
-							{/*		/>*/}
-							{/*	</FormControl>*/}
-							{/*</Box>*/}
+							{/* <Box */}
+							{/*	sx={{ */}
+							{/*		width: "100%", */}
+							{/*		background: theme.palette.background.paper, */}
+							{/*		[theme.breakpoints.up("md")]: { */}
+							{/*			position: "absolute", */}
+							{/*			bottom: 0, */}
+							{/*			transform: "translateY(100%)", */}
+							{/*		}, */}
+							{/*		"& .MuiOutlinedInput-notchedOutline": { */}
+							{/*			border: "0 !important", */}
+							{/*		}, */}
+							{/*	}} */}
+							{/* > */}
+							{/*	<FormControl fullWidth variant="outlined" data-aos="fade-up"> */}
+							{/*		<OutlinedInput */}
+							{/*			sx={{ */}
+							{/*				background: theme.palette.background.paper, */}
+							{/*				boxShadow: 4, */}
+							{/*			}} */}
+							{/*			startAdornment={ */}
+							{/*				<InputAdornment position="start"> */}
+							{/*					<Box */}
+							{/*						component={"svg"} */}
+							{/*						xmlns="http://www.w3.org/2000/svg" */}
+							{/*						fill="none" */}
+							{/*						viewBox="0 0 24 24" */}
+							{/*						stroke="currentColor" */}
+							{/*						width={24} */}
+							{/*						height={24} */}
+							{/*					> */}
+							{/*						<path */}
+							{/*							strokeLinecap="round" */}
+							{/*							strokeLinejoin="round" */}
+							{/*							strokeWidth={2} */}
+							{/*							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" */}
+							{/*						/> */}
+							{/*					</Box> */}
+							{/*				</InputAdornment> */}
+							{/*			} */}
+							{/*		/> */}
+							{/*	</FormControl> */}
+							{/* </Box> */}
 						</Grid>
 						<Grid item xs={12} md={6}>
-							<Box
-								height={1}
-								width={1}
-								display={"flex"}
-								justifyContent={"center"}
-							>
+							<Box height={1} width={1} display="flex" justifyContent="center">
 								<Box
 									height={1}
 									width={1}
@@ -270,10 +267,8 @@ const JobListing = (): JSX.Element => {
 									maxHeight={500}
 								>
 									<Box
-										component={"img"}
-										src={
-											"https://assets.maccarianagency.com/svg/illustrations/drawkit-illustration1.svg"
-										}
+										component="img"
+										src="https://assets.maccarianagency.com/svg/illustrations/drawkit-illustration1.svg"
 										width={1}
 										height={1}
 										sx={{
@@ -295,15 +290,15 @@ const JobListing = (): JSX.Element => {
 						{mock.map((job) => (
 							<JobCard key={fancyId()} job={job} />
 						))}
-						<Grid item container justifyContent={"center"} xs={12}>
+						<Grid item container justifyContent="center" xs={12}>
 							<Button
 								component={Link}
 								to="/job-listing"
-								variant={"contained"}
-								size={"large"}
+								variant="contained"
+								size="large"
 								endIcon={
 									<Box
-										component={"svg"}
+										component="svg"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -328,6 +323,6 @@ const JobListing = (): JSX.Element => {
 			</Container>
 		</>
 	);
-};
+}
 
 export default JobListing;

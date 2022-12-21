@@ -76,30 +76,30 @@ const mock = [
 	},
 ];
 
-const Process = (): JSX.Element => {
+function Process(): JSX.Element {
 	const theme = useTheme();
 	return (
 		<Box>
 			<Box marginBottom={4}>
 				<Typography
-					variant={"h4"}
+					variant="h4"
 					gutterBottom
-					align={"center"}
+					align="center"
 					sx={{ fontWeight: 700 }}
 				>
 					Our process to find you a new job is fast
 				</Typography>
 				<Typography
-					variant={"h6"}
-					component={"p"}
-					color={"text.secondary"}
-					align={"center"}
+					variant="h6"
+					component="p"
+					color="text.secondary"
+					align="center"
 				>
 					Fill out our standardized application on our platform.
 					<br />
 					Most applicants finish in under an hour.
 				</Typography>
-				<Box marginTop={3} display={"flex"} justifyContent={"center"}>
+				<Box marginTop={3} display="flex" justifyContent="center">
 					<Button
 						variant="contained"
 						color="primary"
@@ -131,10 +131,10 @@ const Process = (): JSX.Element => {
 					{mock.map((item, i) => (
 						<Grid item xs={12} md={4} key={i}>
 							<Box
-								display={"flex"}
-								flexDirection={"column"}
-								alignItems={"center"}
-								data-aos={"fade-up"}
+								display="flex"
+								flexDirection="column"
+								alignItems="center"
+								data-aos="fade-up"
 								data-aos-delay={i * 100}
 								data-aos-offset={100}
 								data-aos-duration={600}
@@ -146,20 +146,20 @@ const Process = (): JSX.Element => {
 									marginBottom={2}
 									bgcolor={alpha(theme.palette.primary.main, 0.1)}
 									color={theme.palette.primary.main}
-									variant={"rounded"}
+									variant="rounded"
 									borderRadius={2}
 								>
 									{item.icon}
 								</Box>
 								<Typography
-									variant={"h6"}
+									variant="h6"
 									gutterBottom
 									sx={{ fontWeight: 500 }}
-									align={"center"}
+									align="center"
 								>
 									{item.title}
 								</Typography>
-								<Typography align={"center"} color="text.secondary">
+								<Typography align="center" color="text.secondary">
 									{item.subtitle}
 								</Typography>
 							</Box>
@@ -169,6 +169,6 @@ const Process = (): JSX.Element => {
 			</Box>
 		</Box>
 	);
-};
+}
 
 export default Process;

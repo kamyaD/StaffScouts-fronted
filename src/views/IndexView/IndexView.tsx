@@ -12,21 +12,21 @@ import {
 	Reviews,
 } from "./components";
 
-const IndexView = (): JSX.Element => {
+function IndexView(): JSX.Element {
 	return (
 		<>
-			<Box bgcolor={"alternate.main"}>
+			<Box bgcolor="alternate.main">
 				<Hero />
 			</Box>
 			<Container>
 				<Process />
 			</Container>
-			<Box bgcolor={"alternate.main"}>
+			<Box bgcolor="alternate.main">
 				<Container>
 					<AboutTop />
 				</Container>
 			</Box>
-			<Box bgcolor={"alternate.main"}>
+			<Box bgcolor="alternate.main">
 				<Container>
 					<Reviews />
 				</Container>
@@ -34,7 +34,7 @@ const IndexView = (): JSX.Element => {
 			<Container>
 				<Jobs />
 			</Container>
-			<Box bgcolor={"alternate.main"}>
+			<Box bgcolor="alternate.main">
 				<Container>
 					<News />
 				</Container>
@@ -44,6 +44,6 @@ const IndexView = (): JSX.Element => {
 			</Container>
 		</>
 	);
-};
+}
 
 export default IndexView;

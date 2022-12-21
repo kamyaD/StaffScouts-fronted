@@ -19,7 +19,7 @@ export type PageProps = {
 	image: string;
 };
 
-const RedBox = ({ error }: { error: Error }) => {
+function RedBox({ error }: { error: Error }) {
 	const [isVisible, setIsVisible] = useState(true);
 	const frames = errorStack.parse(error);
 
@@ -58,15 +58,15 @@ const RedBox = ({ error }: { error: Error }) => {
 			</div>
 		</div>
 	);
-};
+}
 
-const ErrorPage = ({
+function ErrorPage({
 	error,
 	pageProps,
 }: {
 	error?: Error;
 	pageProps: PageProps;
-}) => {
+}) {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -95,11 +95,11 @@ const ErrorPage = ({
 				) : null}
 				<Box
 					bgcolor={theme.palette.alternate.main}
-					position={"relative"}
-					minHeight={"calc(100vh - 247px)"}
-					display={"flex"}
-					alignItems={"center"}
-					justifyContent={"center"}
+					position="relative"
+					minHeight="calc(100vh - 247px)"
+					display="flex"
+					alignItems="center"
+					justifyContent="center"
 					height={1}
 					marginTop={-12}
 					paddingTop={12}
@@ -109,15 +109,15 @@ const ErrorPage = ({
 							<Grid
 								item
 								container
-								alignItems={"center"}
-								justifyContent={"center"}
+								alignItems="center"
+								justifyContent="center"
 								xs={12}
 								md={6}
 							>
 								<Box>
 									<Typography
 										variant="h1"
-										component={"h1"}
+										component="h1"
 										align={isMd ? "left" : "center"}
 										sx={{ fontWeight: 700 }}
 									>
@@ -135,7 +135,7 @@ const ErrorPage = ({
 									</Typography>
 									<Box
 										marginTop={4}
-										display={"flex"}
+										display="flex"
 										justifyContent={{ xs: "center", md: "flex-start" }}
 									>
 										<Button
@@ -143,18 +143,18 @@ const ErrorPage = ({
 											variant="contained"
 											color="primary"
 											size="large"
-											to={"/"}
+											to="/"
 										>
 											Go home
 										</Button>
 									</Box>
 								</Box>
 							</Grid>
-							<Grid item container justifyContent={"center"} xs={12} md={6}>
+							<Grid item container justifyContent="center" xs={12} md={6}>
 								<Box height={1} width={1} maxWidth={500}>
 									<Box
-										component={"img"}
-										src={"/img/not-found.svg"}
+										component="img"
+										src="/img/not-found.svg"
 										width={1}
 										height={1}
 										sx={{
@@ -172,6 +172,6 @@ const ErrorPage = ({
 			</main>
 		</>
 	);
-};
+}
 
 export default ErrorPage;

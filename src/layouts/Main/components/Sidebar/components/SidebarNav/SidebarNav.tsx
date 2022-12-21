@@ -23,7 +23,7 @@ interface Props {
 	handleContactModal: () => void;
 }
 
-const SidebarNav = ({ onClose, handleContactModal }: Props): JSX.Element => {
+function SidebarNav({ onClose, handleContactModal }: Props): JSX.Element {
 	const handleLogin = () => {};
 
 	const logoutActiveUser = async (e: {
@@ -35,7 +35,7 @@ const SidebarNav = ({ onClose, handleContactModal }: Props): JSX.Element => {
 	const renderAuthButtons = () => (
 		<Box>
 			<Button fullWidth variant="outlined" color="primary" size="medium">
-				{"Account"}
+				Account
 			</Button>
 		</Box>
 	);
@@ -50,15 +50,13 @@ const SidebarNav = ({ onClose, handleContactModal }: Props): JSX.Element => {
 			>
 				<Chip
 					size="medium"
-					label={"Anonymous User"}
+					label="Anonymous User"
 					variant="outlined"
 					color="primary"
 					avatar={
 						<Avatar
-							alt={"Anonymous User"}
-							src={
-								"https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg"
-							}
+							alt="Anonymous User"
+							src="https://storage.googleapis.com/static.almondhydroponics.com/static/images/avatar_male.svg"
 							aria-describedby="menu-popover"
 							aria-controls="menu-popover"
 							aria-haspopup="true"
@@ -79,7 +77,7 @@ const SidebarNav = ({ onClose, handleContactModal }: Props): JSX.Element => {
 				marginLeft={2}
 			>
 				<Logo />
-				<Box display={"flex"} justifyContent={"flex-end"} onClick={onClose}>
+				<Box display="flex" justifyContent="flex-end" onClick={onClose}>
 					<IconButton>
 						<CloseIcon fontSize="medium" />
 					</IconButton>
@@ -87,7 +85,7 @@ const SidebarNav = ({ onClose, handleContactModal }: Props): JSX.Element => {
 			</Stack>
 			<Box paddingX={2} paddingBottom={2}>
 				<Box>
-					<NavItem title={""} handleContactModal={handleContactModal} />
+					<NavItem title="" handleContactModal={handleContactModal} />
 				</Box>
 				<Divider sx={{ marginBottom: 2 }} />
 				{renderAuthButtons()}
@@ -107,13 +105,13 @@ const SidebarNav = ({ onClose, handleContactModal }: Props): JSX.Element => {
 					>
 						Legal
 					</Button>
-					<Typography variant={"caption"} fontWeight={300}>
+					<Typography variant="caption" fontWeight={300}>
 						{`v${packageJson.version}`}
 					</Typography>
 				</Stack>
 			</Container>
 		</Box>
 	);
-};
+}
 
 export default SidebarNav;

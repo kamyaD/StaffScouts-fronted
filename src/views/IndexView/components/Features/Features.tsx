@@ -9,14 +9,14 @@ import Typography from "@mui/material/Typography";
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 
-const Features = (): JSX.Element => {
+function Features(): JSX.Element {
 	const theme = useTheme();
 
 	return (
 		<Box>
 			<Grid container spacing={4}>
 				<Grid item xs={12} md={6}>
-					<Box height={1} width={1} display={"flex"} justifyContent={"center"}>
+					<Box height={1} width={1} display="flex" justifyContent="center">
 						<Box
 							height={1}
 							width={1}
@@ -24,10 +24,8 @@ const Features = (): JSX.Element => {
 							maxHeight={600}
 						>
 							<Box
-								component={"img"}
-								src={
-									"https://assets.maccarianagency.com/svg/illustrations/drawkit-illustration2.svg"
-								}
+								component="img"
+								src="https://assets.maccarianagency.com/svg/illustrations/drawkit-illustration2.svg"
 								width={1}
 								height={1}
 								sx={{
@@ -38,13 +36,13 @@ const Features = (): JSX.Element => {
 						</Box>
 					</Box>
 				</Grid>
-				<Grid item container alignItems={"center"} xs={12} md={6}>
+				<Grid item container alignItems="center" xs={12} md={6}>
 					<Box>
 						<Box marginBottom={2}>
-							<Typography variant={"h4"} sx={{ fontWeight: 700 }} gutterBottom>
+							<Typography variant="h4" sx={{ fontWeight: 700 }} gutterBottom>
 								Learn with theFront
 							</Typography>
-							<Typography color="text.secondary" variant={"h6"}>
+							<Typography color="text.secondary" variant="h6">
 								Send one-off and automated email, push, and in-app messages to
 								people.
 								<br />
@@ -62,12 +60,12 @@ const Features = (): JSX.Element => {
 									<Box
 										component={ListItem}
 										disableGutters
-										width={"auto"}
+										width="auto"
 										padding={0}
 									>
 										<Box
 											component={ListItemAvatar}
-											minWidth={"auto !important"}
+											minWidth="auto !important"
 											marginRight={2}
 										>
 											<Box
@@ -101,6 +99,6 @@ const Features = (): JSX.Element => {
 			</Grid>
 		</Box>
 	);
-};
+}
 
 export default Features;

@@ -19,7 +19,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export const SnackBar = ({ snack }: SnackMessageProps): JSX.Element => {
+export function SnackBar({ snack }: SnackMessageProps): JSX.Element {
 	const [isSnackOpen, setSnackOpen] = useState(false);
 	const [snackMessage, setSnackMessage] = useState("");
 
@@ -66,6 +66,6 @@ export const SnackBar = ({ snack }: SnackMessageProps): JSX.Element => {
 			</div>
 		</Snackbar>
 	);
-};
+}
 
 export default SnackBar;

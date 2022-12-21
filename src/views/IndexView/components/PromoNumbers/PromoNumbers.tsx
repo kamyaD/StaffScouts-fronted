@@ -28,7 +28,7 @@ const mock = [
 	},
 ];
 
-const PromoNumbers = (): JSX.Element => {
+function PromoNumbers(): JSX.Element {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -45,17 +45,17 @@ const PromoNumbers = (): JSX.Element => {
 				<CardContent>
 					<Box>
 						<Typography
-							variant={"h5"}
+							variant="h5"
 							sx={{ fontWeight: 700 }}
-							align={"center"}
+							align="center"
 							gutterBottom
 						>
 							Hiring? Candidates are working for you
 						</Typography>
 						<Typography
-							variant={"subtitle1"}
-							align={"center"}
-							color={"text.secondary"}
+							variant="subtitle1"
+							align="center"
+							color="text.secondary"
 						>
 							We get thousands of job postings weekly, but only accept the
 							openings at the top companies.
@@ -65,7 +65,7 @@ const PromoNumbers = (): JSX.Element => {
 						<Grid container spacing={2}>
 							{mock.map((item, i) => (
 								<Grid key={i} item xs={12} md={4}>
-									<Typography variant="h3" align={"center"} gutterBottom>
+									<Typography variant="h3" align="center" gutterBottom>
 										<Box fontWeight={600}>
 											<CountUp
 												redraw={false}
@@ -77,7 +77,7 @@ const PromoNumbers = (): JSX.Element => {
 									</Typography>
 									<Typography
 										color="text.secondary"
-										align={"center"}
+										align="center"
 										component="p"
 									>
 										{item.subtitle}
@@ -90,7 +90,7 @@ const PromoNumbers = (): JSX.Element => {
 						display="flex"
 						flexDirection={{ xs: "column", sm: "row" }}
 						alignItems={{ xs: "stretched", sm: "flex-start" }}
-						justifyContent={"center"}
+						justifyContent="center"
 					>
 						<Box
 							component={Button}
@@ -106,6 +106,6 @@ const PromoNumbers = (): JSX.Element => {
 			</Card>
 		</Box>
 	);
-};
+}
 
 export default PromoNumbers;

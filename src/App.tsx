@@ -20,7 +20,7 @@ import {
 	Register as RegisterView,
 } from "./views";
 
-let routes: RouteObject[] = [
+const routes: RouteObject[] = [
 	{
 		path: "/",
 		element: <Main />,
@@ -43,20 +43,20 @@ let routes: RouteObject[] = [
 	},
 ];
 
-let router = createBrowserRouter(routes);
+const router = createBrowserRouter(routes);
 
 if (import.meta.hot) {
 	import.meta.hot.dispose(() => router.dispose());
 }
 
-const App = (): JSX.Element => {
+function App(): JSX.Element {
 	return (
 		<Page>
-			<AuthProvider authName={"_auth"} authType={"cookie"}>
+			<AuthProvider authName="_auth" authType="cookie">
 				<RouterProvider router={router} fallbackElement={<Fallback />} />
 			</AuthProvider>
 		</Page>
 	);
-};
+}
 
 export default App;

@@ -16,21 +16,21 @@ const mock = [
 	},
 ];
 
-const Questions = (): JSX.Element => {
+function Questions(): JSX.Element {
 	return (
 		<Box>
 			<Grid container spacing={4}>
 				{mock.map((item, i) => (
 					<Grid key={i} item xs={12} md={6}>
-						<Typography variant={"h6"} gutterBottom sx={{ fontWeight: 700 }}>
+						<Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
 							{item.title}
 						</Typography>
-						<Typography color={"text.secondary"}>{item.subtitle}</Typography>
+						<Typography color="text.secondary">{item.subtitle}</Typography>
 					</Grid>
 				))}
 			</Grid>
 		</Box>
 	);
-};
+}
 
 export default Questions;

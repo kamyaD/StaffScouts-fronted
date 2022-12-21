@@ -2,11 +2,11 @@ import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 import React from "react";
 
-const Partners = (): JSX.Element => {
+function Partners(): JSX.Element {
 	const theme = useTheme();
 	return (
 		<Box>
-			<Box display="flex" flexWrap="wrap" justifyContent={"center"}>
+			<Box display="flex" flexWrap="wrap" justifyContent="center">
 				{[
 					"https://assets.maccarianagency.com/svg/logos/airbnb-original.svg",
 					"https://assets.maccarianagency.com/svg/logos/amazon-original.svg",
@@ -34,6 +34,6 @@ const Partners = (): JSX.Element => {
 			</Box>
 		</Box>
 	);
-};
+}
 
 export default Partners;

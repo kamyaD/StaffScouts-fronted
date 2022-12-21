@@ -27,7 +27,7 @@ const mock = [
 	},
 ];
 
-const LatestNews = (): JSX.Element => {
+function LatestNews(): JSX.Element {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -63,12 +63,12 @@ const LatestNews = (): JSX.Element => {
 				},
 			}}
 		>
-			<Box position={"relative"} zIndex={2}>
+			<Box position="relative" zIndex={2}>
 				<Box marginBottom={4}>
 					<Typography
 						variant="h4"
-						align={"center"}
-						data-aos={"fade-up"}
+						align="center"
+						data-aos="fade-up"
 						gutterBottom
 						sx={{
 							fontWeight: 700,
@@ -79,21 +79,21 @@ const LatestNews = (): JSX.Element => {
 					</Typography>
 					<Typography
 						variant="h6"
-						align={"center"}
-						color={"text.secondary"}
-						data-aos={"fade-up"}
+						align="center"
+						color="text.secondary"
+						data-aos="fade-up"
 					>
 						Experience your music like never before. Buy music instruments &
 						accessories online.
 					</Typography>
-					<Box display="flex" justifyContent={"center"} marginTop={2}>
+					<Box display="flex" justifyContent="center" marginTop={2}>
 						<Button
 							variant="contained"
 							color="primary"
 							size="large"
 							endIcon={
 								<Box
-									component={"svg"}
+									component="svg"
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
@@ -175,7 +175,7 @@ const LatestNews = (): JSX.Element => {
 										<Box>
 											<Typography
 												color="text.primary"
-												variant={"h6"}
+												variant="h6"
 												sx={{
 													textAlign: { xs: "center", md: "left" },
 												}}
@@ -184,13 +184,13 @@ const LatestNews = (): JSX.Element => {
 											</Typography>
 											<Box
 												marginTop={2}
-												display={"flex"}
+												display="flex"
 												justifyContent={{ xs: "center", md: "flex-start" }}
 											>
 												<Button
 													endIcon={
 														<Box
-															component={"svg"}
+															component="svg"
 															xmlns="http://www.w3.org/2000/svg"
 															fill="none"
 															viewBox="0 0 24 24"
@@ -220,6 +220,6 @@ const LatestNews = (): JSX.Element => {
 			</Box>
 		</Box>
 	);
-};
+}
 
 export default LatestNews;

@@ -11,12 +11,12 @@ interface Props {
 	handleContactModal: () => void;
 }
 
-const Sidebar = ({
+function Sidebar({
 	open,
 	variant,
 	onClose,
 	handleContactModal,
-}: Props): JSX.Element => {
+}: Props): JSX.Element {
 	return (
 		<Drawer
 			anchor="right"
@@ -42,6 +42,6 @@ const Sidebar = ({
 			</Box>
 		</Drawer>
 	);
-};
+}
 
 export default Sidebar;

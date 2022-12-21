@@ -4,7 +4,7 @@ import {
 	LocationOn,
 	PaymentsOutlined,
 } from "@mui/icons-material";
-import { Chip, IconButton } from "@mui/material";
+import { Chip, Divider, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -27,7 +27,7 @@ interface JobProps {
 	};
 }
 
-const JobCard = ({ job }: JobProps): JSX.Element => {
+function JobCard({ job }: JobProps): JSX.Element {
 	const theme = useTheme();
 	return (
 		<Grid item xs={12}>
@@ -36,9 +36,9 @@ const JobCard = ({ job }: JobProps): JSX.Element => {
 				width={1}
 				height={1}
 				borderRadius={0}
-				borderBottom={1}
+				// borderBottom={1}
 				boxShadow={0}
-				display={"flex"}
+				display="flex"
 				flexDirection={{ xs: "column", md: "row" }}
 				sx={{ backgroundImage: "none", bgcolor: "transparent" }}
 			>
@@ -75,7 +75,7 @@ const JobCard = ({ job }: JobProps): JSX.Element => {
 						justifyContent: "center",
 					}}
 				>
-					<Box display={"flex"} justifyContent={"space-between"}>
+					<Box display="flex" justifyContent="space-between">
 						<Typography fontWeight={700}>{job.title}</Typography>
 						<Box>
 							<IconButton aria-label="add to favorites">
@@ -107,7 +107,7 @@ const JobCard = ({ job }: JobProps): JSX.Element => {
 						</Box>
 					</Box>
 					<Typography color="text.secondary">{job.description}</Typography>
-					<Box marginTop={2} display={"flex"} justifyContent={"space-between"}>
+					<Box marginTop={2} display="flex" justifyContent="space-between">
 						<Box marginY={1}>
 							<Chip label={job.jobType} />
 						</Box>
@@ -115,7 +115,7 @@ const JobCard = ({ job }: JobProps): JSX.Element => {
 							variant="contained"
 							endIcon={
 								<Box
-									component={"svg"}
+									component="svg"
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
@@ -137,8 +137,9 @@ const JobCard = ({ job }: JobProps): JSX.Element => {
 					</Box>
 				</CardContent>
 			</Box>
+			<Divider />
 		</Grid>
 	);
-};
+}
 
 export default JobCard;

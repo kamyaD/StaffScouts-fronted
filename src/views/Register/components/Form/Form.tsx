@@ -32,7 +32,7 @@ type IFormInput = {
 	password: string;
 };
 
-const Form = (): JSX.Element => {
+function Form(): JSX.Element {
 	const [alignment, setAlignment] = useState("candidate");
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
@@ -189,13 +189,13 @@ const Form = (): JSX.Element => {
 							display="flex"
 							flexDirection={{ xs: "column", sm: "row" }}
 							alignItems={{ xs: "stretched", sm: "center" }}
-							justifyContent={"space-between"}
+							justifyContent="space-between"
 							width={1}
 							maxWidth={600}
-							margin={"0 auto"}
+							margin="0 auto"
 						>
 							<Box marginBottom={{ xs: 1, sm: 0 }}>
-								<Typography variant={"subtitle2"}>
+								<Typography variant="subtitle2">
 									Already have an account?{" "}
 									<Button
 										component={Link}
@@ -207,23 +207,13 @@ const Form = (): JSX.Element => {
 									</Button>
 								</Typography>
 							</Box>
-							<Button size={"large"} variant={"contained"} type={"submit"}>
+							<Button size="large" variant="contained" type="submit">
 								Sign up
 							</Button>
 						</Box>
 					</Grid>
-					<Grid
-						item
-						container
-						xs={12}
-						justifyContent={"left"}
-						alignItems={"left"}
-					>
-						<Typography
-							variant={"subtitle2"}
-							color={"text.secondary"}
-							align={"left"}
-						>
+					<Grid item container xs={12} justifyContent="left" alignItems="left">
+						<Typography variant="subtitle2" color="text.secondary" align="left">
 							By clicking "Sign up" button you agree with our
 							<Button
 								component={Link}
@@ -240,6 +230,6 @@ const Form = (): JSX.Element => {
 			</form>
 		</Box>
 	);
-};
+}
 
 export default Form;
