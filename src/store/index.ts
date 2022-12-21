@@ -6,15 +6,17 @@ import {
 import type { TypedUseSelectorHook } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 
+import { authApi } from "./services/auth";
 import { baseApi } from "./services/baseApi";
-import { usersApi } from "./services/users";
+import { authSlice } from "./slices/auth";
 import { notificationsSlice } from "./slices/notifications";
 import { snackSlice } from "./slices/snack";
 
 const rootReducer = combineReducers({
 	[snackSlice.name]: snackSlice.reducer,
 	[notificationsSlice.name]: notificationsSlice.reducer,
-	[usersApi.reducerPath]: usersApi.reducer,
+	[authSlice.name]: authSlice.reducer,
+	[authApi.reducerPath]: authApi.reducer,
 });
 
 const createStore = (

@@ -6,18 +6,16 @@ import type { SyntheticEvent } from "react";
 import { forwardRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { SnackMessage, reset } from "../store/slices/snack";
+import type { SnackMessage } from "../store/slices/snack";
+import { reset } from "../store/slices/snack";
 
 interface SnackMessageProps {
 	snack: SnackMessage;
 }
 
-const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
-	props,
-	ref,
-) {
-	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
+	<MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+));
 
 export function SnackBar({ snack }: SnackMessageProps): JSX.Element {
 	const [isSnackOpen, setSnackOpen] = useState(false);

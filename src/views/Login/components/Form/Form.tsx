@@ -14,7 +14,7 @@ import * as yup from "yup";
 
 import { FormInputText } from "../../../../components/FormInput";
 import { useAppDispatch } from "../../../../store";
-import { useLoginUserMutation } from "../../../../store/services/users";
+import { useLoginMutation } from "../../../../store/services/auth";
 import { displaySnackMessage } from "../../../../store/slices/snack";
 
 const validationSchema = yup.object({
@@ -36,7 +36,7 @@ function Form(): JSX.Element {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	const [loginUser] = useLoginUserMutation();
+	const [loginUser] = useLoginMutation();
 
 	const initialValues = {
 		email: "",
@@ -70,6 +70,11 @@ function Form(): JSX.Element {
 
 		if (result) {
 			console.log("Class: , Function: onSubmit, Line 66 result():", result);
+			dispatch(
+				displaySnackMessage({
+					message: "Login successful",
+				}),
+			);
 			signIn({
 				token: "35v3443bn368367n306306wbn407qn420b436b4",
 				tokenType: "Bearer",

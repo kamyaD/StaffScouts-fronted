@@ -21,6 +21,7 @@
 		"@reduxjs/toolkit": "^1.9.1",
 		"@types/react-lazy-load-image-component": "^1.5.2",
 		"aos": "^2.3.4",
+		"axios": "^1.2.1",
 		"clsx": "^1.2.1",
 		"dayjs": "^1.11.7",
 		"error-stack-parser": "^2.1.4",
