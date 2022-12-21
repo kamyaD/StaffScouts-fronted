@@ -30,7 +30,7 @@ export function ServerError({ error }: { error?: Error }) {
 		<ErrorPage
 			error={error}
 			pageProps={{
-				title: "500 - Oh no, something did not go well.",
+				title: "Oh no, something did not go well.",
 				subtitle: `"${pathname}" is currently not working. So sorry.`,
 				image: "/img/not-found.svg",
 			}}
@@ -48,7 +48,7 @@ export function NoMatch() {
 			<body className="bg-white transition duration-500 dark:bg-gray-900">
 				<ErrorPage
 					pageProps={{
-						title: "404 - Oh no, you found a page that's missing stuff.",
+						title: "Oh no, you found a page that's missing stuff.",
 						subtitle: `"${location.pathname}" is not a page on staff scouts website. So sorry.`,
 						image: "/img/not-found.svg",
 					}}

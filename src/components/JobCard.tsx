@@ -4,13 +4,13 @@ import {
 	LocationOn,
 	PaymentsOutlined,
 } from "@mui/icons-material";
-import { Chip, Divider, IconButton } from "@mui/material";
+import { Chip, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
-import { useTheme } from "@mui/material/styles";
+import { alpha, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -40,7 +40,11 @@ function JobCard({ job }: JobProps): JSX.Element {
 				boxShadow={0}
 				display="flex"
 				flexDirection={{ xs: "column", md: "row" }}
-				sx={{ backgroundImage: "none", bgcolor: "transparent" }}
+				sx={{
+					backgroundImage: "none",
+					bgcolor: "transparent",
+					borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+				}}
 			>
 				<Box
 					sx={{
@@ -137,7 +141,6 @@ function JobCard({ job }: JobProps): JSX.Element {
 					</Box>
 				</CardContent>
 			</Box>
-			<Divider />
 		</Grid>
 	);
 }

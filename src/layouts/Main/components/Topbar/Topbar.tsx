@@ -2,9 +2,11 @@
 import { Menu } from "@mui/icons-material";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
+import { useIsAuthenticated } from "react-auth-kit";
 import { Link } from "react-router-dom";
 
 import Logo from "../../../../components/Logo";
+import UserAvatar from "../../../../components/UserAvatar";
 import fancyId from "../../../../utils/fancyId";
 import { mainLayoutNavigation } from "../../../navigation";
 
@@ -14,6 +16,7 @@ interface Props {
 }
 
 function Topbar({ onSidebarOpen }: Props): JSX.Element {
+	const isAuthenticated = useIsAuthenticated();
 	const [activeLink, setActiveLink] = useState("");
 	// const { pathname } = useRouter();
 	//
@@ -25,25 +28,28 @@ function Topbar({ onSidebarOpen }: Props): JSX.Element {
 	// 	}
 	// }, [pathname]);
 
-	const renderAuthButtons = () => (
-		<Box sx={{ display: { xs: "none", md: "flex" } }}>
-			<Button component={Link} to="/login" variant="text" color="inherit">
-				Login
-			</Button>
-			<Button
-				component={Link}
-				to="/register"
-				variant="contained"
-				color="primary"
-				sx={{
-					marginLeft: 2,
-					paddingY: 0.5,
-				}}
-			>
-				Sign up
-			</Button>
-		</Box>
-	);
+	const renderAuthButtons = () =>
+		isAuthenticated() ? (
+			<UserAvatar />
+		) : (
+			<Box sx={{ display: { xs: "none", md: "flex" } }}>
+				<Button component={Link} to="/login" variant="text" color="inherit">
+					Login
+				</Button>
+				<Button
+					component={Link}
+					to="/register"
+					variant="contained"
+					color="primary"
+					sx={{
+						marginLeft: 2,
+						paddingY: 0.5,
+					}}
+				>
+					Sign up
+				</Button>
+			</Box>
+		);
 
 	return (
 		<Box
