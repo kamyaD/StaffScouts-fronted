@@ -17,8 +17,11 @@ export const usersApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
 		loginUser: build.mutation<Users, Partial<Users>>({
 			query: ({ ...body }) => ({
-				url: "http://localhost:8000/login",
+				url: "http://localhost:8000/api-user-login",
 				method: "POST",
+				// headers: {
+				// 	"Access-Control-Allow-Origin": "*",
+				// },
 				body,
 			}),
 			invalidatesTags: (result, error, { id }) => [{ type: "Users", id }],

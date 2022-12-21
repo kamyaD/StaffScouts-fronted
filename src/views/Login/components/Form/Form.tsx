@@ -13,18 +13,13 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
 import { FormInputText } from "../../../../components/FormInput";
+import { useAppDispatch } from "../../../../store";
 import { useLoginUserMutation } from "../../../../store/services/users";
+import { displaySnackMessage } from "../../../../store/slices/snack";
 
 const validationSchema = yup.object({
-	email: yup
-		.string()
-		.trim()
-		.email("Please enter a valid email address")
-		.required("Email is required."),
-	password: yup
-		.string()
-		.required("Please specify your password")
-		.min(8, "The password should have at minimum length of 8"),
+	username: yup.string().trim(),
+	password: yup.string().required("Please specify your password"),
 });
 
 type IFormInput = {
@@ -39,6 +34,7 @@ const Form = (): JSX.Element => {
 	const isAuthenticated = useIsAuthenticated();
 	const signIn = useSignIn();
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
 	const [loginUser] = useLoginUserMutation();
 
@@ -55,32 +51,40 @@ const Form = (): JSX.Element => {
 
 	const onSubmit = async (values: any) => {
 		console.log("Class: , Function: onSubmit, Line 69 values():", values);
-		const appHeaders = new Headers();
-		appHeaders.append("Content-Type", "application/json");
-		const requestOptions = {
-			headers: appHeaders,
-			method: "POST",
-			body: values,
-		};
+		// const appHeaders = new Headers();
+		// appHeaders.append("Content-Type", "application/json");
+		// appHeaders.append("Access-Control-Allow-Origin", "*");
+		// const requestOptions = {
+		// 	headers: appHeaders,
+		// 	method: "POST",
+		// 	body: values,
+		// };
+		//
+		// const response = await fetch(
+		// 	"http://localhost:8000/api-user-login",
+		// 	requestOptions,
+		// );
+		// const result = await response.json();
 
-		const response = await fetch("http://localhost:8000/login", requestOptions);
-		const result = await response.json();
+		const result = await loginUser(values);
 
-		// const result = await loginUser(values);
-
-		console.log("Class: , Function: onSubmit, Line 66 result():", result);
-
-		// if (result) {
-		// 	signIn({
-		// 		token: "35v3443bn368367n306306wbn407qn420b436b4",
-		// 		tokenType: "Bearer",
-		// 		authState: { name: "React User", uid: 123456 },
-		// 		expiresIn: 120,
-		// 	});
-		// 	navigate("/login");
-		// } else {
-		// 	alert("Error Occurred. Try Again");
-		// }
+		if (result) {
+			console.log("Class: , Function: onSubmit, Line 66 result():", result);
+			signIn({
+				token: "35v3443bn368367n306306wbn407qn420b436b4",
+				tokenType: "Bearer",
+				authState: { name: "React User", uid: 123456 },
+				expiresIn: 120,
+			});
+			navigate("/login");
+		} else {
+			dispatch(
+				displaySnackMessage({
+					message: "Error Occurred. Try Again",
+					severity: "error",
+				}),
+			);
+		}
 	};
 
 	return (
@@ -103,13 +107,13 @@ const Form = (): JSX.Element => {
 					<Grid item xs={12}>
 						<FormInputText
 							required
-							name="email"
+							name="username"
 							margin="dense"
 							size="medium"
 							control={control}
-							label="Email"
-							type="email"
-							placeholder="blah@email.com"
+							label="Username"
+							type="text"
+							placeholder="blahblah"
 						/>
 					</Grid>
 					<Grid item xs={12}>

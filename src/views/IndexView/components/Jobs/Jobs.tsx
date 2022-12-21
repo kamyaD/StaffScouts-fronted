@@ -1,4 +1,10 @@
-import { Divider } from "@mui/material";
+import {
+	Bookmark,
+	Favorite,
+	LocationOn,
+	PaymentsOutlined,
+} from "@mui/icons-material";
+import { Chip, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -19,7 +25,10 @@ const mock = [
 			name: "Clara Bertoletti",
 			avatar: "https://assets.maccarianagency.com/avatars/img1.jpg",
 		},
+		location: "Nairobi, Kenya",
+		offer: "Ksh25,000",
 		date: "10 Sep",
+		jobType: "Contract",
 	},
 	{
 		image: "https://assets.maccarianagency.com/backgrounds/img22.jpg",
@@ -30,7 +39,10 @@ const mock = [
 			name: "Jhon Anderson",
 			avatar: "https://assets.maccarianagency.com/avatars/img2.jpg",
 		},
+		location: "Nairobi, Kenya",
+		offer: "Ksh25,000",
 		date: "02 Aug",
+		jobType: "Contract",
 	},
 	{
 		image: "https://assets.maccarianagency.com/backgrounds/img23.jpg",
@@ -41,7 +53,10 @@ const mock = [
 			name: "Chary Smith",
 			avatar: "https://assets.maccarianagency.com/avatars/img3.jpg",
 		},
+		location: "Nairobi, Kenya",
+		offer: "Ksh25,000",
 		date: "05 Mar",
+		jobType: "Contract",
 	},
 ];
 
@@ -63,6 +78,7 @@ const Jobs = (): JSX.Element => {
 							width={1}
 							height={1}
 							borderRadius={0}
+							borderBottom={1}
 							boxShadow={0}
 							display={"flex"}
 							flexDirection={{ xs: "column", md: "row" }}
@@ -103,17 +119,50 @@ const Jobs = (): JSX.Element => {
 									justifyContent: "center",
 								}}
 							>
-								<Typography fontWeight={700}>{item.title}</Typography>
+								<Box display={"flex"} justifyContent={"space-between"}>
+									<Typography fontWeight={700}>{item.title}</Typography>
+									<Box>
+										<IconButton aria-label="add to favorites">
+											<Favorite />
+										</IconButton>
+										<IconButton aria-label="share">
+											<Bookmark />
+										</IconButton>
+									</Box>
+								</Box>
 								<Box marginY={1}>
-									<Typography variant={"caption"} color={"text.secondary"}>
-										{item.author.name} - {item.date}
-									</Typography>
+									<Box
+										component={Button}
+										variant="text"
+										color="text.secondary"
+										startIcon={<LocationOn />}
+										sx={{ paddingY: 0, paddingX: 0 }}
+									>
+										{item.location}
+									</Box>
+									<Box
+										component={Button}
+										variant="text"
+										color="text.secondary"
+										startIcon={<PaymentsOutlined />}
+										sx={{ paddingY: 0, paddingLeft: 2 }}
+									>
+										{item.offer}
+									</Box>
 								</Box>
 								<Typography color="text.secondary">
 									{item.description}
 								</Typography>
-								<Box marginTop={2} display={"flex"} justifyContent={"flex-end"}>
+								<Box
+									marginTop={2}
+									display={"flex"}
+									justifyContent={"space-between"}
+								>
+									<Box marginY={1}>
+										<Chip label={item.jobType} />
+									</Box>
 									<Button
+										variant="contained"
 										endIcon={
 											<Box
 												component={"svg"}
@@ -138,7 +187,6 @@ const Jobs = (): JSX.Element => {
 								</Box>
 							</CardContent>
 						</Box>
-						<Divider />
 					</Grid>
 				))}
 				<Grid item container justifyContent={"center"} xs={12}>
