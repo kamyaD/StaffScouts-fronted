@@ -43,6 +43,7 @@ module.exports = {
     "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
+    "react/require-default-props": "off",
 
     // enable these again someday:
     "@typescript-eslint/no-unsafe-argument": "off",

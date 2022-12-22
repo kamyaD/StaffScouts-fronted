@@ -14,7 +14,7 @@ import React from "react";
 const mock = [
 	{
 		feedback:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"An Administrative who constantly applies administration ideas toward the creation of a bigger profit margin. Adept at training and developing administration professionals, discussing office administration issues with larger customers and working with other executives to improve the customer experience. Purpose creating organizational success and bettering brand reputation through serving customers. Considered a value creator who operates ahead of the curve to promote customer satisfaction.",
 		name: "Martha",
 		title: "Customer service executive",
 		avatar: "https://assets.maccarianagency.com/avatars/img1.jpg",

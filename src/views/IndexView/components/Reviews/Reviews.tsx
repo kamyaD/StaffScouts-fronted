@@ -14,21 +14,21 @@ import React from "react";
 const mock = [
 	{
 		feedback:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"An Administrative who constantly applies administration ideas toward the creation of a bigger profit margin. Adept at training and developing administration professionals, discussing office administration issues with larger customers and working with other executives to improve the customer experience. Purpose creating organizational success and bettering brand reputation through serving customers. Considered a value creator who operates ahead of the curve to promote customer satisfaction.",
 		name: "Martha",
 		title: "Customer service executive",
 		avatar: "https://assets.maccarianagency.com/avatars/img1.jpg",
 	},
 	{
 		feedback:
-			"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			"Am a competent, ambitious and self- motivated person with excellent communication and interpersonal skills, I sets goals and through hard work achieve them. Having attained excellent combination of good leadership and organizational skills I can lead in any situation that presents itself. Always ensure that I achieve my best. Being an organizer, fast learner and a team player, I consider options with an open mind before arriving at conclusions.",
 		name: "Margaret",
 		title: "Busines development",
 		avatar: "https://assets.maccarianagency.com/avatars/img2.jpg",
 	},
 	{
 		feedback:
-			"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			"I am a driver and i also have cars for hire. I am located in Eldoret and my prices are fair.",
 		name: "Douglas",
 		title: "Driver - Cars and ight vans",
 		avatar: "https://assets.maccarianagency.com/avatars/img3.jpg",

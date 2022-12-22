@@ -1,1 +1,1 @@
-export { default } from './AccountSettingsView';
+export { default } from "./AccountSettingsView";

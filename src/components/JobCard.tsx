@@ -4,7 +4,7 @@ import {
 	LocationOn,
 	PaymentsOutlined,
 } from "@mui/icons-material";
-import { Chip, IconButton } from "@mui/material";
+import { CardMedia, Chip, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -13,7 +13,6 @@ import Grid from "@mui/material/Grid";
 import { alpha, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface JobProps {
 	job: {
@@ -46,31 +45,43 @@ function JobCard({ job }: JobProps): JSX.Element {
 					borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
 				}}
 			>
-				<Box
+				<CardMedia
+					component="img"
 					sx={{
-						width: { xs: 1, md: "20%" },
-						"& .lazy-load-image-loaded": {
-							height: 1,
-							display: "flex !important",
-						},
+						width: { xs: 1, md: "25%" },
+						height: 1,
+						borderRadius: 2,
+						objectFit: "cover",
+						maxHeight: 200,
 					}}
-				>
-					<Box
-						component={LazyLoadImage}
-						height={1}
-						width={1}
-						src={job.image}
-						alt="..."
-						effect="blur"
-						sx={{
-							objectFit: "cover",
-							maxHeight: 200,
-							borderRadius: 2,
-							filter:
-								theme.palette.mode === "dark" ? "brightness(0.7)" : "none",
-						}}
-					/>
-				</Box>
+					image={job.image}
+					alt="Live from space album cover"
+				/>
+				{/* <Box */}
+				{/*	sx={{ */}
+				{/*		width: { xs: 1, md: "20%" }, */}
+				{/*		"& .lazy-load-image-loaded": { */}
+				{/*			height: 1, */}
+				{/*			display: "flex !important", */}
+				{/*		}, */}
+				{/*	}} */}
+				{/* > */}
+				{/*	<Box */}
+				{/*		component={LazyLoadImage} */}
+				{/*		height={1} */}
+				{/*		width={1} */}
+				{/*		src={job.image} */}
+				{/*		alt="..." */}
+				{/*		effect="blur" */}
+				{/*		sx={{ */}
+				{/*			objectFit: "cover", */}
+				{/*			maxHeight: 200, */}
+				{/*			borderRadius: 2, */}
+				{/*			filter: */}
+				{/*				theme.palette.mode === "dark" ? "brightness(0.7)" : "none", */}
+				{/*		}} */}
+				{/*	/> */}
+				{/* </Box> */}
 				<CardContent
 					sx={{
 						width: { xs: 1, md: "80%" },
