@@ -91,7 +91,7 @@ function Hero(): JSX.Element {
 		const sliderOpts = {
 			dots: false,
 			infinite: true,
-			speed: 4000,
+			speed: 3000,
 			slidesToShow: 1,
 			slidesToScroll: 1,
 			autoplay: true,

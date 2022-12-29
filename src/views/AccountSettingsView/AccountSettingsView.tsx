@@ -1,4 +1,4 @@
-import { AllOut } from "@mui/icons-material";
+import { AllOutTwoTone, SecurityTwoTone } from "@mui/icons-material";
 import { Box, Card, Grid, Typography, useMediaQuery } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import type { ChangeEvent, ReactNode } from "react";
@@ -8,7 +8,7 @@ import { useNavigation } from "react-router-dom";
 import Container from "../../components/Container";
 import { MenuTab, MenuTabs } from "../../components/MenuTabs";
 import TabPanel from "../../components/TabPanel";
-import { General } from "./components";
+import { General, Security } from "./components";
 
 export interface MenuComponentProps {
 	primaryText: string;
@@ -22,7 +22,13 @@ const subPages: MenuComponentProps[] = [
 		id: "general",
 		primaryText: "General",
 		component: General,
-		icon: <AllOut />,
+		icon: <AllOutTwoTone />,
+	},
+	{
+		id: "security",
+		primaryText: "Security",
+		component: Security,
+		icon: <SecurityTwoTone />,
 	},
 ];
 

@@ -77,15 +77,6 @@ function LatestNews(): JSX.Element {
 					>
 						Our latest news
 					</Typography>
-					<Typography
-						variant="h6"
-						align="center"
-						color="text.secondary"
-						data-aos="fade-up"
-					>
-						Experience your music like never before. Buy music instruments &
-						accessories online.
-					</Typography>
 					<Box display="flex" justifyContent="center" marginTop={2}>
 						<Button
 							variant="contained"

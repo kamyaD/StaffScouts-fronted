@@ -1,9 +1,9 @@
 // components
 import { Menu } from "@mui/icons-material";
-import { Box, Button, IconButton, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useIsAuthenticated } from "react-auth-kit";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Logo from "../../../../components/Logo";
 import UserAvatar from "../../../../components/UserAvatar";
@@ -18,32 +18,52 @@ interface Props {
 function Topbar({ onSidebarOpen }: Props): JSX.Element {
 	const isAuthenticated = useIsAuthenticated();
 	const [activeLink, setActiveLink] = useState("");
-	// const { pathname } = useRouter();
-	//
-	// useEffect(() => {
-	// 	setActiveLink(window && window.location ? pathname : "");
-	//
-	// 	if (pathname === "/") {
-	// 		setActiveLink("");
-	// 	}
-	// }, [pathname]);
+	const { pathname } = useLocation();
+
+	useEffect(() => {
+		setActiveLink(window && window.location ? pathname : "");
+
+		if (pathname === "/") {
+			setActiveLink("");
+		}
+	}, [pathname]);
 
 	const renderAuthButtons = () =>
 		isAuthenticated() ? (
 			<UserAvatar />
 		) : (
 			<Box sx={{ display: { xs: "none", md: "flex" } }}>
-				<Button component={Link} to="/login" variant="text" color="inherit">
+				<Button
+					component={Link}
+					to="/login"
+					variant="text"
+					color="inherit"
+					sx={{
+						color:
+							activeLink === "/login" ? "secondary.main" : "text.secondary",
+						cursor: "pointer",
+						"&:hover": {
+							color: "text.primary",
+						},
+					}}
+				>
 					Login
 				</Button>
+				<Divider sx={{ height: 28, m: 1 }} orientation="vertical" />
 				<Button
 					component={Link}
 					to="/register"
-					variant="contained"
-					color="primary"
+					variant="text"
+					color="inherit"
 					sx={{
 						marginLeft: 2,
 						paddingY: 0.5,
+						color:
+							activeLink === "/register" ? "secondary.main" : "text.secondary",
+						cursor: "pointer",
+						"&:hover": {
+							color: "text.primary",
+						},
 					}}
 				>
 					Sign up
@@ -70,7 +90,7 @@ function Topbar({ onSidebarOpen }: Props): JSX.Element {
 								sx={{
 									color:
 										activeLink === page.href
-											? "primary.main"
+											? "secondary.main"
 											: "text.secondary",
 									cursor: "pointer",
 									"&:hover": {

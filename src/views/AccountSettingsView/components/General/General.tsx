@@ -1,6 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -31,7 +29,24 @@ const validationSchema = yup.object({
 		.trim()
 		.email("Please enter a valid email address")
 		.required("Email is required."),
-	password: yup.string().required("Please specify your password"),
+	bio: yup.string().trim().max(500, "Should be less than 500 chars"),
+	country: yup
+		.string()
+		.trim()
+		.min(2, "Please enter a valid name")
+		.max(80, "Please enter a valid name")
+		.required("Please specify your country name"),
+	city: yup
+		.string()
+		.trim()
+		.min(2, "Please enter a valid name")
+		.max(80, "Please enter a valid name")
+		.required("Please specify your city name"),
+	address: yup
+		.string()
+		.required("Please specify your address")
+		.min(2, "Please enter a valid address")
+		.max(200, "Please enter a valid address"),
 });
 
 type IFormInput = {
@@ -48,8 +63,11 @@ function General(): JSX.Element {
 	const initialValues = {
 		firstName: "",
 		lastName: "",
+		bio: "",
 		email: "",
-		password: "",
+		country: "",
+		city: "",
+		address: "",
 	};
 
 	const { handleSubmit, control } = useForm<IFormInput>({
@@ -103,7 +121,7 @@ function General(): JSX.Element {
 							sx={{ marginBottom: 2 }}
 							fontWeight={700}
 						>
-							Enter your email
+							Enter your last name
 						</Typography>
 						<FormInputText
 							name="lastName"
@@ -122,7 +140,7 @@ function General(): JSX.Element {
 							sx={{ marginBottom: 2 }}
 							fontWeight={700}
 						>
-							Enter your email
+							Email
 						</Typography>
 						<FormInputText
 							name="email"
@@ -141,28 +159,71 @@ function General(): JSX.Element {
 							sx={{ marginBottom: 2 }}
 							fontWeight={700}
 						>
-							Enter your password
+							Address
 						</Typography>
 						<FormInputText
-							required
-							name="password"
-							type={isPasswordHidden ? "text" : "password"}
+							name="address"
+							type="text"
 							margin="dense"
 							size="medium"
 							control={control}
-							label="Password"
-							placeholder="Password"
-							InputProps={{
-								endAdornment: (
-									<InputAdornment
-										sx={{ cursor: "pointer" }}
-										onClick={togglePassword}
-										position="end"
-									>
-										{isPasswordHidden ? <Visibility /> : <VisibilityOff />}
-									</InputAdornment>
-								),
-							}}
+							label="Address"
+							placeholder="Address"
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<Typography
+							variant="subtitle2"
+							sx={{ marginBottom: 2 }}
+							fontWeight={700}
+						>
+							Country
+						</Typography>
+						<FormInputText
+							name="country"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="Country"
+							type="text"
+							fullWidth
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<Typography
+							variant="subtitle2"
+							sx={{ marginBottom: 2 }}
+							fontWeight={700}
+						>
+							City
+						</Typography>
+						<FormInputText
+							name="city"
+							type="text"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="City"
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<Typography
+							variant="subtitle2"
+							sx={{ marginBottom: 2 }}
+							fontWeight={700}
+						>
+							Enter your bio
+						</Typography>
+						<FormInputText
+							multiline
+							rows={5}
+							name="bio"
+							type="text"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="Bio"
+							placeholder="Bio"
 						/>
 					</Grid>
 					<Grid item container xs={12}>

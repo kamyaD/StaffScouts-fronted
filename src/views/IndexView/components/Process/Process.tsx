@@ -91,7 +91,7 @@ function Process(): JSX.Element {
 					</Button>
 				</Box>
 			</Box>
-			<Box>
+			<Box marginTop={12}>
 				<Grid container spacing={4}>
 					{mock.map((item, i) => (
 						<Grid item xs={12} md={4} key={fancyId()}>
@@ -127,9 +127,9 @@ function Process(): JSX.Element {
 								>
 									{item.title}
 								</Typography>
-								<Typography align="center" color="text.secondary">
-									{item.subtitle}
-								</Typography>
+								{/* <Typography align="center" color="text.secondary"> */}
+								{/*	{item.subtitle} */}
+								{/* </Typography> */}
 							</Box>
 						</Grid>
 					))}

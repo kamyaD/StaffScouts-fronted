@@ -108,7 +108,7 @@ function JobListing(): JSX.Element {
 									>
 										123 Results
 									</Typography>
-									<Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+									<Divider sx={{ height: 28, m: 1 }} orientation="vertical" />
 									<Button
 										sx={{
 											height: 54,

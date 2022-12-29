@@ -52,20 +52,22 @@ function Form(): JSX.Element {
 	const onSubmit = async (values: any) => {
 		const result = await loginUser(values);
 
-		if (result && !isAuthenticated()) {
+		try {
+			signIn({
+				// @ts-expect-error ignore for now
+				token: result.data.token as string,
+				tokenType: "Bearer",
+				// @ts-expect-error ignore for now
+				authState: { name: result.data.username, uid: result.data.id },
+				expiresIn: 120,
+			});
 			dispatch(
 				displaySnackMessage({
 					message: "Login successful",
 				}),
 			);
-			signIn({
-				token: result.data.token as string,
-				tokenType: "Bearer",
-				authState: { name: result.data.username, uid: result.data.id },
-				expiresIn: 120,
-			});
-			navigate("/");
-		} else {
+			navigate("/account");
+		} catch (e) {
 			dispatch(
 				displaySnackMessage({
 					message: "Error Occurred. Try Again",
@@ -73,6 +75,28 @@ function Form(): JSX.Element {
 				}),
 			);
 		}
+
+		// 	if (result.data.token && !isAuthenticated()) {
+		// 		signIn({
+		// 			token: result.data.token as string,
+		// 			tokenType: "Bearer",
+		// 			authState: { name: result.data.username, uid: result.data.id },
+		// 			expiresIn: 120,
+		// 		});
+		// 		dispatch(
+		// 			displaySnackMessage({
+		// 				message: "Login successful",
+		// 			}),
+		// 		);
+		// 		navigate("/account");
+		// 	} else {
+		// 		dispatch(
+		// 			displaySnackMessage({
+		// 				message: "Error Occurred. Try Again",
+		// 				severity: "error",
+		// 			}),
+		// 		);
+		// 	}
 	};
 
 	return (

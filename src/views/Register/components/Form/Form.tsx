@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { InputAdornment, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 
 import { FormInputText } from "../../../../components/FormInput";
-import fancyId from "../../../../utils/fancyId";
 import { candidatesChoice, employerChoice } from "../../../../utils/fixtures";
 
 const validationSchema = yup.object({
@@ -27,6 +26,19 @@ const validationSchema = yup.object({
 		.required("Please specify your password")
 		.min(8, "The password should have at minimum length of 8"),
 });
+
+// {
+// 	"username": "mashafrancis",
+// 	"email": "masha@gmail.com",
+// 	"first_name": "Francis",
+// 	"last_name": "Masha",
+// 	"bio": "This is blah blah",
+// 	"profile_pic": "http://localhost:8000/media/konde_francis.jpg",
+// 	"city": "Nairobi",
+// 	"country": "Kenya",
+// 	"job_title": "Engineer",
+// 	"availability_status": "Immediately"
+// }
 
 type IFormInput = {
 	email: string;
@@ -75,44 +87,44 @@ function Form(): JSX.Element {
 				<Typography color="text.secondary">
 					Fill out the form to get started.
 				</Typography>
-				<ToggleButtonGroup
-					fullWidth
-					size="small"
-					color="secondary"
-					value={alignment}
-					exclusive
-					onChange={handleFormTypeChange}
-					aria-label="Work"
-				>
-					<ToggleButton value="candidate">Candidate</ToggleButton>
-					<ToggleButton value="employer">Employer</ToggleButton>
-				</ToggleButtonGroup>
+				{/* <ToggleButtonGroup */}
+				{/*	fullWidth */}
+				{/*	size="small" */}
+				{/*	color="secondary" */}
+				{/*	value={alignment} */}
+				{/*	exclusive */}
+				{/*	onChange={handleFormTypeChange} */}
+				{/*	aria-label="Work" */}
+				{/* > */}
+				{/*	<ToggleButton value="candidate">Candidate</ToggleButton> */}
+				{/*	<ToggleButton value="employer">Employer</ToggleButton> */}
+				{/* </ToggleButtonGroup> */}
 			</Box>
 			<form method="post" onSubmit={handleSubmit(onSubmit)}>
 				<Grid container spacing={4}>
-					<Grid item xs={12}>
-						<FormInputText
-							select
-							autoFocus
-							margin="dense"
-							name="experience"
-							placeholder=""
-							size="medium"
-							control={control}
-							label="Experience"
-							type="text"
-							SelectProps={{
-								native: true,
-							}}
-						>
-							{accountType()?.map((item: any) => (
-								<option key={fancyId()} value={item}>
-									{item}
-								</option>
-							))}
-						</FormInputText>
-					</Grid>
-					<Grid item xs={12}>
+					{/* <Grid item xs={12}> */}
+					{/*	<FormInputText */}
+					{/*		select */}
+					{/*		autoFocus */}
+					{/*		margin="dense" */}
+					{/*		name="experience" */}
+					{/*		placeholder="" */}
+					{/*		size="medium" */}
+					{/*		control={control} */}
+					{/*		label="Experience" */}
+					{/*		type="text" */}
+					{/*		SelectProps={{ */}
+					{/*			native: true, */}
+					{/*		}} */}
+					{/*	> */}
+					{/*		{accountType()?.map((item: any) => ( */}
+					{/*			<option key={fancyId()} value={item}> */}
+					{/*				{item} */}
+					{/*			</option> */}
+					{/*		))} */}
+					{/*	</FormInputText> */}
+					{/* </Grid> */}
+					<Grid item xs={12} sm={6}>
 						<FormInputText
 							required
 							name="firstName"
@@ -124,7 +136,7 @@ function Form(): JSX.Element {
 							placeholder="First name"
 						/>
 					</Grid>
-					<Grid item xs={12}>
+					<Grid item xs={12} sm={6}>
 						<FormInputText
 							required
 							name="lastName"
@@ -136,19 +148,19 @@ function Form(): JSX.Element {
 							placeholder="Last name"
 						/>
 					</Grid>
-					<Grid item xs={12}>
+					<Grid item xs={12} sm={6}>
 						<FormInputText
 							required
-							name="phoneNumber"
+							name="userName"
 							margin="dense"
 							size="medium"
 							control={control}
-							label="Phone number"
-							type="tel"
-							placeholder="Phone number"
+							label="Username"
+							type="text"
+							placeholder="Username"
 						/>
 					</Grid>
-					<Grid item xs={12}>
+					<Grid item xs={12} sm={6}>
 						<FormInputText
 							required
 							name="email"
@@ -160,7 +172,7 @@ function Form(): JSX.Element {
 							placeholder="Email"
 						/>
 					</Grid>
-					<Grid item xs={12}>
+					<Grid item xs={12} sm={6}>
 						<FormInputText
 							required
 							name="password"
@@ -170,6 +182,29 @@ function Form(): JSX.Element {
 							control={control}
 							label="Password"
 							placeholder="Password"
+							InputProps={{
+								endAdornment: (
+									<InputAdornment
+										sx={{ cursor: "pointer" }}
+										onClick={togglePassword}
+										position="end"
+									>
+										{isPasswordHidden ? <Visibility /> : <VisibilityOff />}
+									</InputAdornment>
+								),
+							}}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<FormInputText
+							required
+							name="confirmPassword"
+							type={isPasswordHidden ? "text" : "password"}
+							margin="dense"
+							size="medium"
+							control={control}
+							label="Confirm password"
+							placeholder="Confirm password"
 							InputProps={{
 								endAdornment: (
 									<InputAdornment
