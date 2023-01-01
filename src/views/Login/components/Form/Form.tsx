@@ -50,24 +50,50 @@ function Form(): JSX.Element {
 	});
 
 	const onSubmit = async (values: any) => {
-		const result = await loginUser(values);
+		const results = await loginUser(values);
 
-		try {
+		// try {
+		// 	console.log("Class: Form, Function: onSubmit, Line 56 data():", data);
+		// 	signIn({
+		// 		// @ts-expect-error ignore for now
+		// 		token: data.token as string,
+		// 		tokenType: "Bearer",
+		// 		// @ts-expect-error ignore for now
+		// 		authState: { name: data.username, uid: data.id },
+		// 		expiresIn: 120,
+		// 	});
+		// 	dispatch(
+		// 		displaySnackMessage({
+		// 			message: "Login successful",
+		// 		}),
+		// 	);
+		// 	navigate("/account");
+		// } catch (e) {
+		// 	dispatch(
+		// 		displaySnackMessage({
+		// 			message: "Error Occurred. Try Again",
+		// 			severity: "error",
+		// 		}),
+		// 	);
+		// }
+
+		if (
 			signIn({
 				// @ts-expect-error ignore for now
-				token: result.data.token as string,
+				token: results?.data?.token as string,
 				tokenType: "Bearer",
 				// @ts-expect-error ignore for now
-				authState: { name: result.data.username, uid: result.data.id },
+				authState: { name: results?.data?.username, uid: results?.data?.id },
 				expiresIn: 120,
-			});
+			})
+		) {
 			dispatch(
 				displaySnackMessage({
 					message: "Login successful",
 				}),
 			);
 			navigate("/account");
-		} catch (e) {
+		} else {
 			dispatch(
 				displaySnackMessage({
 					message: "Error Occurred. Try Again",
@@ -75,28 +101,6 @@ function Form(): JSX.Element {
 				}),
 			);
 		}
-
-		// 	if (result.data.token && !isAuthenticated()) {
-		// 		signIn({
-		// 			token: result.data.token as string,
-		// 			tokenType: "Bearer",
-		// 			authState: { name: result.data.username, uid: result.data.id },
-		// 			expiresIn: 120,
-		// 		});
-		// 		dispatch(
-		// 			displaySnackMessage({
-		// 				message: "Login successful",
-		// 			}),
-		// 		);
-		// 		navigate("/account");
-		// 	} else {
-		// 		dispatch(
-		// 			displaySnackMessage({
-		// 				message: "Error Occurred. Try Again",
-		// 				severity: "error",
-		// 			}),
-		// 		);
-		// 	}
 	};
 
 	return (

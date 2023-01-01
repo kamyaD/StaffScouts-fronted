@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+import cors from "cors";
 import express from "express";
+import morgan from "morgan";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -10,36 +12,44 @@ BigInt.prototype["toJSON"] = function () {
 };
 
 app.use(express.json());
-
-// function toJson(data: any[] | undefined) {
-// 	if (data !== undefined) {
-// 		let intCount = 0,
-// 			repCount = 0;
-// 		const json = JSON.stringify(data, (_, v) => {
-// 			if (typeof v === "bigint") {
-// 				intCount++;
-// 				return `${v}#bigint`;
-// 			}
-// 			return v;
-// 		});
-// 		const res = json.replace(/"(-?\d+)#bigint"/g, (_, a) => {
-// 			repCount++;
-// 			return a;
-// 		});
-// 		if (repCount > intCount) {
-// 			// You have a string somewhere that looks like "123#bigint";
-// 			throw new Error(`BigInt serialization conflict with a string value.`);
-// 		}
-// 		return res;
-// 	}
-// }
+app.use(
+	cors({
+		origin: ["http://localhost:3000"],
+		credentials: true,
+	}),
+);
+app.use(morgan("dev"));
 
 app.get("/users", async (req, res) => {
 	const users = await prisma.users.findMany();
 	res.json(users);
 });
 
-const server = app.listen(8081, () =>
+app.get("/candidates", async (req, res) => {
+	const candidates = await prisma.candidate_specialisms.findMany();
+	res.json(candidates);
+});
+
+app.get("/jobs", async (req, res) => {
+	const jobs = await prisma.jobs.findMany({
+		orderBy: {
+			created_at: "desc",
+		},
+		select: {
+			jobs_title: true,
+			jobs_description: true,
+			country: true,
+			offered_salary: true,
+			contract_type_id: true,
+			city: true,
+			application_deadline: true,
+			created_at: true,
+		},
+	});
+	res.json(jobs);
+});
+
+app.listen(8081, () =>
 	console.log(`
 🚀 Server ready at: http://localhost:8081`),
 );

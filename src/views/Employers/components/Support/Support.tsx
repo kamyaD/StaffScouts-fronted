@@ -13,22 +13,22 @@ const Support = (): JSX.Element => {
 				<Grid item xs={12} md={6}>
 					<Box>
 						<Typography
-							variant={"h6"}
+							variant="h6"
 							fontWeight={700}
-							align={"center"}
+							align="center"
 							gutterBottom
 						>
 							Need a support?
 						</Typography>
-						<Typography align={"center"}>
+						<Typography align="center">
 							View message performance and test against variants and control.
 						</Typography>
-						<Box marginTop={2} display={"flex"} justifyContent={"center"}>
+						<Box marginTop={2} display="flex" justifyContent="center">
 							<Button
-								size={"large"}
+								size="large"
 								endIcon={
 									<Box
-										component={"svg"}
+										component="svg"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -63,23 +63,23 @@ const Support = (): JSX.Element => {
 				>
 					<Box>
 						<Typography
-							variant={"h6"}
+							variant="h6"
 							fontWeight={700}
-							align={"center"}
+							align="center"
 							gutterBottom
 						>
 							Customize plan
 						</Typography>
-						<Typography align={"center"}>
+						<Typography align="center">
 							Looking for something else? Request a Consultation to customize a
 							plan.
 						</Typography>
-						<Box marginTop={2} display={"flex"} justifyContent={"center"}>
+						<Box marginTop={2} display="flex" justifyContent="center">
 							<Button
-								size={"large"}
+								size="large"
 								endIcon={
 									<Box
-										component={"svg"}
+										component="svg"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"

@@ -6,42 +6,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import JobCard from "../../../../components/JobCard";
+import { useGetAllJobsQuery } from "../../../../store/services/jobs";
 import fancyId from "../../../../utils/fancyId";
 
-const mock = [
-	{
-		image: "/img/head-hunting.png",
-		description:
-			"We are hiring an Associate Sales Director under our Farm Star brand, where we sell and market our Evergrow Organic Fertilizers, Kuzapro Insect Based Animal Protein, and Evermoto biomass briquettes. The Associate Director will have full responsibility for product sales by providing strategic leadership and operational oversight to the Farm Star Country Sales teams, the Sales & Marketing Excellence team and the Sales Enablement team.",
-		title: "Associate sales director",
-		location: "Nairobi, Kenya",
-		offer: "Ksh25,000",
-		date: "10 Sep",
-		jobType: "Contract",
-	},
-	{
-		image: "/img/head-hunting.png",
-		description:
-			"The company is looking for a strategic and innovative Procurement & Warehouse Manager (Project Manager Supply Chain) to effectively lead and own execution of projects within the Warehouse and Procurement functions.",
-		title: "Procurement and warehouse manager",
-		location: "Nairobi, Kenya",
-		offer: "Ksh25,000",
-		date: "02 Aug",
-		jobType: "Contract",
-	},
-	{
-		image: "/img/head-hunting.png",
-		description:
-			"StaffScout is looking to change how employers and candidates think about recruitment. StaffScout would like to make the job application process as simple and visible as possible through the use of our platform, https://www.staffscout.co.ke/..",
-		title: "Digital Marketing & Sales Intern",
-		location: "Nairobi, Kenya",
-		offer: "Ksh25,000",
-		date: "05 Mar",
-		jobType: "Contract",
-	},
-];
-
 function Jobs(): JSX.Element {
+	const { data: jobs, error, isLoading } = useGetAllJobsQuery();
+
 	return (
 		<Box>
 			<Box marginBottom={4}>
@@ -50,37 +20,40 @@ function Jobs(): JSX.Element {
 				</Typography>
 			</Box>
 			<Grid container spacing={4}>
-				{mock.map((job) => (
+				{jobs?.slice(0, 3).map((job) => (
 					<JobCard key={fancyId()} job={job} />
 				))}
-				<Grid item container justifyContent="center" xs={12}>
-					<Button
-						component={Link}
-						to="/job-listing"
-						variant="contained"
-						size="large"
-						endIcon={
-							<Box
-								component="svg"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								width={24}
-								height={24}
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M17 8l4 4m0 0l-4 4m4-4H3"
-								/>
-							</Box>
-						}
-					>
-						View all
-					</Button>
-				</Grid>
+				{/* @ts-expect-error ignore for now */}
+				{jobs?.length > 3 ? (
+					<Grid item container justifyContent="center" xs={12}>
+						<Button
+							component={Link}
+							to="/job-listing"
+							variant="contained"
+							size="large"
+							endIcon={
+								<Box
+									component="svg"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									width={24}
+									height={24}
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M17 8l4 4m0 0l-4 4m4-4H3"
+									/>
+								</Box>
+							}
+						>
+							View all
+						</Button>
+					</Grid>
+				) : null}
 			</Grid>
 		</Box>
 	);

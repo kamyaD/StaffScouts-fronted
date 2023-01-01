@@ -22,13 +22,12 @@ const mock = [
 	},
 ];
 
-const Plans = (): JSX.Element => {
-	return (
+const Plans = (): JSX.Element => (
 		<Box>
 			<Box marginBottom={4}>
 				<Typography
 					variant="h4"
-					align={"center"}
+					align="center"
 					gutterBottom
 					sx={{
 						fontWeight: 700,
@@ -36,7 +35,7 @@ const Plans = (): JSX.Element => {
 				>
 					Business grade quality for all plans
 				</Typography>
-				<Typography variant="h6" align={"center"} color={"text.secondary"}>
+				<Typography variant="h6" align="center" color="text.secondary">
 					For entrepreneurs, startups and freelancers. If you didn’t find what
 					you needed, these could help!
 				</Typography>
@@ -46,20 +45,20 @@ const Plans = (): JSX.Element => {
 					<Grid item xs={12} md={4} key={i}>
 						<Box
 							height={1}
-							display={"flex"}
-							flexDirection={"column"}
-							alignItems={"flex-start"}
+							display="flex"
+							flexDirection="column"
+							alignItems="flex-start"
 						>
-							<Typography variant={"h6"} fontWeight={600} gutterBottom>
+							<Typography variant="h6" fontWeight={600} gutterBottom>
 								{item.title}
 							</Typography>
 							<Typography color="text.secondary">{item.subtitle}</Typography>
 							<Box flexGrow={1} marginBottom={2} />
 							<Button
-								size={"large"}
+								size="large"
 								endIcon={
 									<Box
-										component={"svg"}
+										component="svg"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -84,6 +83,5 @@ const Plans = (): JSX.Element => {
 			</Grid>
 		</Box>
 	);
-};
 
 export default Plans;

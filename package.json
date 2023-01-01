@@ -20,6 +20,7 @@
 		"@mui/lab": "^5.0.0-alpha.114",
 		"@mui/material": "^5.11.2",
 		"@reduxjs/toolkit": "^1.9.1",
+		"@supercharge/strings": "^2.0.0",
 		"@types/react-lazy-load-image-component": "^1.5.2",
 		"aos": "^2.3.4",
 		"axios": "^1.2.1",

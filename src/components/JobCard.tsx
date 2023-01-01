@@ -4,30 +4,46 @@ import {
 	LocationOn,
 	PaymentsOutlined,
 } from "@mui/icons-material";
-import { CardMedia, Chip, IconButton } from "@mui/material";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Grid from "@mui/material/Grid";
+import {
+	Box,
+	Button,
+	Card,
+	CardContent,
+	Chip,
+	Grid,
+	IconButton,
+	Tooltip,
+	Typography,
+} from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import React from "react";
+import Str from "@supercharge/strings";
+
+import type { IJobs } from "../types";
+import dayjsTime from "../utils/dayjsTime";
+import stripHtml from "../utils/stripHtml";
 
 interface JobProps {
-	job: {
-		image: string;
-		description: string;
-		title: string;
-		location: string;
-		offer: string;
-		date: string;
-		jobType: string;
-	};
+	job: IJobs;
 }
 
-function JobCard({ job }: JobProps): JSX.Element {
+function JobCard({
+	job: {
+		jobs_title,
+		jobs_description,
+		country,
+		offered_salary,
+		contract_type_id,
+		city,
+		application_deadline,
+		created_at,
+	},
+}: JobProps): JSX.Element {
 	const theme = useTheme();
+
+	const jobDescription = Str(stripHtml(jobs_description).toString())
+		.limit(300, "...")
+		.get();
+
 	return (
 		<Grid item xs={12}>
 			<Box
@@ -45,18 +61,18 @@ function JobCard({ job }: JobProps): JSX.Element {
 					borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
 				}}
 			>
-				<CardMedia
-					component="img"
-					sx={{
-						width: { xs: 1, md: "25%" },
-						height: 1,
-						borderRadius: 2,
-						objectFit: "cover",
-						maxHeight: 200,
-					}}
-					image={job.image}
-					alt="Live from space album cover"
-				/>
+				{/* <CardMedia */}
+				{/*	component="img" */}
+				{/*	sx={{ */}
+				{/*		width: { xs: 1, md: "25%" }, */}
+				{/*		height: 1, */}
+				{/*		borderRadius: 2, */}
+				{/*		objectFit: "cover", */}
+				{/*		maxHeight: 200, */}
+				{/*	}} */}
+				{/*	image="/img/head-hunting.png" */}
+				{/*	alt="Live from space album cover" */}
+				{/* /> */}
 				{/* <Box */}
 				{/*	sx={{ */}
 				{/*		width: { xs: 1, md: "20%" }, */}
@@ -91,14 +107,20 @@ function JobCard({ job }: JobProps): JSX.Element {
 					}}
 				>
 					<Box display="flex" justifyContent="space-between">
-						<Typography fontWeight={700}>{job.title}</Typography>
+						<Typography variant="h5" fontWeight={700}>
+							{jobs_title}
+						</Typography>
 						<Box>
-							<IconButton aria-label="add to favorites">
-								<Favorite />
-							</IconButton>
-							<IconButton aria-label="share">
-								<Bookmark />
-							</IconButton>
+							<Tooltip title="Like">
+								<IconButton aria-label="add to favorites">
+									<Favorite />
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Save">
+								<IconButton aria-label="share">
+									<Bookmark />
+								</IconButton>
+							</Tooltip>
 						</Box>
 					</Box>
 					<Box marginY={1}>
@@ -109,7 +131,7 @@ function JobCard({ job }: JobProps): JSX.Element {
 							startIcon={<LocationOn />}
 							sx={{ paddingY: 0, paddingX: 0 }}
 						>
-							{job.location}
+							{`${city}, ${country}`}
 						</Box>
 						<Box
 							component={Button}
@@ -118,13 +140,29 @@ function JobCard({ job }: JobProps): JSX.Element {
 							startIcon={<PaymentsOutlined />}
 							sx={{ paddingY: 0, paddingLeft: 2 }}
 						>
-							{job.offer}
+							{offered_salary}
 						</Box>
 					</Box>
-					<Typography color="text.secondary">{job.description}</Typography>
+					<Typography color="text.secondary">{jobDescription}</Typography>
 					<Box marginTop={2} display="flex" justifyContent="space-between">
 						<Box marginY={1}>
-							<Chip label={job.jobType} />
+							<Chip label={contract_type_id} />
+							<Chip
+								variant="outlined"
+								label={`Posted: ${dayjsTime(created_at).fromNow()}`}
+								sx={{
+									marginLeft: 2,
+								}}
+							/>
+							<Chip
+								variant="outlined"
+								label={`Deadline: ${dayjsTime(application_deadline).format(
+									"YYYY-MM-DD",
+								)}`}
+								sx={{
+									marginLeft: 2,
+								}}
+							/>
 						</Box>
 						<Button
 							variant="contained"

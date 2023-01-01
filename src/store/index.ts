@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { authApi } from "./services/auth";
 import { baseApi } from "./services/baseApi";
+import { baseDevApi } from "./services/baseDevApi";
+import { jobsApi } from "./services/jobs";
 import { authSlice } from "./slices/auth";
 import { notificationsSlice } from "./slices/notifications";
 import { snackSlice } from "./slices/snack";
@@ -14,6 +16,7 @@ const rootReducer = combineReducers({
 	[notificationsSlice.name]: notificationsSlice.reducer,
 	[authSlice.name]: authSlice.reducer,
 	[authApi.reducerPath]: authApi.reducer,
+	[jobsApi.reducerPath]: jobsApi.reducer,
 });
 
 const createStore = (
@@ -23,7 +26,9 @@ const createStore = (
 		reducer: rootReducer,
 		devTools: true,
 		middleware: (getDefaultMiddleware) =>
-			getDefaultMiddleware().concat(baseApi.middleware),
+			getDefaultMiddleware()
+				.concat(baseApi.middleware)
+				.concat(baseDevApi.middleware),
 		...options,
 	});
 
