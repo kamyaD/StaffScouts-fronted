@@ -1,12 +1,12 @@
+import { MenuTab, MenuTabs } from "@/components/MenuTabs";
 import { AllOutTwoTone, SecurityTwoTone } from "@mui/icons-material";
 import { Box, Card, Grid, Typography, useMediaQuery } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+import { useRouter } from "next/router";
 import type { ChangeEvent, ReactNode } from "react";
 import { createElement, useEffect, useState } from "react";
-import { useNavigation } from "react-router-dom";
 
 import Container from "../../components/Container";
-import { MenuTab, MenuTabs } from "../../components/MenuTabs";
 import TabPanel from "../../components/TabPanel";
 import { General, Security } from "./components";
 
@@ -48,7 +48,7 @@ function AccountSettingsView(): JSX.Element {
 		);
 	}, [selectedTabIndex]);
 
-	const history = useNavigation();
+	const history = useRouter();
 
 	const theme = useTheme();
 	const isSm = useMediaQuery(theme.breakpoints.up("sm"), {

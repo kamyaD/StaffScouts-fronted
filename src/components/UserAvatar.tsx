@@ -10,10 +10,9 @@ import {
 	useMediaQuery,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+import { signOut, useSession } from "next-auth/react";
 import type { MouseEvent } from "react";
 import { useState } from "react";
-import { useAuthUser, useSignOut } from "react-auth-kit";
-import { useNavigate } from "react-router-dom";
 
 import fancyId from "../utils/fancyId";
 
@@ -21,9 +20,12 @@ function UserAvatar(): JSX.Element {
 	const theme = useTheme();
 	const isSm = useMediaQuery(theme.breakpoints.down("sm"));
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const authUser = useAuthUser();
-	const signOut = useSignOut();
-	const navigate = useNavigate();
+	const { data: session } = useSession();
+
+	const { username, image } = session?.user || {
+		name: "Anonymous User",
+		image: "/img/avatar.svg",
+	};
 
 	const handleToggleProfileMenu = (event: MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -31,9 +33,8 @@ function UserAvatar(): JSX.Element {
 
 	const handleProfileClose = () => setAnchorEl(null);
 
-	const logoutActiveUser = (): void => {
-		signOut();
-		navigate("/");
+	const logoutActiveUser = async (): Promise<void> => {
+		await signOut();
 	};
 
 	const open = Boolean(anchorEl);
@@ -47,16 +48,14 @@ function UserAvatar(): JSX.Element {
 		},
 	];
 
-	console.log("Class: , Function: UserAvatar, Line 45 session():", authUser());
-
 	return (
 		<>
-			<Tooltip title={authUser()?.name ?? "Anonymous User"}>
+			<Tooltip title={username}>
 				{isSm ? (
 					<Avatar
 						onClick={handleToggleProfileMenu}
-						alt={authUser()?.name ?? "Anonymous User"}
-						src="/img/avatar.svg"
+						alt={username ?? "Anonymous User"}
+						src={image ?? "/img/avatar.svg"}
 						aria-describedby="menu-popover"
 						aria-controls="menu-popover"
 						aria-haspopup="true"
@@ -64,13 +63,15 @@ function UserAvatar(): JSX.Element {
 					/>
 				) : (
 					<Chip
-						label={authUser()?.name ?? "Anonymous User"}
-						color="primary"
+						size="medium"
+						label={username ?? "Anonymous User"}
+						variant="outlined"
+						color="default"
 						onClick={handleToggleProfileMenu}
 						avatar={
 							<Avatar
-								alt={authUser()?.name ?? "Anonymous User"}
-								src="/img/avatar.svg"
+								alt={username ?? "Anonymous User"}
+								src={image ?? "/img/avatar_male.svg"}
 								aria-describedby="menu-popover"
 								aria-controls="menu-popover"
 								aria-haspopup="true"
@@ -111,7 +112,6 @@ function UserAvatar(): JSX.Element {
 				{menuItems.map((item) => {
 					const handleClick = async () => {
 						handleProfileClose();
-						await navigate(item.link);
 					};
 					return (
 						<MenuItem

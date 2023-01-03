@@ -1,17 +1,9 @@
 import { KeyboardArrowUpRounded } from "@mui/icons-material";
-import {
-	AppBar,
-	Box,
-	Divider,
-	Fab,
-	Zoom,
-	useScrollTrigger,
-} from "@mui/material";
+import { AppBar, Box, Fab, Zoom, useScrollTrigger } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import type { MouseEvent, ReactElement, ReactNode } from "react";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 
 import Container from "../../components/Container";
 import { Footer, Sidebar, Topbar } from "./components";
@@ -67,7 +59,7 @@ function ScrollTop({ window, children }: ScrollTopProps) {
 	);
 }
 
-function Main(): JSX.Element {
+function Main({ children }: Props): JSX.Element {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -127,9 +119,7 @@ function Main(): JSX.Element {
 				open={open}
 				variant="temporary"
 			/>
-			<Outlet />
-			<Divider />
-			{/* <main>{children}</main> */}
+			<main>{children}</main>
 			<ScrollTop>
 				<Fab color="secondary" size="small" aria-label="scroll back to top">
 					<KeyboardArrowUpRounded />

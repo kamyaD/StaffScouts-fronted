@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -11,19 +11,17 @@ import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import * as z from "zod";
 
 import { FormInputText } from "../../../../components/FormInput";
 
-const validationSchema = yup.object({
-	currentPassword: yup.string().required("Please specify your password"),
-	newPassword: yup
+const validationSchema = z.object({
+	currentPassword: z.string(),
+	newPassword: z
 		.string()
-		.required("Please specify your password")
 		.min(8, "The password should have at minimum length of 8"),
-	repeatPassword: yup
+	repeatPassword: z
 		.string()
-		.required("Please specify your password")
 		.min(8, "The password should have at minimum length of 8"),
 });
 
@@ -44,7 +42,7 @@ function Security(): JSX.Element {
 	};
 
 	const { handleSubmit, control } = useForm<IFormInput>({
-		resolver: yupResolver(validationSchema),
+		resolver: zodResolver(validationSchema),
 		defaultValues: initialValues,
 		mode: "onChange",
 	});

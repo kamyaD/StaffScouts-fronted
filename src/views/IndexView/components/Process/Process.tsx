@@ -10,8 +10,7 @@ import Grid from "@mui/material/Grid";
 import { alpha, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 /* eslint-disable react/no-unescaped-entities */
-import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 import fancyId from "../../../../utils/fancyId";
 
@@ -65,7 +64,7 @@ function Process(): JSX.Element {
 				<Box marginTop={3} display="flex" justifyContent="center">
 					<Button
 						component={Link}
-						to="/job-listing"
+						href="/job-listing"
 						variant="contained"
 						color="primary"
 						size="large"
@@ -97,7 +96,7 @@ function Process(): JSX.Element {
 						<Grid item xs={12} md={4} key={fancyId()}>
 							<Box
 								component={Link}
-								to={item.href}
+								href={item.href}
 								display="flex"
 								flexDirection="column"
 								alignItems="center"

@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+import { Button } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 
 function ThemeModeToggler(): JSX.Element {

@@ -1,9 +1,10 @@
+import { baseApi } from "@/store/services/baseApi";
+
 import type { ICandidates } from "../../types";
-import { baseDevApi } from "./baseDevApi";
 
 type CandidatesResponse = ICandidates[];
 
-export const usersApi = baseDevApi.injectEndpoints({
+export const usersApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
 		candidates: build.query<CandidatesResponse, void>({
 			query: () => ({

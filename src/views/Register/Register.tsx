@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import React from "react";
 
 import Container from "../../components/Container";
 import { Form } from "./components";
@@ -21,6 +20,8 @@ function Register(): JSX.Element {
 			alignItems="center"
 			justifyContent="center"
 			height={1}
+			marginTop={-12}
+			paddingTop={12}
 		>
 			<Container>
 				<Grid container spacing={6}>
@@ -30,7 +31,7 @@ function Register(): JSX.Element {
 						alignItems="center"
 						justifyContent="center"
 						xs={12}
-						md={6}
+						md={5}
 					>
 						<Form />
 					</Grid>

@@ -6,9 +6,9 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import clsx from "clsx";
 import errorStack from "error-stack-parser";
+import Link from "next/link";
 import type { ElementType, ReactNode } from "react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import Container from "./Container";
 
@@ -144,7 +144,7 @@ function ErrorPage({
 											variant="contained"
 											color="primary"
 											size="large"
-											to="/"
+											href="/"
 										>
 											Go home
 										</Button>

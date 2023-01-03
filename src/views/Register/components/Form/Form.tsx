@@ -1,19 +1,20 @@
+import { candidatesChoice, employerChoice } from "@/utils/fixtures";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import type { MouseEvent } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 /* eslint-disable react/no-unescaped-entities */
 import * as yup from "yup";
 
 import { FormInputText } from "../../../../components/FormInput";
-import { candidatesChoice, employerChoice } from "../../../../utils/fixtures";
 
 const validationSchema = yup.object({
 	email: yup
@@ -46,6 +47,7 @@ type IFormInput = {
 };
 
 function Form(): JSX.Element {
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [alignment, setAlignment] = useState("candidate");
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
@@ -58,7 +60,7 @@ function Form(): JSX.Element {
 		password: "",
 	};
 
-	const { handleSubmit, control, reset, formState } = useForm<IFormInput>({
+	const { handleSubmit, control } = useForm<IFormInput>({
 		resolver: yupResolver(validationSchema),
 		defaultValues: initialValues,
 		mode: "onChange",
@@ -124,31 +126,7 @@ function Form(): JSX.Element {
 					{/*		))} */}
 					{/*	</FormInputText> */}
 					{/* </Grid> */}
-					<Grid item xs={12} sm={6}>
-						<FormInputText
-							required
-							name="firstName"
-							margin="dense"
-							size="medium"
-							control={control}
-							label="First name"
-							type="text"
-							placeholder="First name"
-						/>
-					</Grid>
-					<Grid item xs={12} sm={6}>
-						<FormInputText
-							required
-							name="lastName"
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Last name"
-							type="text"
-							placeholder="Last name"
-						/>
-					</Grid>
-					<Grid item xs={12} sm={6}>
+					<Grid item xs={12}>
 						<FormInputText
 							required
 							name="userName"
@@ -160,7 +138,7 @@ function Form(): JSX.Element {
 							placeholder="Username"
 						/>
 					</Grid>
-					<Grid item xs={12} sm={6}>
+					<Grid item xs={12}>
 						<FormInputText
 							required
 							name="email"
@@ -172,7 +150,7 @@ function Form(): JSX.Element {
 							placeholder="Email"
 						/>
 					</Grid>
-					<Grid item xs={12} sm={6}>
+					<Grid item xs={12}>
 						<FormInputText
 							required
 							name="password"
@@ -195,7 +173,7 @@ function Form(): JSX.Element {
 							}}
 						/>
 					</Grid>
-					<Grid item xs={12} sm={6}>
+					<Grid item xs={12}>
 						<FormInputText
 							required
 							name="confirmPassword"
@@ -221,44 +199,56 @@ function Form(): JSX.Element {
 					<Grid item container xs={12}>
 						<Box
 							display="flex"
-							flexDirection={{ xs: "column", sm: "row" }}
-							alignItems={{ xs: "stretched", sm: "center" }}
+							flexDirection={"column"}
 							justifyContent="space-between"
 							width={1}
 							maxWidth={600}
 							margin="0 auto"
 						>
-							<Box marginBottom={{ xs: 1, sm: 0 }}>
-								<Typography variant="subtitle2">
-									Already have an account?{" "}
-									<Button
-										component={Link}
-										to="/login"
-										variant="text"
-										color="secondary"
-									>
-										Login.
-									</Button>
-								</Typography>
-							</Box>
-							<Button size="large" variant="contained" type="submit">
-								Sign up
-							</Button>
-						</Box>
-					</Grid>
-					<Grid item container xs={12} justifyContent="left" alignItems="left">
-						<Typography variant="subtitle2" color="text.secondary" align="left">
-							By clicking "Sign up" button you agree with our
-							<Button
-								component={Link}
-								to="/company-terms"
-								variant="text"
-								color="secondary"
-								sx={{ marginY: 0, paddingY: 0 }}
+							<LoadingButton
+								fullWidth
+								variant="contained"
+								type="submit"
+								color="primary"
+								size="large"
+								loading={isLoading}
+								loadingIndicator="Please wait..."
 							>
-								terms and conditions.
-							</Button>
-						</Typography>
+								Register
+							</LoadingButton>
+						</Box>
+						<Box marginTop={2}>
+							<Typography variant="subtitle2">
+								Already have an account?{" "}
+								<Button
+									component={Link}
+									href="/login"
+									variant="text"
+									color="inherit"
+									sx={{ fontWeight: 700 }}
+								>
+									Login.
+								</Button>
+							</Typography>
+						</Box>
+						<Box marginTop={2}>
+							<Typography
+								variant="subtitle2"
+								color="text.secondary"
+								align="left"
+							>
+								By clicking "Sign up" button you agree with our
+								<Button
+									component={Link}
+									href="/company-terms"
+									variant="text"
+									color="inherit"
+									sx={{ fontWeight: 700 }}
+								>
+									terms and conditions.
+								</Button>
+							</Typography>
+						</Box>
 					</Grid>
 				</Grid>
 			</form>
