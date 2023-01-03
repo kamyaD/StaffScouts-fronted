@@ -19,6 +19,7 @@ import {
 	EmployersView,
 	IndexView as HomeView,
 	JobListingView,
+	JobOpeningView,
 	LoginView,
 	RegisterView,
 } from "./views";
@@ -40,6 +41,10 @@ const routes: RouteObject[] = [
 			{
 				path: "/job-listing",
 				element: <JobListingView />,
+			},
+			{
+				path: "/job-listings",
+				element: <JobOpeningView />,
 			},
 			{
 				path: "/contingency-hiring",

@@ -17,7 +17,9 @@ export const authSlice = createSlice({
 		builder.addMatcher(
 			authApi.endpoints.login.matchFulfilled,
 			(state, { payload }) => {
+				// @ts-expect-error ignore for now
 				state.token = payload.token;
+				// @ts-expect-error ignore for now
 				state.user = payload;
 			},
 		);

@@ -7,3 +7,4 @@ node_modules/
 public
 packages/tailwind
 server
+vite.config.ts

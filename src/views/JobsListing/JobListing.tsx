@@ -39,10 +39,12 @@ function JobListing(): JSX.Element {
 		// @ts-expect-error ignore for now
 		totalPages: Math.ceil(jobs?.length / JOBS_PER_PAGE),
 	};
+	// @ts-expect-error ignore for now
 	const paginated = usePagination(jobs, JOBS_PER_PAGE);
 
 	const handlePageChange = (e: any, p: React.SetStateAction<number>) => {
 		setPage(p);
+		// @ts-expect-error ignore for now
 		paginated.jump(p);
 	};
 

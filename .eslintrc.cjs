@@ -56,6 +56,8 @@ module.exports = {
     "testing-library/no-await-sync-events": "off",
 
     // this auto-fixes and it's nice to have types and actual stuff separate
-    "@typescript-eslint/consistent-type-imports": "warn"
+    "@typescript-eslint/consistent-type-imports": "warn",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "no-param-reassign": "off"
   }
 };

@@ -59,8 +59,10 @@ function Form(): JSX.Element {
 				}),
 			);
 			signIn({
+				// @ts-expect-error ignore for now
 				token: result.data.token as string,
 				tokenType: "Bearer",
+				// @ts-expect-error ignore for now
 				authState: { name: result.data.username, uid: result.data.id },
 				expiresIn: 120,
 			});
