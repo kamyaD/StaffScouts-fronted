@@ -1,4 +1,4 @@
-export interface IJobs {
+interface IJobs {
 	id: number;
 	user_id: number;
 	specialism_id: number;
@@ -26,3 +26,27 @@ export interface IJobs {
 	application_deadline: Date;
 	is_company_name_hidden: boolean;
 }
+
+interface ICandidates {
+	id: number;
+	user_id: number;
+	specialism_id: string;
+	experiences_id: number;
+	education_levels_id: number;
+	job_title: string;
+	personal_statement: string;
+	personal: string;
+	biography: string;
+	education: string;
+	experience: string;
+	portfolio: string;
+	skills: string;
+	honors?: any;
+	availability_status: number;
+	metadata?: any;
+	created_at: Date;
+	updated_at: Date;
+	deleted_at: Date;
+}
+
+export { IJobs, ICandidates };

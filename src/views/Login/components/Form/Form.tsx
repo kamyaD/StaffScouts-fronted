@@ -15,6 +15,7 @@ import * as yup from "yup";
 import { FormInputText } from "../../../../components/FormInput";
 import { useAppDispatch } from "../../../../store";
 import { useLoginMutation } from "../../../../store/services/auth";
+import { setCredentials } from "../../../../store/slices/auth";
 import { displaySnackMessage } from "../../../../store/slices/snack";
 
 const validationSchema = yup.object({
@@ -36,7 +37,7 @@ function Form(): JSX.Element {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	const [loginUser, { data }] = useLoginMutation();
+	const [login, { data }] = useLoginMutation();
 
 	const initialValues = {
 		email: "",
@@ -50,40 +51,16 @@ function Form(): JSX.Element {
 	});
 
 	const onSubmit = async (values: any) => {
-		const results = await loginUser(values);
-
-		// try {
-		// 	console.log("Class: Form, Function: onSubmit, Line 56 data():", data);
-		// 	signIn({
-		// 		// @ts-expect-error ignore for now
-		// 		token: data.token as string,
-		// 		tokenType: "Bearer",
-		// 		// @ts-expect-error ignore for now
-		// 		authState: { name: data.username, uid: data.id },
-		// 		expiresIn: 120,
-		// 	});
-		// 	dispatch(
-		// 		displaySnackMessage({
-		// 			message: "Login successful",
-		// 		}),
-		// 	);
-		// 	navigate("/account");
-		// } catch (e) {
-		// 	dispatch(
-		// 		displaySnackMessage({
-		// 			message: "Error Occurred. Try Again",
-		// 			severity: "error",
-		// 		}),
-		// 	);
-		// }
+		console.log("Class: Form, Function: onSubmit, Line 55 values():", values);
+		const user = await login(values).unwrap();
+		console.log("Class: Form, Function: onSubmit, Line 56 user():", user);
+		dispatch(setCredentials(user?.data));
 
 		if (
 			signIn({
-				// @ts-expect-error ignore for now
-				token: results?.data?.token as string,
+				token: user?.data?.token as string,
 				tokenType: "Bearer",
-				// @ts-expect-error ignore for now
-				authState: { name: results?.data?.username, uid: results?.data?.id },
+				authState: { name: user?.data?.username, uid: user?.data?.id },
 				expiresIn: 120,
 			})
 		) {

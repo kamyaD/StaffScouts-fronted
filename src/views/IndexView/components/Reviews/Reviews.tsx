@@ -11,6 +11,11 @@ import { alpha, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import React from "react";
 
+import { useCandidatesQuery } from "../../../../store/services/users";
+import type { ICandidates } from "../../../../types";
+import fancyId from "../../../../utils/fancyId";
+import stripHtml from "../../../../utils/stripHtml";
+
 const mock = [
 	{
 		feedback:
@@ -40,6 +45,11 @@ function Reviews(): JSX.Element {
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
 	});
+
+	const { data } = useCandidatesQuery();
+	// @ts-ignore
+	const candidates: ICandidates[] = data?.slice(0, 3);
+	console.log("Class: Reviews, Function: Reviews, Line 49 data():", candidates);
 
 	const sliderOpts = {
 		dots: !isMd,
@@ -113,8 +123,8 @@ function Reviews(): JSX.Element {
 					</Box>
 				</Box>
 				<Grid container spacing={2}>
-					{mock.map((item, i) => (
-						<Grid item xs={12} md={4} key={i}>
+					{candidates?.map((item, i) => (
+						<Grid item xs={12} md={4} key={fancyId()}>
 							<Box
 								width={1}
 								height={1}
@@ -144,20 +154,20 @@ function Reviews(): JSX.Element {
 										>
 											<ListItemAvatar sx={{ marginRight: 3 }}>
 												<Avatar
-													src={item.avatar}
+													src="https://assets.maccarianagency.com/avatars/img1.jpg"
 													variant="rounded"
 													sx={{ width: 100, height: 100, borderRadius: 2 }}
 												/>
 											</ListItemAvatar>
 											<ListItemText
 												sx={{ margin: 0 }}
-												primary={item.name}
-												secondary={item.title}
+												primary={JSON.parse(item.personal).first_name}
+												secondary={item.job_title}
 											/>
 										</ListItem>
 									</Box>
 									<Typography color="text.secondary">
-										{item.feedback}
+										{stripHtml(item.personal_statement)}
 									</Typography>
 								</CardContent>
 							</Box>

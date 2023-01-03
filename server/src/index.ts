@@ -26,7 +26,7 @@ app.get("/users", async (req, res) => {
 });
 
 app.get("/candidates", async (req, res) => {
-	const candidates = await prisma.candidate_specialisms.findMany();
+	const candidates = await prisma.profiles.findMany();
 	res.json(candidates);
 });
 

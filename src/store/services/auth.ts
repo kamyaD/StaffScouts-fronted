@@ -5,15 +5,13 @@ export interface User {
 	username: string;
 	email: string;
 	password: string;
-	phoneNumber: string;
-
-	[x: string]: any;
 }
 
 export interface UserResponse {
 	data: {
-		user: Partial<User>;
+		id: string;
 		token: string;
+		username: string;
 	};
 }
 

@@ -47,6 +47,8 @@ function UserAvatar(): JSX.Element {
 		},
 	];
 
+	console.log("Class: , Function: UserAvatar, Line 45 session():", authUser());
+
 	return (
 		<>
 			<Tooltip title={authUser()?.name ?? "Anonymous User"}>

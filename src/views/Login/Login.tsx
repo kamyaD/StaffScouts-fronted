@@ -1,8 +1,6 @@
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import { Box, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import React from "react";
 
 import Container from "../../components/Container";
 import { Form } from "./components";

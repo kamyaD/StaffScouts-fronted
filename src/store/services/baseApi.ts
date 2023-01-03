@@ -51,6 +51,6 @@ const axiosBaseQuery =
 export const baseApi = createApi({
 	baseQuery: axiosBaseQuery(),
 	endpoints: () => ({}),
-	tagTypes: ["Users"],
+	tagTypes: ["User"],
 	refetchOnMountOrArgChange: 60,
 });

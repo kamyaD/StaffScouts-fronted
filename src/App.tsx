@@ -72,7 +72,12 @@ if (import.meta.hot) {
 function App(): JSX.Element {
 	return (
 		<Page>
-			<AuthProvider authName="_auth" authType="cookie">
+			<AuthProvider
+				authType="cookie"
+				authName="_auth"
+				cookieDomain={window.location.hostname}
+				cookieSecure={window.location.protocol === "https:"}
+			>
 				<RouterProvider router={router} fallbackElement={<Fallback />} />
 			</AuthProvider>
 		</Page>
