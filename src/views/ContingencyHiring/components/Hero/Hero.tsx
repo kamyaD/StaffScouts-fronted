@@ -1,9 +1,6 @@
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import { Box, Grid, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
 /* eslint-disable react/no-unescaped-entities */
-import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Hero(): JSX.Element {

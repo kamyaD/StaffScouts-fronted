@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import type { ReactNode } from "react";
 
 interface Props {

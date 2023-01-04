@@ -1,3 +1,5 @@
+import usePagination from "@/hooks/usePagination";
+import { useGetAllJobsQuery } from "@/store/services/jobs";
 import { Search } from "@mui/icons-material";
 import {
 	Button,
@@ -12,12 +14,10 @@ import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import Container from "../../components/Container";
 import JobCard from "../../components/JobCard";
-import usePagination from "../../hooks/usePagination";
-import { useGetAllJobsQuery } from "../../store/services/jobs";
 import type { IJobs } from "../../types";
 import fancyId from "../../utils/fancyId";
 

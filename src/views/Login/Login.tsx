@@ -5,7 +5,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Container from "../../components/Container";
 import { Form } from "./components";
 
-function Login(): JSX.Element {
+function Login({ csrfToken }: { csrfToken: string }): JSX.Element {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
@@ -19,9 +19,11 @@ function Login(): JSX.Element {
 			alignItems="center"
 			justifyContent="center"
 			height={1}
+			marginTop={-12}
+			paddingTop={12}
 		>
 			<Container>
-				<Grid container spacing={6}>
+				<Grid container spacing={4}>
 					{isMd ? (
 						<Grid item container justifyContent="center" xs={12} md={6}>
 							<Box height={1} width={1} maxWidth={500}>
@@ -46,9 +48,9 @@ function Login(): JSX.Element {
 						alignItems="center"
 						justifyContent="center"
 						xs={12}
-						md={6}
+						md={5}
 					>
-						<Form />
+						<Form csrfToken={csrfToken} />
 					</Grid>
 				</Grid>
 			</Container>

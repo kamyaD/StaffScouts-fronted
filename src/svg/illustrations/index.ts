@@ -1,0 +1,9 @@
+export { default as HomeIllustration } from "./HomeIllustration";
+export { default as NotFoundIllustration } from "./NotFoundIllustration";
+export { default as AvatarIllustration } from "./AvatarIllustration";
+export { default as ServerErrorIllustration } from "./ServerErrorIllustration";
+export { default as OfflineIllustration } from "./OfflineIllustration";
+export { default as NoDataIllustration } from "./NoDataIllustration";
+export { default as ErrorBoundaryIllustration } from "./ErrorBoundaryIllustration";
+export { default as ErrorOnPageIllustration } from "./ErrorOnPageIllustration";
+export { default as LoginIllustration } from "./LoginIllustration";

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 function Footer(): JSX.Element {
 	return (
@@ -26,16 +26,16 @@ function Footer(): JSX.Element {
 						<Box component="img" src="/img/logo.jpeg" height={1} width={1} />
 					</Box>
 					<Box display="flex" flexWrap="wrap" alignItems="center">
-						<Button component={Link} to="/" color="inherit">
+						<Button component={Link} href="/" color="inherit">
 							Pricing
 						</Button>
-						<Button component={Link} to="/" color="inherit">
+						<Button component={Link} href="/" color="inherit">
 							Hiring
 						</Button>
-						<Button component={Link} to="/" color="inherit">
+						<Button component={Link} href="/" color="inherit">
 							Candidates
 						</Button>
-						<Button component={Link} to="/" color="inherit">
+						<Button component={Link} href="/" color="inherit">
 							Listing
 						</Button>
 					</Box>

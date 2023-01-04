@@ -1,9 +1,10 @@
 // components
 import { Menu } from "@mui/icons-material";
 import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useIsAuthenticated } from "react-auth-kit";
-import { Link, useLocation } from "react-router-dom";
 
 import Logo from "../../../../components/Logo";
 import UserAvatar from "../../../../components/UserAvatar";
@@ -16,9 +17,9 @@ interface Props {
 }
 
 function Topbar({ onSidebarOpen }: Props): JSX.Element {
-	const isAuthenticated = useIsAuthenticated();
 	const [activeLink, setActiveLink] = useState("");
-	const { pathname } = useLocation();
+	const { pathname } = useRouter();
+	const { status } = useSession();
 
 	useEffect(() => {
 		setActiveLink(window && window.location ? pathname : "");
@@ -29,13 +30,13 @@ function Topbar({ onSidebarOpen }: Props): JSX.Element {
 	}, [pathname]);
 
 	const renderAuthButtons = () =>
-		isAuthenticated() ? (
+		status === "authenticated" ? (
 			<UserAvatar />
 		) : (
 			<Box sx={{ display: { xs: "none", md: "flex" } }}>
 				<Button
 					component={Link}
-					to="/login"
+					href="/login"
 					variant="text"
 					color="inherit"
 					sx={{
@@ -52,7 +53,7 @@ function Topbar({ onSidebarOpen }: Props): JSX.Element {
 				<Divider sx={{ height: 28, m: 1 }} orientation="vertical" />
 				<Button
 					component={Link}
-					to="/register"
+					href="/register"
 					variant="text"
 					color="inherit"
 					sx={{
@@ -84,7 +85,7 @@ function Topbar({ onSidebarOpen }: Props): JSX.Element {
 			<Box sx={{ display: { xs: "none", md: "flex" } }} alignItems="center">
 				{mainLayoutNavigation.map((page, index) => (
 					<Box key={fancyId()} marginLeft={index === 0 ? 0 : 4}>
-						<Link to={page.href}>
+						<Link href={page.href}>
 							<Typography
 								color="primary"
 								sx={{

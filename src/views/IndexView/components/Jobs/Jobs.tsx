@@ -1,12 +1,11 @@
+import { useGetAllJobsQuery } from "@/store/services/jobs";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 import JobCard from "../../../../components/JobCard";
-import { useGetAllJobsQuery } from "../../../../store/services/jobs";
 import fancyId from "../../../../utils/fancyId";
 
 function Jobs(): JSX.Element {
@@ -28,7 +27,7 @@ function Jobs(): JSX.Element {
 					<Grid item container justifyContent="center" xs={12}>
 						<Button
 							component={Link}
-							to="/job-listing"
+							href="/job-listing"
 							variant="contained"
 							size="large"
 							endIcon={

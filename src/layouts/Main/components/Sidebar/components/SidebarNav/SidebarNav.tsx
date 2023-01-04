@@ -10,7 +10,7 @@ import {
 	Stack,
 	Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 import packageJson from "../../../../../../../package.json";
 import Container from "../../../../../../components/Container";
@@ -24,14 +24,6 @@ interface Props {
 }
 
 function SidebarNav({ onClose, handleContactModal }: Props): JSX.Element {
-	const handleLogin = () => {};
-
-	const logoutActiveUser = async (e: {
-		preventDefault: () => void;
-	}): Promise<void> => {
-		e.preventDefault();
-	};
-
 	const renderAuthButtons = () => (
 		<Box>
 			<Button fullWidth variant="outlined" color="primary" size="medium">
@@ -97,7 +89,7 @@ function SidebarNav({ onClose, handleContactModal }: Props): JSX.Element {
 				>
 					<Button
 						component={Link}
-						to="company-terms"
+						href="company-terms"
 						startIcon={<PolicyTwoTone />}
 						sx={{ color: "text.primary", paddingX: 0 }}
 					>

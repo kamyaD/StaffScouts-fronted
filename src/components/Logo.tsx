@@ -1,17 +1,13 @@
 import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const logo = "/img/logo.jpeg";
-
-interface Props {
-	displayText?: boolean;
-}
 
 function Logo(): JSX.Element {
 	return (
 		<Box
 			component={Link}
-			to="/"
+			href="/"
 			role="presentation"
 			style={{ cursor: "pointer" }}
 		>

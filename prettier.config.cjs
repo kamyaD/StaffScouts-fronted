@@ -7,5 +7,5 @@ module.exports = {
 	semi: true,
 	trailingComma: "all",
 	tabWidth: 2,
-	useTabs: true,
+	useTabs: true
 };

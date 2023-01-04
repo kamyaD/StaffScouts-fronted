@@ -1,50 +1,36 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import Typography from "@mui/material/Typography";
-import React, { useState } from "react";
+import { FormInputText } from "@/components/FormInput";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Button, Divider, Grid, Typography } from "@mui/material";
+import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import * as z from "zod";
 
-import { FormInputText } from "../../../../components/FormInput";
-
-const validationSchema = yup.object({
-	firstName: yup
+const validationSchema = z.object({
+	firstName: z
 		.string()
 		.trim()
 		.min(2, "Please enter a valid name")
-		.max(50, "Please enter a valid name")
-		.required("Please specify your first name"),
-	lastName: yup
+		.max(50, "Please enter a valid name"),
+	lastName: z
 		.string()
 		.trim()
 		.min(2, "Please enter a valid name")
-		.max(50, "Please enter a valid name")
-		.required("Please specify your last name"),
-	email: yup
-		.string()
-		.trim()
-		.email("Please enter a valid email address")
-		.required("Email is required."),
-	bio: yup.string().trim().max(500, "Should be less than 500 chars"),
-	country: yup
+		.max(50, "Please enter a valid name"),
+	email: z.string().trim().email("Please enter a valid email address"),
+	bio: z.string().trim().max(500, "Should be less than 500 chars"),
+	country: z
 		.string()
 		.trim()
 		.min(2, "Please enter a valid name")
-		.max(80, "Please enter a valid name")
-		.required("Please specify your country name"),
-	city: yup
+		.max(80, "Please enter a valid name"),
+	city: z
 		.string()
 		.trim()
 		.min(2, "Please enter a valid name")
-		.max(80, "Please enter a valid name")
-		.required("Please specify your city name"),
-	address: yup
+		.max(80, "Please enter a valid name"),
+	address: z
 		.string()
-		.required("Please specify your address")
 		.min(2, "Please enter a valid address")
 		.max(200, "Please enter a valid address"),
 });
@@ -71,7 +57,7 @@ function General(): JSX.Element {
 	};
 
 	const { handleSubmit, control } = useForm<IFormInput>({
-		resolver: yupResolver(validationSchema),
+		resolver: zodResolver(validationSchema),
 		defaultValues: initialValues,
 		mode: "onChange",
 	});
@@ -85,7 +71,7 @@ function General(): JSX.Element {
 			</Typography>
 			<Typography variant="subtitle2" color="text.secondary">
 				Please read our{" "}
-				<Link color="secondary" href="/company-terms" underline="none">
+				<Link color="secondary" href="/company-terms">
 					terms of use
 				</Link>{" "}
 				to be informed how we manage your private data.

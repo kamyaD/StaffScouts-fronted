@@ -1,21 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { useIsAuthenticated, useSignIn } from "react-auth-kit";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
 /* eslint-disable react/no-unescaped-entities */
 import * as yup from "yup";
 
 import { FormInputText } from "../../../../components/FormInput";
-import { useAppDispatch } from "../../../../store";
-import { useLoginMutation } from "../../../../store/services/auth";
-import { displaySnackMessage } from "../../../../store/slices/snack";
 
 const validationSchema = yup.object({
 	username: yup.string().trim(),
@@ -28,54 +21,13 @@ type IFormInput = {
 };
 
 function Form(): JSX.Element {
-	const [isPasswordHidden, showPassword] = useState<boolean>(false);
-	const togglePassword = () => showPassword((prevState) => !prevState);
-
-	const isAuthenticated = useIsAuthenticated();
-	const signIn = useSignIn();
-	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
-
-	const [loginUser, { data }] = useLoginMutation();
-
-	const initialValues = {
-		email: "",
-		password: "",
-	};
-
 	const { handleSubmit, control, reset, formState } = useForm<IFormInput>({
 		resolver: yupResolver(validationSchema),
 		// defaultValues: initialValues,
 		mode: "onChange",
 	});
 
-	const onSubmit = async (values: any) => {
-		const result = await loginUser(values);
-
-		if (result && !isAuthenticated()) {
-			dispatch(
-				displaySnackMessage({
-					message: "Login successful",
-				}),
-			);
-			signIn({
-				// @ts-expect-error ignore for now
-				token: result.data.token as string,
-				tokenType: "Bearer",
-				// @ts-expect-error ignore for now
-				authState: { name: result.data.username, uid: result.data.id },
-				expiresIn: 120,
-			});
-			navigate("/profile");
-		} else {
-			dispatch(
-				displaySnackMessage({
-					message: "Error Occurred. Try Again",
-					severity: "error",
-				}),
-			);
-		}
-	};
+	const onSubmit = async (values: any) => {};
 
 	return (
 		<Box>
@@ -106,46 +58,6 @@ function Form(): JSX.Element {
 							placeholder="blahblah"
 						/>
 					</Grid>
-					<Grid item xs={12}>
-						<Box
-							display="flex"
-							flexDirection={{ xs: "column", sm: "row" }}
-							alignItems={{ xs: "stretched", sm: "center" }}
-							justifyContent="flex-end"
-							width={1}
-							marginBottom={0}
-						>
-							<Button
-								component={Link}
-								to="/password-reset-cover"
-								variant="text"
-								color="secondary"
-							>
-								Forgot your password?
-							</Button>
-						</Box>
-						<FormInputText
-							required
-							name="password"
-							type={isPasswordHidden ? "text" : "password"}
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Password"
-							placeholder="Password"
-							InputProps={{
-								endAdornment: (
-									<InputAdornment
-										sx={{ cursor: "pointer" }}
-										onClick={togglePassword}
-										position="end"
-									>
-										{isPasswordHidden ? <Visibility /> : <VisibilityOff />}
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
 					<Grid item container xs={12}>
 						<Box
 							display="flex"
@@ -161,7 +73,7 @@ function Form(): JSX.Element {
 									Don't have an account yet?{" "}
 									<Button
 										component={Link}
-										to="/register"
+										href="/register"
 										variant="text"
 										color="secondary"
 									>

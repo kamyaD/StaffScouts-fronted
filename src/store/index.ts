@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { authApi } from "./services/auth";
 import { baseApi } from "./services/baseApi";
-import { baseDevApi } from "./services/baseDevApi";
 import { jobsApi } from "./services/jobs";
 import { authSlice } from "./slices/auth";
 import { notificationsSlice } from "./slices/notifications";
@@ -26,9 +25,7 @@ const createStore = (
 		reducer: rootReducer,
 		devTools: true,
 		middleware: (getDefaultMiddleware) =>
-			getDefaultMiddleware()
-				.concat(baseApi.middleware)
-				.concat(baseDevApi.middleware),
+			getDefaultMiddleware().concat(baseApi.middleware),
 		...options,
 	});
 

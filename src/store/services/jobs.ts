@@ -1,9 +1,10 @@
+import { baseApi } from "@/store/services/baseApi";
+
 import type { IJobs } from "../../types";
-import { baseDevApi } from "./baseDevApi";
 
 type JobsResponse = IJobs[];
 
-export const jobsApi = baseDevApi.injectEndpoints({
+export const jobsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getAllJobs: builder.query<JobsResponse, void>({
 			query: () => ({

@@ -1,7 +1,19 @@
 import { TextField } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { Controller } from "react-hook-form";
 
 import type { FormInputProps } from "./FormInputProps";
+
+const ValidationTextField = styled(TextField)({
+	"& label.Mui-focused": {
+		color: "#677788",
+	},
+	"& input:valid:focus + fieldset": {
+		borderLeftWidth: "6px !important",
+		borderWidth: 2,
+		padding: "4px !important",
+	},
+});
 
 function FormInputText({
 	name,
@@ -20,7 +32,7 @@ function FormInputText({
 				fieldState: { error },
 				formState,
 			}) => (
-				<TextField
+				<ValidationTextField
 					helperText={error ? error.message : null}
 					size="small"
 					error={!!error}

@@ -1,9 +1,14 @@
-import { Avatar, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import Grid from "@mui/material/Grid";
+import {
+	Avatar,
+	Box,
+	Card,
+	Grid,
+	ListItem,
+	ListItemAvatar,
+	ListItemText,
+	Typography,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";

@@ -1,87 +1,84 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { FormInputText } from "@/components/FormInput";
+import { useAppDispatch } from "@/store/index";
+import { displaySnackMessage } from "@/store/slices/snack";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { InputAdornment } from "@mui/material";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { useIsAuthenticated, useSignIn } from "react-auth-kit";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Grid, InputAdornment, Typography } from "@mui/material";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-/* eslint-disable react/no-unescaped-entities */
-import * as yup from "yup";
+import * as z from "zod";
 
-import { FormInputText } from "../../../../components/FormInput";
-import { useAppDispatch } from "../../../../store";
-import { useLoginMutation } from "../../../../store/services/auth";
-import { setCredentials } from "../../../../store/slices/auth";
-import { displaySnackMessage } from "../../../../store/slices/snack";
-
-const validationSchema = yup.object({
-	username: yup.string().trim(),
-	password: yup.string().required("Please specify your password"),
+const validationSchema = z.object({
+	username: z.string().trim(),
+	password: z.string().min(4, { message: "Please specify your password" }),
 });
 
 type IFormInput = {
-	email: string;
+	username: string;
 	password: string;
 };
 
-function Form(): JSX.Element {
+function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
+	const { push, prefetch } = useRouter();
 
-	const isAuthenticated = useIsAuthenticated();
-	const signIn = useSignIn();
-	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
-	const [login, { data }] = useLoginMutation();
-
-	const initialValues = {
-		email: "",
-		password: "",
-	};
-
-	const { handleSubmit, control, reset, formState } = useForm<IFormInput>({
-		resolver: yupResolver(validationSchema),
+	const { handleSubmit, control } = useForm<IFormInput>({
+		resolver: zodResolver(validationSchema),
 		// defaultValues: initialValues,
 		mode: "onChange",
 	});
 
-	const onSubmit = async (values: any) => {
-		console.log("Class: Form, Function: onSubmit, Line 55 values():", values);
-		const user = await login(values).unwrap();
-		console.log("Class: Form, Function: onSubmit, Line 56 user():", user);
-		dispatch(setCredentials(user?.data));
+	const onSubmit = async ({ username, password }: IFormInput) => {
+		setIsLoading(true);
+		const res = await signIn("credentials", {
+			username,
+			password,
+			callbackUrl: `${window.location.origin}/account`,
+			redirect: false,
+		});
 
-		if (
-			signIn({
-				token: user?.data?.token as string,
-				tokenType: "Bearer",
-				authState: { name: user?.data?.username, uid: user?.data?.id },
-				expiresIn: 120,
-			})
-		) {
+		if (res?.error) {
 			dispatch(
 				displaySnackMessage({
-					message: "Login successful",
-				}),
-			);
-			navigate("/account");
-		} else {
-			dispatch(
-				displaySnackMessage({
-					message: "Error Occurred. Try Again",
+					message: res?.error as string,
 					severity: "error",
 				}),
 			);
+		} else {
+			dispatch(
+				displaySnackMessage({
+					message: "You have successfully logged in",
+				}),
+			);
 		}
+		if (res?.url) await push(res?.url);
+		setIsLoading(false);
 	};
 
+	useEffect(() => {
+		prefetch("account");
+	}, []);
+
 	return (
-		<Box>
+		// <Box bgcolor={theme.palette.alternate.main}
+		<Box
+			// position="relative"
+			// minHeight="calc(100vh - 247px)"
+			// display="flex"
+			// alignItems="center"
+			// justifyContent="center"
+			// height={1}
+			marginTop={-12}
+			paddingTop={12}
+		>
 			<Box marginBottom={4}>
 				<Typography
 					variant="h4"
@@ -97,6 +94,8 @@ function Form(): JSX.Element {
 			</Box>
 			<form name="login-form" method="post" onSubmit={handleSubmit(onSubmit)}>
 				<Grid container spacing={4}>
+					<input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+
 					<Grid item xs={12}>
 						<FormInputText
 							required
@@ -106,27 +105,9 @@ function Form(): JSX.Element {
 							control={control}
 							label="Username"
 							type="text"
-							placeholder="blahblah"
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<Box
-							display="flex"
-							flexDirection={{ xs: "column", sm: "row" }}
-							alignItems={{ xs: "stretched", sm: "center" }}
-							justifyContent="flex-end"
-							width={1}
-							marginBottom={0}
-						>
-							<Button
-								component={Link}
-								to="/password-reset-cover"
-								variant="text"
-								color="secondary"
-							>
-								Forgot your password?
-							</Button>
-						</Box>
 						<FormInputText
 							required
 							name="password"
@@ -148,33 +129,59 @@ function Form(): JSX.Element {
 								),
 							}}
 						/>
-					</Grid>
-					<Grid item container xs={12}>
 						<Box
 							display="flex"
 							flexDirection={{ xs: "column", sm: "row" }}
 							alignItems={{ xs: "stretched", sm: "center" }}
+							justifyContent="flex-end"
+							width={1}
+							marginBottom={0}
+						>
+							<Button
+								component={Link}
+								href="/password-reset-cover"
+								variant="text"
+								color="inherit"
+								sx={{ fontWeight: 700 }}
+							>
+								Forgot your password?
+							</Button>
+						</Box>
+					</Grid>
+					<Grid item container xs={12}>
+						<Box
+							display="flex"
+							flexDirection={"column"}
 							justifyContent="space-between"
 							width={1}
 							maxWidth={600}
 							margin="0 auto"
 						>
-							<Box marginBottom={{ xs: 1, sm: 0 }}>
+							<LoadingButton
+								fullWidth
+								variant="contained"
+								type="submit"
+								color="primary"
+								size="large"
+								loading={isLoading}
+								loadingIndicator="Please wait..."
+							>
+								Login
+							</LoadingButton>
+							<Box marginTop={2}>
 								<Typography variant="subtitle2">
-									Don't have an account yet?{" "}
+									Don&apos;t have an account yet?{" "}
 									<Button
 										component={Link}
-										to="/register"
+										href="/register"
 										variant="text"
-										color="secondary"
+										color="inherit"
+										sx={{ fontWeight: 700 }}
 									>
 										Sign up here.
 									</Button>
 								</Typography>
 							</Box>
-							<Button size="large" variant="contained" type="submit">
-								Login
-							</Button>
 						</Box>
 					</Grid>
 				</Grid>

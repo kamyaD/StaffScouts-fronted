@@ -4,9 +4,7 @@ import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-/* eslint-disable react/no-unescaped-entities */
-import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 function AboutTop(): JSX.Element {
 	const theme = useTheme();
@@ -35,12 +33,12 @@ function AboutTop(): JSX.Element {
 							color="text.secondary"
 							gutterBottom
 						>
-							For information and bookings, call +254 727 517 071 We'll give you
-							the best career advice for your growth.
+							For information and bookings, call +254 727 517 071 We&apos;ll
+							give you the best career advice for your growth.
 						</Typography>
 						<Button
 							component={Link}
-							to="/contingency-hiring"
+							href="/contingency-hiring"
 							variant="contained"
 							size="large"
 							endIcon={
