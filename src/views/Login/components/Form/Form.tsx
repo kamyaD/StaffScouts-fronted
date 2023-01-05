@@ -1,6 +1,6 @@
 import { FormInputText } from "@/components/FormInput";
+import useStore from "@/lib/store";
 import { useAppDispatch } from "@/store/index";
-import { displaySnackMessage } from "@/store/slices/snack";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
@@ -9,6 +9,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -17,12 +18,10 @@ const validationSchema = z.object({
 	password: z.string().min(4, { message: "Please specify your password" }),
 });
 
-type IFormInput = {
-	username: string;
-	password: string;
-};
+type ValidationSchema = z.infer<typeof validationSchema>;
 
 function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
+	const { displaySnackMessage } = useStore();
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
@@ -30,13 +29,15 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 
 	const dispatch = useAppDispatch();
 
-	const { handleSubmit, control } = useForm<IFormInput>({
+	const { handleSubmit, control } = useForm<ValidationSchema>({
 		resolver: zodResolver(validationSchema),
-		// defaultValues: initialValues,
 		mode: "onChange",
 	});
 
-	const onSubmit = async ({ username, password }: IFormInput) => {
+	const onSubmit: SubmitHandler<ValidationSchema> = async ({
+		username,
+		password,
+	}) => {
 		setIsLoading(true);
 		const res = await signIn("credentials", {
 			username,
@@ -46,18 +47,14 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 		});
 
 		if (res?.error) {
-			dispatch(
-				displaySnackMessage({
-					message: res?.error as string,
-					severity: "error",
-				}),
-			);
+			displaySnackMessage({
+				message: res?.error as string,
+				severity: "error",
+			});
 		} else {
-			dispatch(
-				displaySnackMessage({
-					message: "You have successfully logged in",
-				}),
-			);
+			displaySnackMessage({
+				message: "You have successfully logged in",
+			});
 		}
 		if (res?.url) await push(res?.url);
 		setIsLoading(false);

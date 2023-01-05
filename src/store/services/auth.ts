@@ -29,6 +29,13 @@ export const authApi = baseApi.injectEndpoints({
 				data: credentials,
 			}),
 		}),
+		register: builder.mutation<UserResponse, LoginRequest>({
+			query: (credentials) => ({
+				url: "/register/",
+				method: "post",
+				data: credentials,
+			}),
+		}),
 	}),
 });
 

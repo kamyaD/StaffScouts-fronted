@@ -15,14 +15,7 @@ const ValidationTextField = styled(TextField)({
 	},
 });
 
-function FormInputText({
-	name,
-	control,
-	label,
-	Icon,
-	iconPosition,
-	...rest
-}: FormInputProps) {
+function FormInputText({ name, control, label, ...rest }: FormInputProps) {
 	return (
 		<Controller
 			name={name}

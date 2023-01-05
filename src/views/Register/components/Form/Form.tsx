@@ -1,5 +1,7 @@
-import { candidatesChoice, employerChoice } from "@/utils/fixtures";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { FormInputText } from "@/components/FormInput";
+import { signUpUserFn } from "@/lib/api";
+import useStore from "@/lib/store";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { InputAdornment } from "@mui/material";
@@ -7,72 +9,118 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import type { MouseEvent } from "react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-/* eslint-disable react/no-unescaped-entities */
-import * as yup from "yup";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { FormInputText } from "../../../../components/FormInput";
+const validationSchema = z
+	.object({
+		firstName: z
+			.string()
+			.min(2, "First name must contain at least 2 character(s)")
+			.max(18),
+		lastName: z
+			.string()
+			.min(2, "Last name must contain at least 2 character(s)")
+			.max(18),
+		userName: z
+			.string()
+			.min(2, "User name must contain at least 2 character(s)")
+			.max(18)
+			.trim(),
+		email: z.string().email("Please enter a valid email address").trim(),
+		password: z
+			.string()
+			.min(8, "The password should have at minimum length of 8"),
+		confirmPassword: z.string().min(1, "Confirm Password is required"),
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		path: ["confirmPassword"],
+		message: "Password don't match",
+	});
 
-const validationSchema = yup.object({
-	email: yup
-		.string()
-		.trim()
-		.email("Please enter a valid email address")
-		.required("Email is required."),
-	password: yup
-		.string()
-		.required("Please specify your password")
-		.min(8, "The password should have at minimum length of 8"),
-});
-
-// {
-// 	"username": "mashafrancis",
-// 	"email": "masha@gmail.com",
-// 	"first_name": "Francis",
-// 	"last_name": "Masha",
-// 	"bio": "This is blah blah",
-// 	"profile_pic": "http://localhost:8000/media/konde_francis.jpg",
-// 	"city": "Nairobi",
-// 	"country": "Kenya",
-// 	"job_title": "Engineer",
-// 	"availability_status": "Immediately"
-// }
-
-type IFormInput = {
-	email: string;
-	password: string;
-};
+export type RegisterInputSchema = z.infer<typeof validationSchema>;
 
 function Form(): JSX.Element {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [alignment, setAlignment] = useState("candidate");
+	const { displaySnackMessage, setRequestLoading, requestLoading } = useStore();
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
+	const [isConfirmPasswordHidden, showConfirmPassword] =
+		useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
+	const toggleConfirmPassword = () =>
+		showConfirmPassword((prevState) => !prevState);
 
-	const accountType = () =>
-		alignment === "candidate" ? candidatesChoice : employerChoice;
+	const { push } = useRouter();
 
 	const initialValues = {
+		firstName: "",
+		lastName: "",
+		userName: "",
 		email: "",
 		password: "",
+		confirmPassword: "",
 	};
 
-	const { handleSubmit, control } = useForm<IFormInput>({
-		resolver: yupResolver(validationSchema),
+	const methods = useForm<RegisterInputSchema>({
+		resolver: zodResolver(validationSchema),
 		defaultValues: initialValues,
 		mode: "onChange",
 	});
 
-	const onSubmit = (values: any) => values;
+	const {
+		mutate: registerUser,
+		data,
+		isSuccess,
+	} = useMutation((userData: RegisterInputSchema) => signUpUserFn(userData), {
+		onMutate(variables) {
+			setRequestLoading(true);
+		},
+		onSuccess(data) {
+			setRequestLoading(false);
+			displaySnackMessage({
+				message:
+					"Account registration successful. Kindly login to view your profile.",
+			});
+			push("/login");
+		},
+		onError(error: any) {
+			setRequestLoading(false);
+			if (Array.isArray((error as any).response.data.error)) {
+				(error as any).response.data.error.forEach((el: any) =>
+					displaySnackMessage({
+						message: el.message,
+						severity: "error",
+					}),
+				);
+			} else {
+				displaySnackMessage({
+					message: (error as any).response.data.message,
+					severity: "error",
+				});
+			}
+		},
+	});
 
-	const handleFormTypeChange = (
-		event: MouseEvent<HTMLElement>,
-		newAlignment: string,
-	) => {
-		setAlignment(newAlignment);
+	const {
+		reset,
+		handleSubmit,
+		control,
+		formState: { isSubmitSuccessful },
+	} = methods;
+
+	useEffect(() => {
+		if (isSubmitSuccessful) {
+			reset();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isSubmitSuccessful]);
+
+	const onSubmit: SubmitHandler<RegisterInputSchema> = (values) => {
+		registerUser(values);
 	};
 
 	return (
@@ -89,169 +137,159 @@ function Form(): JSX.Element {
 				<Typography color="text.secondary">
 					Fill out the form to get started.
 				</Typography>
-				{/* <ToggleButtonGroup */}
-				{/*	fullWidth */}
-				{/*	size="small" */}
-				{/*	color="secondary" */}
-				{/*	value={alignment} */}
-				{/*	exclusive */}
-				{/*	onChange={handleFormTypeChange} */}
-				{/*	aria-label="Work" */}
-				{/* > */}
-				{/*	<ToggleButton value="candidate">Candidate</ToggleButton> */}
-				{/*	<ToggleButton value="employer">Employer</ToggleButton> */}
-				{/* </ToggleButtonGroup> */}
 			</Box>
-			<form method="post" onSubmit={handleSubmit(onSubmit)}>
-				<Grid container spacing={4}>
-					{/* <Grid item xs={12}> */}
-					{/*	<FormInputText */}
-					{/*		select */}
-					{/*		autoFocus */}
-					{/*		margin="dense" */}
-					{/*		name="experience" */}
-					{/*		placeholder="" */}
-					{/*		size="medium" */}
-					{/*		control={control} */}
-					{/*		label="Experience" */}
-					{/*		type="text" */}
-					{/*		SelectProps={{ */}
-					{/*			native: true, */}
-					{/*		}} */}
-					{/*	> */}
-					{/*		{accountType()?.map((item: any) => ( */}
-					{/*			<option key={fancyId()} value={item}> */}
-					{/*				{item} */}
-					{/*			</option> */}
-					{/*		))} */}
-					{/*	</FormInputText> */}
-					{/* </Grid> */}
-					<Grid item xs={12}>
-						<FormInputText
-							required
-							name="userName"
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Username"
-							type="text"
-							placeholder="Username"
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<FormInputText
-							required
-							name="email"
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Email"
-							type="email"
-							placeholder="Email"
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<FormInputText
-							required
-							name="password"
-							type={isPasswordHidden ? "text" : "password"}
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Password"
-							placeholder="Password"
-							InputProps={{
-								endAdornment: (
-									<InputAdornment
-										sx={{ cursor: "pointer" }}
-										onClick={togglePassword}
-										position="end"
-									>
-										{isPasswordHidden ? <Visibility /> : <VisibilityOff />}
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<FormInputText
-							required
-							name="confirmPassword"
-							type={isPasswordHidden ? "text" : "password"}
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Confirm password"
-							placeholder="Confirm password"
-							InputProps={{
-								endAdornment: (
-									<InputAdornment
-										sx={{ cursor: "pointer" }}
-										onClick={togglePassword}
-										position="end"
-									>
-										{isPasswordHidden ? <Visibility /> : <VisibilityOff />}
-									</InputAdornment>
-								),
-							}}
-						/>
-					</Grid>
-					<Grid item container xs={12}>
-						<Box
-							display="flex"
-							flexDirection={"column"}
-							justifyContent="space-between"
-							width={1}
-							maxWidth={600}
-							margin="0 auto"
-						>
-							<LoadingButton
-								fullWidth
-								variant="contained"
-								type="submit"
-								color="primary"
-								size="large"
-								loading={isLoading}
-								loadingIndicator="Please wait..."
+			<FormProvider {...methods}>
+				<form method="post" onSubmit={handleSubmit(onSubmit)}>
+					<Grid container spacing={4}>
+						<Grid item xs={6}>
+							<FormInputText
+								required
+								name="firstName"
+								margin="dense"
+								size="medium"
+								control={control}
+								label="First name"
+								type="text"
+							/>
+						</Grid>
+						<Grid item xs={6}>
+							<FormInputText
+								required
+								name="lastName"
+								margin="dense"
+								size="medium"
+								control={control}
+								label="Last name"
+								type="text"
+							/>
+						</Grid>
+						<Grid item xs={6}>
+							<FormInputText
+								required
+								name="userName"
+								margin="dense"
+								size="medium"
+								control={control}
+								label="Username"
+								type="text"
+							/>
+						</Grid>
+						<Grid item xs={6}>
+							<FormInputText
+								required
+								name="email"
+								margin="dense"
+								size="medium"
+								control={control}
+								label="Email"
+								type="email"
+							/>
+						</Grid>
+						<Grid item xs={6}>
+							<FormInputText
+								required
+								name="password"
+								type={isPasswordHidden ? "text" : "password"}
+								margin="dense"
+								size="medium"
+								control={control}
+								label="Password"
+								InputProps={{
+									endAdornment: (
+										<InputAdornment
+											sx={{ cursor: "pointer" }}
+											onClick={togglePassword}
+											position="end"
+										>
+											{isPasswordHidden ? <Visibility /> : <VisibilityOff />}
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid item xs={6}>
+							<FormInputText
+								required
+								name="confirmPassword"
+								type={isConfirmPasswordHidden ? "text" : "password"}
+								margin="dense"
+								size="medium"
+								control={control}
+								label="Confirm password"
+								InputProps={{
+									endAdornment: (
+										<InputAdornment
+											sx={{ cursor: "pointer" }}
+											onClick={toggleConfirmPassword}
+											position="end"
+										>
+											{isConfirmPasswordHidden ? (
+												<Visibility />
+											) : (
+												<VisibilityOff />
+											)}
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid item container xs={12}>
+							<Box
+								display="flex"
+								flexDirection={"column"}
+								justifyContent="space-between"
+								width={1}
+								maxWidth={600}
+								margin="0 auto"
 							>
-								Register
-							</LoadingButton>
-						</Box>
-						<Box marginTop={2}>
-							<Typography variant="subtitle2">
-								Already have an account?{" "}
-								<Button
-									component={Link}
-									href="/login"
-									variant="text"
-									color="inherit"
-									sx={{ fontWeight: 700 }}
+								<LoadingButton
+									fullWidth
+									variant="contained"
+									type="submit"
+									color="primary"
+									size="large"
+									loading={requestLoading}
+									loadingIndicator="Please wait..."
 								>
-									Login.
-								</Button>
-							</Typography>
-						</Box>
-						<Box marginTop={2}>
-							<Typography
-								variant="subtitle2"
-								color="text.secondary"
-								align="left"
-							>
-								By clicking "Sign up" button you agree with our
-								<Button
-									component={Link}
-									href="/company-terms"
-									variant="text"
-									color="inherit"
-									sx={{ fontWeight: 700 }}
+									Register
+								</LoadingButton>
+							</Box>
+							<Box marginTop={2}>
+								<Typography variant="subtitle2">
+									Already have an account?{" "}
+									<Button
+										component={Link}
+										href="/login"
+										variant="text"
+										color="inherit"
+										sx={{ fontWeight: 700 }}
+									>
+										Login.
+									</Button>
+								</Typography>
+							</Box>
+							<Box marginTop={2}>
+								<Typography
+									variant="subtitle2"
+									color="text.secondary"
+									align="left"
 								>
-									terms and conditions.
-								</Button>
-							</Typography>
-						</Box>
+									By clicking &quot;Sign up&quot; button you agree with our
+									<Button
+										component={Link}
+										href="/company-terms"
+										variant="text"
+										color="inherit"
+										sx={{ fontWeight: 700 }}
+									>
+										terms and conditions.
+									</Button>
+								</Typography>
+							</Box>
+						</Grid>
 					</Grid>
-				</Grid>
-			</form>
+				</form>
+			</FormProvider>
 		</Box>
 	);
 }

@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import type { MouseEvent } from "react";
 import { useState } from "react";
 
@@ -21,6 +22,7 @@ function UserAvatar(): JSX.Element {
 	const isSm = useMediaQuery(theme.breakpoints.down("sm"));
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const { data: session } = useSession();
+	const { push } = useRouter();
 
 	const { username, image } = session?.user || {
 		name: "Anonymous User",
@@ -42,7 +44,7 @@ function UserAvatar(): JSX.Element {
 	const menuItems = [
 		{
 			name: "Profile",
-			icon: <AccountCircleOutlined fontSize="small" />,
+			icon: <AccountCircleOutlined />,
 			link: "account",
 			secondaryText: "All about you",
 		},
@@ -63,7 +65,6 @@ function UserAvatar(): JSX.Element {
 					/>
 				) : (
 					<Chip
-						size="medium"
 						label={username ?? "Anonymous User"}
 						variant="outlined"
 						color="default"
@@ -71,7 +72,7 @@ function UserAvatar(): JSX.Element {
 						avatar={
 							<Avatar
 								alt={username ?? "Anonymous User"}
-								src={image ?? "/img/avatar_male.svg"}
+								src={image ?? "/img/avatar.svg"}
 								aria-describedby="menu-popover"
 								aria-controls="menu-popover"
 								aria-haspopup="true"
@@ -112,6 +113,7 @@ function UserAvatar(): JSX.Element {
 				{menuItems.map((item) => {
 					const handleClick = async () => {
 						handleProfileClose();
+						await push(item.link);
 					};
 					return (
 						<MenuItem

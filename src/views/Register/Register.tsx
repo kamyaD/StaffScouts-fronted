@@ -31,7 +31,7 @@ function Register(): JSX.Element {
 						alignItems="center"
 						justifyContent="center"
 						xs={12}
-						md={5}
+						md={6}
 					>
 						<Form />
 					</Grid>

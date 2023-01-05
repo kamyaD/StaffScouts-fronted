@@ -1,3 +1,4 @@
+import useStore from "@/lib/store";
 import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
 import { ThemeProvider } from "@mui/material/styles";
@@ -47,6 +48,8 @@ interface Props {
 }
 
 export default function Page({ children }: Props): JSX.Element {
+	const store = useStore();
+
 	useEffect(() => {
 		// Remove the server-side injected CSS.
 		const jssStyles = document.querySelector("#jss-server-side");
@@ -74,7 +77,7 @@ export default function Page({ children }: Props): JSX.Element {
 			{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 			<CssBaseline />
 			<Paper elevation={0}>{children}</Paper>
-			<SnackBar snack={snack} />
+			<SnackBar snack={store.snack} />
 		</ThemeProvider>
 	);
 }

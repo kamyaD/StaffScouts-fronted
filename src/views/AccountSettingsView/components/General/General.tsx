@@ -82,14 +82,6 @@ function General(): JSX.Element {
 			<form name="profile-form" method="post" onSubmit={handleSubmit(onSubmit)}>
 				<Grid container spacing={4}>
 					<Grid item xs={12} sm={6}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							Enter your first name
-						</Typography>
-
 						<FormInputText
 							name="firstName"
 							margin="dense"
@@ -97,18 +89,10 @@ function General(): JSX.Element {
 							control={control}
 							label="First Name"
 							type="text"
-							placeholder="Blah"
 							fullWidth
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							Enter your last name
-						</Typography>
 						<FormInputText
 							name="lastName"
 							margin="dense"
@@ -116,18 +100,10 @@ function General(): JSX.Element {
 							control={control}
 							label="Last Name"
 							type="text"
-							placeholder="Blah"
 							fullWidth
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							Email
-						</Typography>
 						<FormInputText
 							name="email"
 							margin="dense"
@@ -135,18 +111,10 @@ function General(): JSX.Element {
 							control={control}
 							label="Email"
 							type="email"
-							placeholder="blah@email.com"
 							fullWidth
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							Address
-						</Typography>
 						<FormInputText
 							name="address"
 							type="text"
@@ -158,13 +126,6 @@ function General(): JSX.Element {
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							Country
-						</Typography>
 						<FormInputText
 							name="country"
 							margin="dense"
@@ -176,13 +137,6 @@ function General(): JSX.Element {
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							City
-						</Typography>
 						<FormInputText
 							name="city"
 							type="text"
@@ -193,13 +147,6 @@ function General(): JSX.Element {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							Enter your bio
-						</Typography>
 						<FormInputText
 							multiline
 							rows={5}
@@ -209,10 +156,10 @@ function General(): JSX.Element {
 							size="medium"
 							control={control}
 							label="Bio"
-							placeholder="Bio"
+							placeholder="Tell us more about yourself"
 						/>
 					</Grid>
-					<Grid item container xs={12}>
+					<Grid item container xs={6}>
 						<Box
 							display="flex"
 							flexDirection={{ xs: "column", sm: "row" }}
@@ -221,8 +168,8 @@ function General(): JSX.Element {
 							width={1}
 							margin="0 auto"
 						>
-							<Button size="large" variant="contained" type="submit">
-								Save
+							<Button size="large" variant="contained" type="submit" fullWidth>
+								Save profile
 							</Button>
 						</Box>
 					</Grid>

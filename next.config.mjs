@@ -8,18 +8,23 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  output: 'standalone',
+  output: "standalone",
   swcMinify: true,
   i18n: {
     locales: ["en"],
-    defaultLocale: "en",
+    defaultLocale: "en"
   },
   images: {
-    domains: ['res.cloudinary.com', 'localhost'],
+    domains: ["res.cloudinary.com", "localhost"]
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true
   },
   poweredByHeader: false,
+  modularizeImports: {
+    "@mui/icons-material": {
+      transform: "@mui/icons-material/{{member}}"
+    }
+  }
 };
 export default config;

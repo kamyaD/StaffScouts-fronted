@@ -4,10 +4,7 @@ import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,9 +17,7 @@ const validationSchema = z.object({
 	newPassword: z
 		.string()
 		.min(8, "The password should have at minimum length of 8"),
-	repeatPassword: z
-		.string()
-		.min(8, "The password should have at minimum length of 8"),
+	repeatPassword: z.string(),
 });
 
 type IFormInput = {
@@ -62,7 +57,7 @@ function Security(): JSX.Element {
 				</Typography>
 				<Button
 					size="large"
-					variant="outlined"
+					variant="contained"
 					sx={{ marginTop: { xs: 2, md: 0 } }}
 				>
 					Log out
@@ -78,13 +73,6 @@ function Security(): JSX.Element {
 			>
 				<Grid container spacing={4}>
 					<Grid item xs={12}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							Current password
-						</Typography>
 						<FormInputText
 							required
 							name="currentPassword"
@@ -92,8 +80,7 @@ function Security(): JSX.Element {
 							margin="dense"
 							size="medium"
 							control={control}
-							label="Password"
-							placeholder="Password"
+							label="Current password"
 							InputProps={{
 								endAdornment: (
 									<InputAdornment
@@ -108,13 +95,6 @@ function Security(): JSX.Element {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							New password
-						</Typography>
 						<FormInputText
 							required
 							name="newPassword"
@@ -122,8 +102,7 @@ function Security(): JSX.Element {
 							margin="dense"
 							size="medium"
 							control={control}
-							label="Password"
-							placeholder="Password"
+							label="New password"
 							InputProps={{
 								endAdornment: (
 									<InputAdornment
@@ -138,13 +117,6 @@ function Security(): JSX.Element {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<Typography
-							variant="subtitle2"
-							sx={{ marginBottom: 2 }}
-							fontWeight={700}
-						>
-							Repeat password
-						</Typography>
 						<FormInputText
 							required
 							name="repeatPassword"
@@ -152,8 +124,7 @@ function Security(): JSX.Element {
 							margin="dense"
 							size="medium"
 							control={control}
-							label="Password"
-							placeholder="Password"
+							label="Confirm password"
 							InputProps={{
 								endAdornment: (
 									<InputAdornment
@@ -167,32 +138,7 @@ function Security(): JSX.Element {
 							}}
 						/>
 					</Grid>
-					<Grid item xs={12}>
-						<Divider />
-					</Grid>
-					<Grid item xs={12}>
-						<FormControlLabel
-							control={<Switch color="primary" defaultChecked />}
-							label={
-								<Typography variant="subtitle1" fontWeight={700}>
-									Public Profile
-								</Typography>
-							}
-							labelPlacement="end"
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<FormControlLabel
-							control={<Switch color="primary" />}
-							label={
-								<Typography variant="subtitle1" fontWeight={700}>
-									Expose your email
-								</Typography>
-							}
-							labelPlacement="end"
-						/>
-					</Grid>
-					<Grid item container xs={12}>
+					<Grid item container xs={6}>
 						<Box
 							display="flex"
 							flexDirection={{ xs: "column", sm: "row" }}
@@ -201,20 +147,20 @@ function Security(): JSX.Element {
 							width={1}
 							margin="0 auto"
 						>
-							<Box marginBottom={{ xs: 1, sm: 0 }}>
-								<Typography variant="subtitle2">
-									You may also consider to update your{" "}
-									<Link
-										color="primary"
-										href="/account-notifications"
-										underline="none"
-									>
-										notification settings.
-									</Link>
-								</Typography>
-							</Box>
-							<Button size="large" variant="contained" type="submit">
-								Save
+							{/*<Box marginBottom={{ xs: 1, sm: 0 }}>*/}
+							{/*	<Typography variant="subtitle2">*/}
+							{/*		You may also consider to update your{" "}*/}
+							{/*		<Link*/}
+							{/*			color="primary"*/}
+							{/*			href="/account-notifications"*/}
+							{/*			underline="none"*/}
+							{/*		>*/}
+							{/*			notification settings.*/}
+							{/*		</Link>*/}
+							{/*	</Typography>*/}
+							{/*</Box>*/}
+							<Button size="large" variant="contained" type="submit" fullWidth>
+								Save new password
 							</Button>
 						</Box>
 					</Grid>
