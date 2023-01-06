@@ -1,27 +1,26 @@
 import { FormInputText } from "@/components/FormInput";
 import ImageUpload from "@/components/ImageUpload";
-import { getMeFn } from "@/lib/api";
+import useRequest from "@/hooks/useRequest";
 import useStore from "@/store/index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 const validationSchema = z.object({
-	firstName: z
+	first_name: z
 		.string()
 		.trim()
 		.min(2, "Please enter a valid name")
 		.max(50, "Please enter a valid name"),
-	lastName: z
+	last_name: z
 		.string()
 		.trim()
 		.min(2, "Please enter a valid name")
 		.max(50, "Please enter a valid name"),
-	userName: z
+	username: z
 		.string()
 		.trim()
 		.min(2, "Please enter a valid username")
@@ -46,91 +45,27 @@ const validationSchema = z.object({
 
 export type GeneralProfileInputSchema = z.infer<typeof validationSchema>;
 
-function useGetMe() {
-	return useQuery({
-		queryKey: ["me"],
-		queryFn: () => getMeFn(),
-	});
-}
-
-const initialValues = {
-	firstName: "",
-	lastName: "",
-	userName: "",
-	bio: "",
-	email: "",
-	country: "",
-	city: "",
-	profile_pic: "",
-};
-
-function General(): JSX.Element {
-	const { displaySnackMessage, setAuthUser, setRequestLoading, authUser } =
-		useStore();
-
-	const [userDefaults, setUserDefaults] = useState(initialValues);
-
-	// const { data } = useGetMe();
-	const { data } = useQuery(["me"], getMeFn, {
-		select(data) {
-			return data;
-		},
-		onSuccess(data) {
-			setAuthUser(data);
-			setRequestLoading(false);
-		},
-		onError(error) {
-			setRequestLoading(false);
-			if (Array.isArray((error as any).response.data.error)) {
-				(error as any).response.data.error.forEach((el: any) =>
-					displaySnackMessage({
-						message: el.message,
-						severity: "error",
-					}),
-				);
-			} else {
-				displaySnackMessage({
-					message: (error as any).response.data.message,
-					severity: "error",
-				});
-			}
-		},
-	});
-
-	const userDataDefaults = {
-		firstName: data?.first_name as string,
-		lastName: data?.last_name as string,
-		userName: data?.username as string,
-		bio: data?.bio as string,
-		email: data?.email as string,
-		country: data?.country as string,
-		city: data?.city as string,
-		profile_pic: data?.profile_pic as string,
-	};
-
-	useEffect(() => {
-		const userData = {
-			firstName: data?.first_name as string,
-			lastName: data?.last_name as string,
-			userName: data?.username as string,
-			bio: data?.bio as string,
-			email: data?.email as string,
-			country: data?.country as string,
-			city: data?.city as string,
-			profile_pic: data?.profile_pic as string,
-		};
-
-		setUserDefaults(userData);
-	}, []);
+function General({ user }: any): JSX.Element {
+	const { authUser } = useStore();
 
 	console.log(
-		"Class: General, Function: General, Line 85 authUser():",
-		userDataDefaults,
+		"Class: General, Function: General, Line 53 authUser():",
+		authUser,
 	);
+
+	// const [userDefaults, setUserDefaults] = useState(initialValues);
+
+	const { data: me, error }: { data: any | undefined; error?: AxiosError } =
+		useRequest(
+			{
+				url: "/api/me",
+			},
+			{ refreshInterval: 120_000 },
+		);
 
 	const { handleSubmit, control } = useForm<GeneralProfileInputSchema>({
 		resolver: zodResolver(validationSchema),
-		defaultValues: userDataDefaults,
+		defaultValues: user,
 		mode: "onChange",
 	});
 
@@ -156,7 +91,11 @@ function General(): JSX.Element {
 						to be informed how we manage your private data.
 					</Typography>
 				</div>
-				<ImageUpload name="profile_pic" control={control} />
+				<ImageUpload
+					name="profile_pic"
+					control={control}
+					profile_pic={user?.profile_pic}
+				/>
 			</Stack>
 			<Box paddingY={4}>
 				<Divider />
@@ -165,7 +104,7 @@ function General(): JSX.Element {
 				<Grid container spacing={4}>
 					<Grid item xs={12} sm={6}>
 						<FormInputText
-							name="firstName"
+							name="first_name"
 							margin="dense"
 							size="medium"
 							control={control}
@@ -176,7 +115,7 @@ function General(): JSX.Element {
 					</Grid>
 					<Grid item xs={12} sm={6}>
 						<FormInputText
-							name="lastName"
+							name="last_name"
 							margin="dense"
 							size="medium"
 							control={control}
@@ -187,7 +126,7 @@ function General(): JSX.Element {
 					</Grid>
 					<Grid item xs={12} sm={6}>
 						<FormInputText
-							name="userName"
+							name="username"
 							type="text"
 							margin="dense"
 							size="medium"

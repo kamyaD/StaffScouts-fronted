@@ -1,5 +1,4 @@
-import { useJobs } from "@/hooks/useJobs";
-import usePagination from "@/hooks/usePagination";
+import useRequest from "@/hooks/useRequest";
 import { Search } from "@mui/icons-material";
 import {
 	Button,
@@ -14,12 +13,12 @@ import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import type { SetStateAction } from "react";
+import type { AxiosError } from "axios";
 import { useState } from "react";
 
 import Container from "../../components/Container";
 import JobCard from "../../components/JobCard";
-import type { Job } from "../../types";
+import type { IJobs, Job } from "../../types";
 import fancyId from "../../utils/fancyId";
 
 const JOBS_PER_PAGE = 10;
@@ -32,27 +31,26 @@ function JobListing(): JSX.Element {
 		defaultMatches: true,
 	});
 
-	const { data: jobs, isLoading, isFetching } = useJobs();
+	const { data: jobs, error }: { data: IJobs | undefined; error?: AxiosError } =
+		useRequest(
+			{
+				url: "/api/data/query",
+				params: {
+					id: "jobs",
+				},
+			},
+			{ refreshInterval: 120_000 },
+		);
 
-	console.log("Class: JobListing, Function: JobListing, Line 37 jobs():", jobs);
+	const initialDisplayJobs = jobs?.results;
 
-	const initialDisplayJobs = jobs?.results.slice(0, JOBS_PER_PAGE);
-	// @ts-expect-error ignore for now
-	const paginated = usePagination(jobs, JOBS_PER_PAGE);
-
-	const handlePageChange = (e: any, p: SetStateAction<number>) => {
-		setPage(p);
-		// @ts-expect-error ignore for now
-		paginated.jump(p);
-	};
-
-	if (isLoading) {
+	if (!jobs) {
 		return <div>Loading</div>;
 	}
 
-	// if (error) {
-	// 	return <div>Error fetching jobs</div>;
-	// }
+	if (error) {
+		return <div>Error fetching jobs</div>;
+	}
 
 	const filteredJobs = initialDisplayJobs?.filter((job) => {
 		const searchContent = job.jobs_title + job.jobs_description;
@@ -61,8 +59,7 @@ function JobListing(): JSX.Element {
 
 	// If initialDisplayPosts exist, display it if no searchValue is specified
 	const displayJobs =
-		// @ts-expect-error ignore for now
-		initialDisplayJobs?.length > 0 && !searchValue
+		(initialDisplayJobs?.length as number) > 0 && !searchValue
 			? initialDisplayJobs
 			: filteredJobs;
 
@@ -181,7 +178,7 @@ function JobListing(): JSX.Element {
 									page={page}
 									variant="outlined"
 									color="primary"
-									onChange={handlePageChange}
+									// onChange={handlePageChange}
 								/>
 							</Grid>
 						</Grid>

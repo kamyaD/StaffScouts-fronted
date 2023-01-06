@@ -1,4 +1,5 @@
 import { MenuTab, MenuTabs } from "@/components/MenuTabs";
+import useStore from "@/store/index";
 import { AllOutTwoTone, SecurityTwoTone } from "@mui/icons-material";
 import { Box, Card, Grid, Typography, useMediaQuery } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
@@ -17,22 +18,29 @@ export interface MenuComponentProps {
 	id: string;
 }
 
-const subPages: MenuComponentProps[] = [
-	{
-		id: "general",
-		primaryText: "General",
-		component: General,
-		icon: <AllOutTwoTone />,
-	},
-	{
-		id: "security",
-		primaryText: "Security",
-		component: Security,
-		icon: <SecurityTwoTone />,
-	},
-];
+function AccountSettingsView({ user }: any): JSX.Element {
+	const { displaySnackMessage, setAuthUser, setRequestLoading, authUser } =
+		useStore();
 
-function AccountSettingsView(): JSX.Element {
+	useEffect(() => {
+		setAuthUser(user);
+	}, [user]);
+
+	const subPages: MenuComponentProps[] = [
+		{
+			id: "general",
+			primaryText: "General",
+			component: () => General({ user }),
+			icon: <AllOutTwoTone />,
+		},
+		{
+			id: "security",
+			primaryText: "Security",
+			component: Security,
+			icon: <SecurityTwoTone />,
+		},
+	];
+
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(
 		+JSON.parse(
 			typeof window !== "undefined"

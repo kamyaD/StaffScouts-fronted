@@ -36,7 +36,9 @@ function UserAvatar(): JSX.Element {
 	const handleProfileClose = () => setAnchorEl(null);
 
 	const logoutActiveUser = async (): Promise<void> => {
-		await signOut();
+		await signOut({
+			callbackUrl: `${window.location.origin}`,
+		});
 	};
 
 	const open = Boolean(anchorEl);

@@ -4,7 +4,7 @@ import {
 	Box,
 	CircularProgress,
 	IconButton,
-	Tooltip
+	Tooltip,
 } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import type { SyntheticEvent } from "react";
@@ -20,6 +20,7 @@ const CLOUDINARY_URL =
 type ImageUploadProps = {
 	name: string;
 	control: any;
+	profile_pic: string;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -31,15 +32,15 @@ const useStyles = makeStyles((theme: Theme) =>
 		avatarLoading: {
 			width: theme.spacing(14),
 			height: theme.spacing(14),
-			position: 'absolute',
+			position: "absolute",
 			top: 0,
 			left: -6,
-			zIndex: 1
+			zIndex: 1,
 		},
 	}),
 );
 
-const ImageUpload = ({ name, control }: ImageUploadProps) => {
+const ImageUpload = ({ name, control, profile_pic }: ImageUploadProps) => {
 	const { field } = useController({ name, control });
 	const store = useStore();
 	const classes = useStyles();
@@ -92,31 +93,35 @@ const ImageUpload = ({ name, control }: ImageUploadProps) => {
 				formState,
 			}) => (
 				<Tooltip title="Change photo" placement="top-end">
-					<Box sx={{ m: 10, position: 'relative' }}>
-					<IconButton
-						color="primary"
-						aria-label="upload picture"
-						component="label"
-					>
-						<input
-							type="file"
-							hidden
-							name={name}
-							onBlur={onBlur}
-							ref={ref}
-							onChange={onFileDrop}
-							multiple={false}
-							accept="image/jpg, image/png, image/jpeg"
-						/>
-						<Avatar src="/img/avatar.svg" className={classes.avatar} />
-					</IconButton>
-						{store.uploadingImage && <CircularProgress sx={{
-							position: 'absolute',
-							top: '40%',
-							left: '40%',
-							marginTop: '-12px',
-							marginLeft: '-12px',
-						}} />}
+					<Box sx={{ m: 10, position: "relative" }}>
+						<IconButton
+							color="primary"
+							aria-label="upload picture"
+							component="label"
+						>
+							<input
+								type="file"
+								hidden
+								name={name}
+								onBlur={onBlur}
+								ref={ref}
+								onChange={onFileDrop}
+								multiple={false}
+								accept="image/jpg, image/png, image/jpeg"
+							/>
+							<Avatar src={profile_pic} className={classes.avatar} />
+						</IconButton>
+						{store.uploadingImage && (
+							<CircularProgress
+								sx={{
+									position: "absolute",
+									top: "40%",
+									left: "40%",
+									marginTop: "-12px",
+									marginLeft: "-12px",
+								}}
+							/>
+						)}
 					</Box>
 				</Tooltip>
 			)}

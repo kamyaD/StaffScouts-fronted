@@ -22,6 +22,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppProps, AppType } from "next/app";
 import Head from "next/head";
 import { useState } from "react";
+import { SWRConfig } from "swr";
 
 import createEmotionCache from "../createEmotionCache";
 
@@ -58,20 +59,27 @@ const App: AppType<{ session: Session | null }> = ({
 				/>
 				<title>Staffscout</title>
 			</Head>
-			<QueryClientProvider client={queryClient}>
-				<Hydrate state={pageProps.dehydratedState}>
-					<SessionProvider session={session}>
-						<Page>
-							{Component.auth ? (
-								<Auth>{getLayout(<Component {...pageProps} />)}</Auth>
-							) : (
-								getLayout(<Component {...pageProps} />)
-							)}
-						</Page>
-					</SessionProvider>
-				</Hydrate>
-				<ReactQueryDevtools initialIsOpen={false} />
-			</QueryClientProvider>
+			<SWRConfig
+				value={{
+					fetcher: (resource, init) =>
+						fetch(resource, init).then((res) => res.json()),
+				}}
+			>
+				<QueryClientProvider client={queryClient}>
+					<Hydrate state={pageProps.dehydratedState}>
+						<SessionProvider session={session}>
+							<Page>
+								{Component.auth ? (
+									<Auth>{getLayout(<Component {...pageProps} />)}</Auth>
+								) : (
+									getLayout(<Component {...pageProps} />)
+								)}
+							</Page>
+						</SessionProvider>
+					</Hydrate>
+					<ReactQueryDevtools initialIsOpen={false} />
+				</QueryClientProvider>
+			</SWRConfig>
 		</CacheProvider>
 	);
 };

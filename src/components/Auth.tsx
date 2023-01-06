@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 
@@ -13,7 +13,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
 		if (status === "unauthenticated") {
 			push("/");
 		}
-	}, [isUser, status]);
+	}, [status]);
 
 	if (isUser) {
 		return <>{children}</>;
