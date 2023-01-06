@@ -1,5 +1,5 @@
+import { useJobs } from "@/hooks/useJobs";
 import usePagination from "@/hooks/usePagination";
-import { useGetAllJobsQuery } from "@/store/services/jobs";
 import { Search } from "@mui/icons-material";
 import {
 	Button,
@@ -14,11 +14,12 @@ import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import type { SetStateAction } from "react";
 import { useState } from "react";
 
 import Container from "../../components/Container";
 import JobCard from "../../components/JobCard";
-import type { IJobs } from "../../types";
+import type { Job } from "../../types";
 import fancyId from "../../utils/fancyId";
 
 const JOBS_PER_PAGE = 10;
@@ -31,18 +32,15 @@ function JobListing(): JSX.Element {
 		defaultMatches: true,
 	});
 
-	const { data: jobs, error, isLoading } = useGetAllJobsQuery();
+	const { data: jobs, isLoading, isFetching } = useJobs();
 
-	const initialDisplayJobs = jobs?.slice(0, JOBS_PER_PAGE);
-	const pagination = {
-		currentPage: 2,
-		// @ts-expect-error ignore for now
-		totalPages: Math.ceil(jobs?.length / JOBS_PER_PAGE),
-	};
+	console.log("Class: JobListing, Function: JobListing, Line 37 jobs():", jobs);
+
+	const initialDisplayJobs = jobs?.results.slice(0, JOBS_PER_PAGE);
 	// @ts-expect-error ignore for now
 	const paginated = usePagination(jobs, JOBS_PER_PAGE);
 
-	const handlePageChange = (e: any, p: React.SetStateAction<number>) => {
+	const handlePageChange = (e: any, p: SetStateAction<number>) => {
 		setPage(p);
 		// @ts-expect-error ignore for now
 		paginated.jump(p);
@@ -52,9 +50,9 @@ function JobListing(): JSX.Element {
 		return <div>Loading</div>;
 	}
 
-	if (error) {
-		return <div>Error fetching jobs</div>;
-	}
+	// if (error) {
+	// 	return <div>Error fetching jobs</div>;
+	// }
 
 	const filteredJobs = initialDisplayJobs?.filter((job) => {
 		const searchContent = job.jobs_title + job.jobs_description;
@@ -168,21 +166,22 @@ function JobListing(): JSX.Element {
 					</Grid>
 				</Container>
 			</Box>
-			{pagination && pagination.totalPages > 1 && !searchValue && (
+			{parseInt(jobs?.count as string) > 1 && !searchValue && (
 				<Container>
 					<Box>
 						<Grid container spacing={4}>
-							{displayJobs?.map((job: IJobs) => (
+							{displayJobs?.map((job: Job) => (
 								<JobCard key={fancyId()} job={job} />
 							))}
 							<Grid item container justifyContent="center" xs={12}>
 								<Pagination
-									count={pagination.totalPages}
+									count={
+										(jobs?.count as number) / (jobs?.results.length as number)
+									}
 									page={page}
 									variant="outlined"
 									color="primary"
 									onChange={handlePageChange}
-									sx={{}}
 								/>
 							</Grid>
 						</Grid>

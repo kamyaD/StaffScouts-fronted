@@ -9,14 +9,19 @@ import Auth from "@/components/Auth";
 import Page from "@/components/Page";
 import { trpc } from "@/lib/trpc";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
-import store from "@/store/index";
 import type { EmotionCache } from "@emotion/react";
 import { CacheProvider } from "@emotion/react";
+import {
+	Hydrate,
+	QueryClient,
+	QueryClientProvider,
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps, AppType } from "next/app";
 import Head from "next/head";
-import { Provider } from "react-redux";
+import { useState } from "react";
 
 import createEmotionCache from "../createEmotionCache";
 
@@ -28,12 +33,21 @@ interface Props extends AppProps {
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
+// const queryClient = new QueryClient({
+// 	defaultOptions: {
+// 		queries: { networkMode: "offlineFirst" },
+// 		mutations: { networkMode: "offlineFirst" },
+// 	},
+// });
+
 const App: AppType<{ session: Session | null }> = ({
 	Component,
 	pageProps: { session, ...pageProps },
 	emotionCache = clientSideEmotionCache,
 }: Props) => {
 	const getLayout = Component.getLayout ?? ((page) => page);
+
+	const [queryClient] = useState(() => new QueryClient());
 
 	return (
 		<CacheProvider value={emotionCache}>
@@ -44,17 +58,20 @@ const App: AppType<{ session: Session | null }> = ({
 				/>
 				<title>Staffscout</title>
 			</Head>
-			<Provider store={store}>
-				<SessionProvider session={session}>
-					<Page>
-						{Component.auth ? (
-							<Auth>{getLayout(<Component {...pageProps} />)}</Auth>
-						) : (
-							getLayout(<Component {...pageProps} />)
-						)}
-					</Page>
-				</SessionProvider>
-			</Provider>
+			<QueryClientProvider client={queryClient}>
+				<Hydrate state={pageProps.dehydratedState}>
+					<SessionProvider session={session}>
+						<Page>
+							{Component.auth ? (
+								<Auth>{getLayout(<Component {...pageProps} />)}</Auth>
+							) : (
+								getLayout(<Component {...pageProps} />)
+							)}
+						</Page>
+					</SessionProvider>
+				</Hydrate>
+				<ReactQueryDevtools initialIsOpen={false} />
+			</QueryClientProvider>
 		</CacheProvider>
 	);
 };

@@ -11,7 +11,6 @@ import { alpha, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import React from "react";
 
-import { useCandidatesQuery } from "../../../../store/services/users";
 import type { ICandidates } from "../../../../types";
 import fancyId from "../../../../utils/fancyId";
 import stripHtml from "../../../../utils/stripHtml";
@@ -46,10 +45,9 @@ function Reviews(): JSX.Element {
 		defaultMatches: true,
 	});
 
-	const { data } = useCandidatesQuery();
+	const data = [];
 	// @ts-ignore
 	const candidates: ICandidates[] = data?.slice(0, 3);
-	console.log("Class: Reviews, Function: Reviews, Line 49 data():", candidates);
 
 	const sliderOpts = {
 		dots: !isMd,

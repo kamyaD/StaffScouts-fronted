@@ -1,12 +1,10 @@
-import type { SnackMessage } from "@/store/slices/snack";
-import { reset } from "@/store/slices/snack";
+import type { SnackMessage } from "@/lib/../store";
 import type { AlertProps } from "@mui/material";
 import { Snackbar, useMediaQuery } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { useTheme } from "@mui/material/styles";
 import type { SyntheticEvent } from "react";
 import { forwardRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
 interface SnackMessageProps {
 	snack: SnackMessage;
@@ -23,7 +21,6 @@ export function SnackBar({ snack }: SnackMessageProps): JSX.Element {
 	const [isSnackOpen, setSnackOpen] = useState(false);
 	const [snackMessage, setSnackMessage] = useState("");
 
-	const dispatch = useDispatch();
 	const theme = useTheme();
 	const isSm = useMediaQuery(theme.breakpoints.up("sm"), {
 		defaultMatches: true,
@@ -41,7 +38,6 @@ export function SnackBar({ snack }: SnackMessageProps): JSX.Element {
 	) => {
 		if (reason === "clickaway") return;
 		setSnackOpen(false);
-		dispatch(reset());
 	};
 
 	return (

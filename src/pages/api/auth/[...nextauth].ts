@@ -24,14 +24,9 @@ export const authOptions: NextAuthOptions = {
 					username: credentials?.username,
 					password: credentials?.password,
 				};
-				// const res = await fetch(`http://127.0.0.1:8000/api-user-login/`, {
-				// 	method: "POST",
-				// 	body: JSON.stringify(payload),
-				// 	headers: { "Content-Type": "application/json" },
-				// });
 
 				const res = await axios.post<AuthResponse>(
-					`http://127.0.0.1:8000/api-user-login/`,
+					`http://127.0.0.1:8000/users/api-user-login/`,
 					payload,
 				);
 				const user = await res.data;

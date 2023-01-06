@@ -1,6 +1,6 @@
 import { FormInputText } from "@/components/FormInput";
 import { signUpUserFn } from "@/lib/api";
-import useStore from "@/lib/store";
+import useStore from "@/store/index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";

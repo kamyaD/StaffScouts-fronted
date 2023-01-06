@@ -1,3 +1,6 @@
+import dayjsTime from "@/utils/dayjsTime";
+import isBrowser from "@/utils/isBrowser";
+import stripHtml from "@/utils/stripHtml";
 import {
 	Bookmark,
 	Favorite,
@@ -18,12 +21,10 @@ import {
 import { alpha, useTheme } from "@mui/material/styles";
 import Str from "@supercharge/strings";
 
-import type { IJobs } from "../types";
-import dayjsTime from "../utils/dayjsTime";
-import stripHtml from "../utils/stripHtml";
+import type { Job } from "../types";
 
 interface JobProps {
-	job: IJobs;
+	job: Job;
 }
 
 function JobCard({
@@ -40,9 +41,9 @@ function JobCard({
 }: JobProps): JSX.Element {
 	const theme = useTheme();
 
-	const jobDescription = Str(stripHtml(jobs_description).toString())
-		.limit(300, "...")
-		.get();
+	const jobDescription = isBrowser
+		? Str(stripHtml(jobs_description).toString()).limit(300, "...").get()
+		: "";
 
 	return (
 		<Grid item xs={12}>

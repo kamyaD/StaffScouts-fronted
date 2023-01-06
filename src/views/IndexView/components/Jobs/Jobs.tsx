@@ -1,4 +1,4 @@
-import { useGetAllJobsQuery } from "@/store/services/jobs";
+import { useJobs } from "@/hooks/useJobs";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -9,7 +9,8 @@ import JobCard from "../../../../components/JobCard";
 import fancyId from "../../../../utils/fancyId";
 
 function Jobs(): JSX.Element {
-	const { data: jobs, error, isLoading } = useGetAllJobsQuery();
+	const { data } = useJobs();
+	const jobs = data?.results;
 
 	return (
 		<Box>
@@ -22,12 +23,11 @@ function Jobs(): JSX.Element {
 				{jobs?.slice(0, 3).map((job) => (
 					<JobCard key={fancyId()} job={job} />
 				))}
-				{/* @ts-expect-error ignore for now */}
-				{jobs?.length > 3 ? (
+				{(jobs?.length as number) > 3 ? (
 					<Grid item container justifyContent="center" xs={12}>
 						<Button
 							component={Link}
-							href="/job-listing"
+							href="/jobs-listing"
 							variant="contained"
 							size="large"
 							endIcon={

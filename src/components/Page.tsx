@@ -1,13 +1,11 @@
-import useStore from "@/lib/store";
+import useStore from "@/lib/../store";
 import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
 import { ThemeProvider } from "@mui/material/styles";
 import AOS from "aos";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
-import type { RootState } from "../store";
 import getTheme from "../theme";
 import SnackBar from "./SnackBar";
 
@@ -66,7 +64,6 @@ export default function Page({ children }: Props): JSX.Element {
 	}, []);
 
 	const [themeMode, themeToggler, mountedComponent] = useDarkMode();
-	const snack = useSelector((store: RootState) => store.snack);
 
 	useEffect(() => {
 		AOS.refresh();

@@ -1,4 +1,33 @@
 interface IJobs {
+	results: Array<Job>;
+	count: string | number;
+	next: string | null;
+	previous: string | null;
+}
+
+interface ICandidates {
+	id: number;
+	user_id: number;
+	specialism_id: string;
+	experiences_id: number;
+	education_levels_id: number;
+	job_title: string;
+	personal_statement: string;
+	personal: string;
+	biography: string;
+	education: string;
+	experience: string;
+	portfolio: string;
+	skills: string;
+	honors?: any;
+	availability_status: number;
+	metadata?: any;
+	created_at: Date;
+	updated_at: Date;
+	deleted_at: Date;
+}
+
+interface Job {
 	id: number;
 	user_id: number;
 	specialism_id: number;
@@ -27,26 +56,4 @@ interface IJobs {
 	is_company_name_hidden: boolean;
 }
 
-interface ICandidates {
-	id: number;
-	user_id: number;
-	specialism_id: string;
-	experiences_id: number;
-	education_levels_id: number;
-	job_title: string;
-	personal_statement: string;
-	personal: string;
-	biography: string;
-	education: string;
-	experience: string;
-	portfolio: string;
-	skills: string;
-	honors?: any;
-	availability_status: number;
-	metadata?: any;
-	created_at: Date;
-	updated_at: Date;
-	deleted_at: Date;
-}
-
-export { IJobs, ICandidates };
+export { IJobs, Job, ICandidates };

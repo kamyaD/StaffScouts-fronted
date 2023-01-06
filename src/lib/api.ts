@@ -1,7 +1,7 @@
 import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
 import axios from "axios";
 
-import type { GenericResponse } from "./types";
+import type { GenericResponse, IUserResponse } from "./types";
 
 const BASE_URL = "/";
 
@@ -34,10 +34,10 @@ export const signUpUserFn = async (user: RegisterInputSchema) => {
 //   return response.data;
 // };
 //
-// export const getMeFn = async () => {
-//   const response = await authApi.get<IUserResponse>('users/me');
-//   return response.data;
-// };
+export const getMeFn = async (): Promise<IUserResponse> => {
+	const response = await authApi.get<IUserResponse>(`/api/me`);
+	return response.data;
+};
 //
 // export const forgotPasswordFn = async (email: string) => {
 //   const response = await authApi.post<GenericResponse>('auth/forgotpassword',{email});

@@ -20,14 +20,16 @@ export interface GenericResponse {
 	message: string;
 }
 
-export interface ILoginResponse {
-	status: string;
-	access_token: string;
-}
-
 export interface IUserResponse {
-	status: string;
-	data: {
-		user: IUser;
-	};
+	id: string;
+	first_name: string;
+	last_name: string;
+	username: string;
+	email: string;
+	bio: string;
+	profile_pic: string;
+	city: string;
+	country: string;
+	job_title: string;
+	availability_status: string;
 }

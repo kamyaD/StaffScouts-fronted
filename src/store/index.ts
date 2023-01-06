@@ -1,39 +1,42 @@
-import type { ConfigureStoreOptions } from "@reduxjs/toolkit";
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import type { TypedUseSelectorHook } from "react-redux";
-import { useDispatch, useSelector } from "react-redux";
+import type { IUserResponse } from "@/lib/types";
+import create from "zustand";
 
-import { authApi } from "./services/auth";
-import { baseApi } from "./services/baseApi";
-import { jobsApi } from "./services/jobs";
-import { authSlice } from "./slices/auth";
-import { notificationsSlice } from "./slices/notifications";
-import { snackSlice } from "./slices/snack";
+export type Severity = "success" | "error";
 
-const rootReducer = combineReducers({
-	[snackSlice.name]: snackSlice.reducer,
-	[notificationsSlice.name]: notificationsSlice.reducer,
-	[authSlice.name]: authSlice.reducer,
-	[authApi.reducerPath]: authApi.reducer,
-	[jobsApi.reducerPath]: jobsApi.reducer,
-});
+export interface SnackMessage {
+	message: string;
+	severity?: Severity;
+}
 
-const createStore = (
-	options?: ConfigureStoreOptions["preloadedState"] | undefined,
-) =>
-	configureStore({
-		reducer: rootReducer,
-		devTools: true,
-		middleware: (getDefaultMiddleware) =>
-			getDefaultMiddleware().concat(baseApi.middleware),
-		...options,
-	});
+type Store = {
+	authUser: IUserResponse | null;
+	requestLoading: boolean;
+	setAuthUser: (user: IUserResponse | null) => void;
+	setRequestLoading: (isLoading: boolean) => void;
+	snack: SnackMessage;
+	displaySnackMessage: (snack: SnackMessage) => void;
+	setUploadingImage: (isUploading: boolean) => void;
+	uploadingImage: boolean;
+};
 
-export const store = createStore();
+const useStore = create<Store>((set) => ({
+	authUser: null,
+	requestLoading: false,
+	setAuthUser: (user) => set((state) => ({ ...state, authUser: user })),
+	setRequestLoading: (isLoading) =>
+		set((state) => ({ ...state, requestLoading: isLoading })),
+	snack: {
+		message: "",
+		severity: "success",
+	},
+	displaySnackMessage: (snack: SnackMessage) =>
+		set((state) => ({
+			...state,
+			snack,
+		})),
+	uploadingImage: false,
+	setUploadingImage: (isUploading) =>
+		set((state) => ({ ...state, uploadingImage: isUploading })),
+}));
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-
-export default store;
+export default useStore;

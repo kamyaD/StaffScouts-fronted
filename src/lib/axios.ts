@@ -1,10 +1,39 @@
 // import { env } from "@/env/server.mjs";
+import type { HeadersDefaults } from "axios";
 import axios from "axios";
+import { getSession } from "next-auth/react";
 
-// Create axios instance.
-const axiosInstance = axios.create({
-	baseURL: "http://127.0.0.1:8000",
-	withCredentials: true,
-});
+const axiosClient = axios.create();
 
-export default axiosInstance;
+axiosClient.defaults.baseURL = "http://127.0.0.1:8000";
+
+type headers = {
+	"Content-Type": string;
+	Accept: string;
+	Authorization: string;
+};
+
+// @ts-ignore
+axiosClient.defaults.headers = {
+	"Content-Type": "application/json",
+	Accept: "application/json",
+} as headers & HeadersDefaults;
+
+axiosClient.interceptors.request.use(
+	async (config) => {
+		const session = await getSession();
+
+		if (session) {
+			// @ts-expect-error
+			config.headers.common = {
+				Authorization: `${session.user.token}`,
+			};
+		}
+		return config;
+	},
+	(error) => {
+		return Promise.reject(error);
+	},
+);
+
+export default axiosClient;

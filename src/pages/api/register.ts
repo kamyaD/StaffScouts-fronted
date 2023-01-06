@@ -25,10 +25,7 @@ const handler: NextApiHandler = async (
 	};
 
 	try {
-		const response = await axios.post("/register/", body);
-
-		console.log("Class: , Function: handler, Line 11 response():", response);
-
+		await axios.post("/users/register/", body);
 		res.status(200).end();
 	} catch (e: any) {
 		res.status(400).send(e);

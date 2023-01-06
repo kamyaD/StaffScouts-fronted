@@ -1,11 +1,12 @@
 import { FormInputText } from "@/components/FormInput";
-import useStore from "@/lib/store";
-import { useAppDispatch } from "@/store/index";
+import { getMeFn } from "@/lib/api";
+import useStore from "@/store/index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Grid, InputAdornment, Typography } from "@mui/material";
-import { signIn } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -20,14 +21,21 @@ const validationSchema = z.object({
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
+function useGetMe() {
+	return useQuery({
+		queryKey: ["me"],
+		queryFn: () => getMeFn(),
+	});
+}
+
 function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
-	const { displaySnackMessage } = useStore();
+	const { displaySnackMessage, setAuthUser, setRequestLoading, authUser } =
+		useStore();
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 	const { push, prefetch } = useRouter();
-
-	const dispatch = useAppDispatch();
+	const { data: session } = useSession();
 
 	const { handleSubmit, control } = useForm<ValidationSchema>({
 		resolver: zodResolver(validationSchema),
@@ -56,13 +64,45 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 				message: "You have successfully logged in",
 			});
 		}
+
 		if (res?.url) await push(res?.url);
 		setIsLoading(false);
 	};
 
+	// const { data } = useQuery(["me"], getMeFn, {
+	// 	select(data) {
+	// 		return data;
+	// 	},
+	// 	onSuccess(data) {
+	// 		setAuthUser(data);
+	// 		setRequestLoading(false);
+	// 	},
+	// 	onError(error) {
+	// 		setRequestLoading(false);
+	// 		if (Array.isArray((error as any).response.data.error)) {
+	// 			(error as any).response.data.error.forEach((el: any) =>
+	// 				displaySnackMessage({
+	// 					message: el.message,
+	// 					severity: "error",
+	// 				}),
+	// 			);
+	// 		} else {
+	// 			displaySnackMessage({
+	// 				message: (error as any).response.data.message,
+	// 				severity: "error",
+	// 			});
+	// 		}
+	// 	},
+	// });
+	//
+
 	useEffect(() => {
 		prefetch("account");
 	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("token", session?.user.token as string);
+	}, [session?.user.token]);
 
 	return (
 		// <Box bgcolor={theme.palette.alternate.main}
