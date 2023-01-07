@@ -1,3 +1,4 @@
+import { GeneralProfileInputSchema } from "@/views/AccountSettingsView/components/General/General";
 import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
 import axios from "axios";
 
@@ -36,6 +37,13 @@ export const signUpUserFn = async (user: RegisterInputSchema) => {
 //
 export const getMeFn = async (): Promise<IUserResponse> => {
 	const response = await authApi.get<IUserResponse>(`/api/me`);
+	return response.data;
+};
+
+export const updateProfileFn = async (
+	user: GeneralProfileInputSchema,
+): Promise<IUserResponse> => {
+	const response = await authApi.put<IUserResponse>(`/api/me`, user);
 	return response.data;
 };
 //

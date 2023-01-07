@@ -33,3 +33,17 @@ export interface IUserResponse {
 	job_title: string;
 	availability_status: string;
 }
+
+export interface IUserProfile {
+	id: string;
+	first_name: string;
+	last_name: string;
+	username: string;
+	email: string;
+	bio: string;
+	profile_pic: string;
+	city: string;
+	country: string;
+	job_title: string;
+	availability_status: string;
+}

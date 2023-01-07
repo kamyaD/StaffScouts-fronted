@@ -1,11 +1,15 @@
 import { FormInputText } from "@/components/FormInput";
 import ImageUpload from "@/components/ImageUpload";
-import useRequest from "@/hooks/useRequest";
+import { updateProfileFn } from "@/lib/api";
+import type { IUserProfile } from "@/lib/types";
 import useStore from "@/store/index";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
-import type { AxiosError } from "axios";
+import { LoadingButton } from "@mui/lab";
+import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -25,18 +29,14 @@ const validationSchema = z.object({
 		.trim()
 		.min(2, "Please enter a valid username")
 		.max(50, "Please enter a valid username"),
-	email: z.string().trim().email("Please enter a valid email address"),
+	email: z
+		.string()
+		.trim()
+		.email("Please enter a valid email address")
+		.optional(),
 	bio: z.string().trim().max(500, "Should be less than 500 chars").optional(),
-	country: z
-		.string()
-		.trim()
-		.min(2, "Please enter a valid name")
-		.max(80, "Please enter a valid name"),
-	city: z
-		.string()
-		.trim()
-		.min(2, "Please enter a valid name")
-		.max(80, "Please enter a valid name"),
+	country: z.string().trim().optional(),
+	city: z.string().trim().optional(),
 	profile_pic: z
 		.string()
 		.min(1, "Photo is required")
@@ -45,31 +45,49 @@ const validationSchema = z.object({
 
 export type GeneralProfileInputSchema = z.infer<typeof validationSchema>;
 
-function General({ user }: any): JSX.Element {
-	const { authUser } = useStore();
-
-	console.log(
-		"Class: General, Function: General, Line 53 authUser():",
-		authUser,
-	);
-
-	// const [userDefaults, setUserDefaults] = useState(initialValues);
-
-	const { data: me, error }: { data: any | undefined; error?: AxiosError } =
-		useRequest(
-			{
-				url: "/api/me",
-			},
-			{ refreshInterval: 120_000 },
-		);
-
+function General({ user }: { user: IUserProfile }): JSX.Element {
+	const [requestLoading, setRequestLoading] = useState<boolean>(false);
+	const { displaySnackMessage } = useStore();
 	const { handleSubmit, control } = useForm<GeneralProfileInputSchema>({
 		resolver: zodResolver(validationSchema),
 		defaultValues: user,
 		mode: "onChange",
 	});
 
-	const onSubmit = () => {};
+	const { mutate: updateProfile } = useMutation(
+		(userData: GeneralProfileInputSchema) => updateProfileFn(userData),
+		{
+			onMutate() {
+				setRequestLoading(true);
+			},
+			onSuccess() {
+				setRequestLoading(false);
+				displaySnackMessage({
+					message: "Profile updated successful.",
+				});
+			},
+			onError(error: any) {
+				setRequestLoading(false);
+				if (Array.isArray((error as any).response.data.error)) {
+					(error as any).response.data.error.forEach((el: any) =>
+						displaySnackMessage({
+							message: el.message,
+							severity: "error",
+						}),
+					);
+				} else {
+					displaySnackMessage({
+						message: (error as any).response.data.message,
+						severity: "error",
+					});
+				}
+			},
+		},
+	);
+
+	const onSubmit: SubmitHandler<GeneralProfileInputSchema> = (values) => {
+		updateProfile(values);
+	};
 
 	return (
 		<Box>
@@ -189,9 +207,17 @@ function General({ user }: any): JSX.Element {
 							width={1}
 							margin="0 auto"
 						>
-							<Button size="large" variant="contained" type="submit" fullWidth>
+							<LoadingButton
+								fullWidth
+								variant="contained"
+								type="submit"
+								color="primary"
+								size="large"
+								loading={requestLoading}
+								loadingIndicator="Please wait..."
+							>
 								Save profile
-							</Button>
+							</LoadingButton>
 						</Box>
 					</Grid>
 				</Grid>

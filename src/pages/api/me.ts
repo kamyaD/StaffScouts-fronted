@@ -11,7 +11,7 @@ const handler: NextApiHandler = async (
 
 	const config = {
 		headers: {
-			Authorization: `Bearer ${session?.user?.token}`,
+			Authorization: `Token ${session?.user?.token}`,
 		},
 	};
 
@@ -19,7 +19,7 @@ const handler: NextApiHandler = async (
 		switch (method) {
 			case "PUT":
 				return axios
-					.put("/users", body, config)
+					.put(`/users/update-user/${session?.user?.id}/`, body, config)
 					.then((response) => response.data)
 					.then((data) => res.json(data));
 			case "GET":

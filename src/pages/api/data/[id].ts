@@ -1,5 +1,4 @@
-import axios from "@lib/axios";
-import environment from "@lib/environment";
+import axios from "@/lib/axios";
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 
@@ -10,29 +9,30 @@ const handler: NextApiHandler = async (
 	const {
 		method,
 		query: { id, url },
+		body,
 	} = req;
 	const session = await getSession({ req });
 
 	const config = {
 		headers: {
-			Authorization: `Api-Token ${environment.apiToken}`,
+			Authorization: `Bearer ${session?.user?.token}`,
 		},
 	};
 
 	if (!!session) {
-		try {
-			if (method !== "GET") {
-				res.status(404).end();
-			}
-
-			const endpoint = `https://krr89478.live.dynatrace.com/api/v2/${url}/${id}`;
-
-			return axios
-				.get(endpoint, config)
-				.then((response) => response.data)
-				.then((data) => res.json(data));
-		} catch (e: any) {
-			res.status(e.response.status ?? 500).send(e);
+		switch (method) {
+			case "PUT":
+				return axios
+					.put(`/${url}/${session?.user?.id}`, body.payload, config)
+					.then((response) => response.data)
+					.then((data) => res.json(data));
+			case "DELETE":
+				return axios
+					.delete(`/scheduled-reports/${id}`, config)
+					.then(() => res.send({ message: "Schedule deleted successfully." }));
+			default:
+				res.setHeader("Allow", ["delete", "put"]);
+				res.status(405).end(`Method blah ${method} Not Allowed`);
 		}
 	}
 };

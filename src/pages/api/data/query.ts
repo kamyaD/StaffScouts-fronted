@@ -23,7 +23,6 @@ const handler: NextApiHandler = async (
 
 			if (req.query.id) {
 				const url = `http://127.0.0.1:8000/${req.query.id}`;
-				console.log("Class: , Function: handler, Line 26 url():", url);
 				const queryParams = queryString.stringify(req.query, {
 					skipEmptyString: true,
 					skipNull: true,
