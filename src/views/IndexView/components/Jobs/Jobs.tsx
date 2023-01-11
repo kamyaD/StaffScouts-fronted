@@ -1,4 +1,3 @@
-import { useJobs } from "@/hooks/useJobs";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -7,10 +6,23 @@ import Link from "next/link";
 
 import JobCard from "../../../../components/JobCard";
 import fancyId from "../../../../utils/fancyId";
+import type { IJobs } from "../../../../types";
+import type { AxiosError } from "axios";
+import useRequest from "@/hooks/useRequest";
 
 function Jobs(): JSX.Element {
-	const { data } = useJobs();
-	const jobs = data?.results;
+	const { data, error }: { data: IJobs | undefined; error?: AxiosError } =
+		useRequest(
+			{
+				url: "/api/data/query",
+				params: {
+					id: "jobs",
+				},
+			},
+			{ refreshInterval: 120_000 },
+		);
+
+	const jobs = data?.results
 
 	return (
 		<Box>

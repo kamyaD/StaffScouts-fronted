@@ -1,22 +1,7 @@
 import { Main } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
 import type { ReactElement } from "react";
-import JobsListingView from "views/JobsListing";
-
-// export async function getStaticProps() {
-// 	const queryClient = new QueryClient();
-//
-// 	await queryClient.prefetchQuery({
-// 		queryKey: ["jobs"],
-// 		queryFn: () => fetchJobs(),
-// 	});
-//
-// 	return {
-// 		props: {
-// 			dehydratedState: dehydrate(queryClient),
-// 		},
-// 	};
-// }
+import JobsListingView from "@/views/JobsListing";
 
 const JobsListingPage: NextPageWithAuthAndLayout = () => {
 	return <JobsListingView />;

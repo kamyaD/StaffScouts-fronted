@@ -21,14 +21,19 @@ const handler: NextApiHandler = async (
 
 	if (!!session) {
 		switch (method) {
+			case "GET":
+				return axios
+					.get(`/${url}/${id}`, config)
+					.then((response) => response.data)
+					.then((data) => res.json(data));
 			case "PUT":
 				return axios
-					.put(`/${url}/${session?.user?.id}`, body.payload, config)
+					.put(`/${url}/${id}`, body.payload, config)
 					.then((response) => response.data)
 					.then((data) => res.json(data));
 			case "DELETE":
 				return axios
-					.delete(`/scheduled-reports/${id}`, config)
+					.delete(`/${url}/${id}`, config)
 					.then(() => res.send({ message: "Schedule deleted successfully." }));
 			default:
 				res.setHeader("Allow", ["delete", "put"]);

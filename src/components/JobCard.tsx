@@ -5,7 +5,7 @@ import {
 	Bookmark,
 	Favorite,
 	LocationOn,
-	PaymentsOutlined,
+	PaymentsOutlined
 } from "@mui/icons-material";
 import {
 	Box,
@@ -16,12 +16,13 @@ import {
 	Grid,
 	IconButton,
 	Tooltip,
-	Typography,
+	Typography
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import Str from "@supercharge/strings";
 
 import type { Job } from "../types";
+import Link from "next/link";
 
 interface JobProps {
 	job: Job;
@@ -29,6 +30,7 @@ interface JobProps {
 
 function JobCard({
 	job: {
+		id,
 		jobs_title,
 		jobs_description,
 		country,
@@ -167,6 +169,8 @@ function JobCard({
 						</Box>
 						<Button
 							variant="contained"
+							component={Link}
+							href={`/jobs-listing/${id}`}
 							endIcon={
 								<Box
 									component="svg"

@@ -6,7 +6,7 @@ import {
 	IconButton,
 	InputBase,
 	Pagination,
-	Paper,
+	Paper
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -147,7 +147,7 @@ function JobListing(): JSX.Element {
 								>
 									<Box
 										component="img"
-										src="https://assets.maccarianagency.com/svg/illustrations/drawkit-illustration1.svg"
+										src="/img/jobs-listing.svg"
 										width={1}
 										height={1}
 										sx={{
