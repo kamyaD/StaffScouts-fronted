@@ -47,3 +47,14 @@ export interface IUserProfile {
 	job_title: string;
 	availability_status: string;
 }
+
+export interface JobInterestedDTO {
+	user_id: string | number;
+	job_id: string | number;
+	created_at: Date;
+	updated_at: Date;
+}
+
+export interface IJobInterestedResponse extends JobInterestedDTO {
+	id: string;
+}

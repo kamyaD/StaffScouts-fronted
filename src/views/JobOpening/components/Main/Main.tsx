@@ -9,19 +9,31 @@ import type { Job } from "../../../../types";
 import type { AxiosError } from "axios";
 import useRequest from "@/hooks/useRequest";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { useMutation } from "@tanstack/react-query";
+import { createCandidateJobInterestedFn } from "@/lib/api";
+import { useState } from "react";
+import useStore from "@/store/index";
+import { JobInterestedDTO } from "@/lib/types";
 
 const Main = (): JSX.Element => {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
 	});
+	const [requestLoading, setRequestLoading] = useState<boolean>(false);
+	const { displaySnackMessage } = useStore();
 
 	const router = useRouter()
+
+	const { data: session } = useSession();
+	const jobId = router.query.id
+	const userId = session?.user.id
 
 	const { data: job, error }: { data: Job | undefined; error?: AxiosError } =
 		useRequest(
 			{
-				url: `/api/unauthedData/${router.query.id}`,
+				url: `/api/unauthedData/${jobId}`,
 				params: {
 					url: "jobs",
 					id: router.query.id
@@ -29,6 +41,48 @@ const Main = (): JSX.Element => {
 			},
 			{ refreshInterval: 120_000 },
 		);
+
+	const { mutate: createJobInterestedIn } = useMutation(
+		(jobsData: JobInterestedDTO) => createCandidateJobInterestedFn(jobsData),
+		{
+			onMutate() {
+				setRequestLoading(true);
+			},
+			onSuccess() {
+				setRequestLoading(false);
+				displaySnackMessage({
+					message: "Thank you for creating interest in the job.",
+				});
+			},
+			onError(error: any) {
+				setRequestLoading(false);
+				if (Array.isArray((error as any).response.data.error)) {
+					(error as any).response.data.error.forEach((el: any) =>
+						displaySnackMessage({
+							message: el.message,
+							severity: "error",
+						}),
+					);
+				} else {
+					displaySnackMessage({
+						message: (error as any).response.data.message,
+						severity: "error",
+					});
+				}
+			},
+		},
+	);
+
+	const handleUnauthenticatedUser = () => router.push('/login')
+
+	const jobsData = {
+		user_id: userId as string,
+		job_id: jobId as string,
+		created_at: new Date(),
+		updated_at: new Date()
+	}
+
+	const handleCandidateJobInterest = () => createJobInterestedIn(jobsData)
 
 	return (
 		<Box>
@@ -45,7 +99,7 @@ const Main = (): JSX.Element => {
 					<Typography variant={"h6"}>Nairobi, Kenya · Full time</Typography>
 				</Box>
 				<Box display="flex" marginTop={{ xs: 2, md: 0 }}>
-					<Button variant="contained" color="primary" size="large">
+					<Button variant="contained" color="primary" size="large" onClick={session ? handleCandidateJobInterest : handleUnauthenticatedUser}>
 						Apply now
 					</Button>
 					{/*<Box*/}
@@ -66,12 +120,14 @@ const Main = (): JSX.Element => {
 						<Typography variant={"h5"} fontWeight={700} gutterBottom>
 							Job description
 						</Typography>
+						{ /* @ts-expect-error */ }
 						<Typography component={"p"} dangerouslySetInnerHTML={{__html: job?.jobs_description}} />
 					</Box>
 					<Box marginBottom={3}>
 						<Typography variant={"h5"} fontWeight={700} gutterBottom>
 							Duties and Responsibilities
 						</Typography>
+						{ /* @ts-expect-error */ }
 						<Typography component={"p"} dangerouslySetInnerHTML={{__html: job?.duties_responsibilities}} />
 						{/*<Grid container spacing={1} sx={{ marginTop: 1 }}>*/}
 						{/*	{[*/}
@@ -125,6 +181,7 @@ const Main = (): JSX.Element => {
 						<Typography variant={"h5"} fontWeight={700} gutterBottom>
 							Job Requirements
 						</Typography>
+						{ /* @ts-expect-error */ }
 						<Typography component={"p"} dangerouslySetInnerHTML={{__html: job?.qualifications_competencies}} />
 					</Box>
 					{/*<Box>*/}

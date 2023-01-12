@@ -15,7 +15,7 @@ const handler: NextApiHandler = async (
 
 	const config = {
 		headers: {
-			Authorization: `Bearer ${session?.user?.token}`,
+			Authorization: `Token ${session?.user?.token}`,
 		},
 	};
 

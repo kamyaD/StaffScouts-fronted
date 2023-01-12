@@ -1,8 +1,17 @@
-import { GeneralProfileInputSchema } from "@/views/AccountSettingsView/components/General/General";
-import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
+import type {
+	GeneralProfileInputSchema
+} from "@/views/AccountSettingsView/components/General/General";
+import type {
+	RegisterInputSchema
+} from "@/views/Register/components/Form/Form";
 import axios from "axios";
 
-import type { GenericResponse, IUserResponse } from "./types";
+import type {
+	GenericResponse,
+	IJobInterestedResponse,
+	IUserResponse,
+	JobInterestedDTO
+} from "./types";
 
 const BASE_URL = "/";
 
@@ -46,6 +55,14 @@ export const updateProfileFn = async (
 	const response = await authApi.put<IUserResponse>(`/api/me`, user);
 	return response.data;
 };
+
+export const createCandidateJobInterestedFn = async (
+	job: JobInterestedDTO,
+): Promise<IJobInterestedResponse> => {
+	const response = await authApi.post<IJobInterestedResponse>(`/api/mutate/?url=candidate/create-create-job-interested`, job);
+	return response.data;
+};
+
 //
 // export const forgotPasswordFn = async (email: string) => {
 //   const response = await authApi.post<GenericResponse>('auth/forgotpassword',{email});

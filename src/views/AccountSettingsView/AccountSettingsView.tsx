@@ -10,6 +10,7 @@ import { createElement, useEffect, useState } from "react";
 import Container from "../../components/Container";
 import TabPanel from "../../components/TabPanel";
 import { General, Security } from "./components";
+import type { IUserProfile } from "@/lib/types";
 
 export interface MenuComponentProps {
 	primaryText: string;
@@ -18,7 +19,7 @@ export interface MenuComponentProps {
 	id: string;
 }
 
-function AccountSettingsView({ user }: any): JSX.Element {
+function AccountSettingsView({ user }: { user: IUserProfile }): JSX.Element {
 	const { displaySnackMessage, setAuthUser, setRequestLoading, authUser } =
 		useStore();
 
