@@ -6,24 +6,9 @@ import Link from "next/link";
 
 import JobCard from "../../../../components/JobCard";
 import fancyId from "../../../../utils/fancyId";
-import type { IJobs } from "../../../../types";
-import type { AxiosError } from "axios";
-import useRequest from "@/hooks/useRequest";
+import type { Job } from "../../../../types";
 
-function Jobs(): JSX.Element {
-	const { data, error }: { data: IJobs | undefined; error?: AxiosError } =
-		useRequest(
-			{
-				url: "/api/data/query",
-				params: {
-					id: "jobs",
-				},
-			},
-			{ refreshInterval: 120_000 },
-		);
-
-	const jobs = data?.results
-
+function Jobs({ jobs }: { jobs: Array<Job> }): JSX.Element {
 	return (
 		<Box>
 			<Box marginBottom={4}>
@@ -32,7 +17,7 @@ function Jobs(): JSX.Element {
 				</Typography>
 			</Box>
 			<Grid container spacing={4}>
-				{jobs?.slice(0, 3).map((job) => (
+				{jobs.map((job) => (
 					<JobCard key={fancyId()} job={job} />
 				))}
 				{(jobs?.length as number) > 3 ? (

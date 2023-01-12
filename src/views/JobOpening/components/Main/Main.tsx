@@ -30,8 +30,6 @@ const Main = (): JSX.Element => {
 			{ refreshInterval: 120_000 },
 		);
 
-	console.log('Class: , Function: Main, Line 33 job():', job);
-
 	return (
 		<Box>
 			<Box

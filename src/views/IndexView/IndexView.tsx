@@ -9,10 +9,15 @@ import {
 	News,
 	Newsletter,
 	Process,
-	Reviews,
+	Reviews
 } from "./components";
+import { Job } from "../../types";
 
-function IndexView(): JSX.Element {
+interface Props {
+	jobs: Array<Job>
+}
+
+function IndexView({ jobs }: Props): JSX.Element {
 	return (
 		<>
 			<Box bgcolor="alternate.main">
@@ -32,7 +37,7 @@ function IndexView(): JSX.Element {
 				</Container>
 			</Box>
 			<Container>
-				<Jobs />
+				<Jobs jobs={jobs} />
 			</Container>
 			<Box bgcolor="alternate.main">
 				<Container>

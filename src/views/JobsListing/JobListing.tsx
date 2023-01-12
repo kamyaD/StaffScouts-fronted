@@ -23,7 +23,11 @@ import fancyId from "../../utils/fancyId";
 
 const JOBS_PER_PAGE = 10;
 
-function JobListing(): JSX.Element {
+type Props = {
+	allJobs: IJobs
+};
+
+function JobListing({ allJobs }: Props): JSX.Element {
 	const [searchValue, setSearchValue] = useState<string>("");
 	const [page, setPage] = useState<number>(1);
 	const theme = useTheme();
@@ -34,12 +38,12 @@ function JobListing(): JSX.Element {
 	const { data: jobs, error }: { data: IJobs | undefined; error?: AxiosError } =
 		useRequest(
 			{
-				url: "/api/data/query",
+				url: "/api/unauthedData",
 				params: {
 					id: "jobs",
 				},
 			},
-			{ refreshInterval: 120_000 },
+			{ refreshInterval: 120_000, fallbackData: allJobs },
 		);
 
 	const initialDisplayJobs = jobs?.results;
