@@ -4,7 +4,7 @@ import {
 	Box,
 	CircularProgress,
 	IconButton,
-	Tooltip,
+	Tooltip
 } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import type { SyntheticEvent } from "react";
@@ -12,6 +12,7 @@ import { useCallback } from "react";
 import { Controller, useController } from "react-hook-form";
 
 import useStore from "../store";
+import { updateProfileFn } from "@/lib/api";
 
 const CLOUDINARY_UPLOAD_PRESET = "zes3n5np";
 const CLOUDINARY_URL =
@@ -20,7 +21,6 @@ const CLOUDINARY_URL =
 type ImageUploadProps = {
 	name: string;
 	control: any;
-	profile_pic: string;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -40,7 +40,8 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-const ImageUpload = ({ name, control, profile_pic }: ImageUploadProps) => {
+const ImageUpload = ({ name, control }: ImageUploadProps) => {
+	const { authUser, setAuthUser } = useStore();
 	const { field } = useController({ name, control });
 	const store = useStore();
 	const classes = useStyles();
@@ -60,10 +61,16 @@ const ImageUpload = ({ name, control, profile_pic }: ImageUploadProps) => {
 				method: "POST",
 				body: formData,
 			})
-				.then((res) => {
+				.then(async (res) => {
 					store.setUploadingImage(false);
 
-					return res.json();
+					const data = await res.json();
+
+					const userResponse = await updateProfileFn({ ...authUser, profile_pic: data.secure_url })
+
+					setAuthUser(userResponse)
+
+					return data;
 				})
 				.catch((err) => {
 					store.setUploadingImage(false);
@@ -109,7 +116,7 @@ const ImageUpload = ({ name, control, profile_pic }: ImageUploadProps) => {
 								multiple={false}
 								accept="image/jpg, image/png, image/jpeg"
 							/>
-							<Avatar src={profile_pic} className={classes.avatar} />
+							<Avatar src={authUser?.profile_pic} className={classes.avatar} />
 						</IconButton>
 						{store.uploadingImage && (
 							<CircularProgress

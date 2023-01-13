@@ -1,5 +1,9 @@
-import type { GeneralProfileInputSchema } from "@/views/AccountSettingsView/components/General/General";
-import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
+import type {
+	GeneralProfileInputSchema
+} from "@/views/AccountSettingsView/components/General/General";
+import type {
+	RegisterInputSchema
+} from "@/views/Register/components/Form/Form";
 import axios from "axios";
 
 import type { IJobs } from "../types";
@@ -7,7 +11,7 @@ import type {
 	GenericResponse,
 	IJobInterestedResponse,
 	IUserResponse,
-	JobInterestedDTO,
+	JobInterestedDTO
 } from "./types";
 
 const BASE_URL = "/";

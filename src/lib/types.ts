@@ -32,6 +32,9 @@ export interface IUserResponse {
 	country: string;
 	job_title: string;
 	availability_status: string;
+	is_employer?: boolean;
+	is_candidate?: boolean;
+	is_both_employer_and_candidate?: boolean;
 }
 
 export interface IUserProfile {
@@ -46,6 +49,9 @@ export interface IUserProfile {
 	country: string;
 	job_title: string;
 	availability_status: string;
+	is_employer?: boolean;
+	is_candidate?: boolean;
+	is_both_employer_and_candidate?: boolean;
 }
 
 export interface JobInterestedDTO {

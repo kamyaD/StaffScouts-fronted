@@ -1,4 +1,5 @@
 import type { SnackMessage } from "@/lib/../store";
+import useStore from "@/lib/../store";
 import type { AlertProps } from "@mui/material";
 import { Snackbar, useMediaQuery } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
@@ -20,6 +21,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 export function SnackBar({ snack }: SnackMessageProps): JSX.Element {
 	const [isSnackOpen, setSnackOpen] = useState(false);
 	const [snackMessage, setSnackMessage] = useState("");
+	const { resetSnack } = useStore();
 
 	const theme = useTheme();
 	const isSm = useMediaQuery(theme.breakpoints.up("sm"), {
@@ -38,6 +40,7 @@ export function SnackBar({ snack }: SnackMessageProps): JSX.Element {
 	) => {
 		if (reason === "clickaway") return;
 		setSnackOpen(false);
+		resetSnack()
 	};
 
 	return (

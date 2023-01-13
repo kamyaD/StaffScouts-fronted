@@ -20,6 +20,9 @@ const handler: NextApiHandler = async (
 		country: "",
 		job_title: "",
 		availability_status: "",
+		is_employer: false,
+		is_candidate: false,
+		is_both_employer_and_candidate: false,
 		profile_pic:
 			"https://res.cloudinary.com/mashafrancis/image/upload/v1670917120/musings/illustrations/avatar.svg",
 	};

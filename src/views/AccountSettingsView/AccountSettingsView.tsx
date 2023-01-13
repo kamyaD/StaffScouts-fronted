@@ -20,8 +20,7 @@ export interface MenuComponentProps {
 }
 
 function AccountSettingsView({ user }: { user: IUserProfile }): JSX.Element {
-	const { displaySnackMessage, setAuthUser, setRequestLoading, authUser } =
-		useStore();
+	const { setAuthUser } = useStore();
 
 	useEffect(() => {
 		setAuthUser(user);

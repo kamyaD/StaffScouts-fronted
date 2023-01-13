@@ -6,7 +6,7 @@ import {
 	IconButton,
 	InputBase,
 	Pagination,
-	Paper,
+	Paper
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -18,8 +18,7 @@ import { useState } from "react";
 
 import Container from "../../components/Container";
 import JobCard from "../../components/JobCard";
-import type { IJobs, Job } from "../../types";
-import type { ContractType, PaginatedResults } from "../../types";
+import type { ContractType, IJobs, Job, PaginatedResults } from "../../types";
 import fancyId from "../../utils/fancyId";
 
 const JOBS_PER_PAGE = 10;
@@ -67,9 +66,12 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 
 	// If initialDisplayPosts exist, display it if no searchValue is specified
 	const displayJobs =
-		(initialDisplayJobs?.length as number) > 0 && !searchValue
+		// @ts-expect-error
+		initialDisplayJobs?.length > 0 && !searchValue
 			? initialDisplayJobs
 			: filteredJobs;
+
+	console.log('Class: JobListing, Function: JobListing, Line 73 initialDisplayJobs?.length():', filteredJobs);
 
 	const contract = contractTypes?.results,
 		contractObject = contract?.reduce(
@@ -79,9 +81,9 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 		);
 
 	const modifiedJobs = displayJobs?.map((job) => {
-		// @ts-expect-error
 		return {
 			...job,
+			// @ts-expect-error
 			contract_type_id: contractObject[job.contract_type_id as string],
 		};
 	});
@@ -186,7 +188,7 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 					</Grid>
 				</Container>
 			</Box>
-			{parseInt(jobs?.count as string) > 1 && !searchValue && (
+
 				<Container>
 					<Box>
 						<Grid container spacing={4}>
@@ -207,7 +209,7 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 						</Grid>
 					</Box>
 				</Container>
-			)}
+
 		</>
 	);
 }

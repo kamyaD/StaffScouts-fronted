@@ -25,9 +25,9 @@ function Jobs({
 		);
 
 	const modifiedJobs = jobs.map((job) => {
-		// @ts-expect-error
 		return {
 			...job,
+			// @ts-expect-error
 			contract_type_id: contractObject[job.contract_type_id as string],
 		};
 	});

@@ -18,17 +18,17 @@ const validationSchema = z.object({
 		.string()
 		.trim()
 		.min(2, "Please enter a valid name")
-		.max(50, "Please enter a valid name"),
+		.max(50, "Please enter a valid name").optional(),
 	last_name: z
 		.string()
 		.trim()
 		.min(2, "Please enter a valid name")
-		.max(50, "Please enter a valid name"),
+		.max(50, "Please enter a valid name").optional(),
 	username: z
 		.string()
 		.trim()
 		.min(2, "Please enter a valid username")
-		.max(50, "Please enter a valid username"),
+		.max(50, "Please enter a valid username").optional(),
 	email: z
 		.string()
 		.trim()
@@ -112,7 +112,6 @@ function General({ user }: { user: IUserProfile }): JSX.Element {
 				<ImageUpload
 					name="profile_pic"
 					control={control}
-					profile_pic={user?.profile_pic}
 				/>
 			</Stack>
 			<Box paddingY={4}>
