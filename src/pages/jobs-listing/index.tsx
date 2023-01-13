@@ -1,24 +1,22 @@
 import { Main } from "@/layouts/index";
-import type { ReactElement } from "react";
+import { getContractTypesFn, getJobsFn } from "@/lib/api";
 import JobsListingView from "@/views/JobsListing";
-import type { IJobs } from "../../types";
-
-type Props = {
-	allJobs: IJobs
-};
+import type { JobListingProps } from "@/views/JobsListing/JobListing";
+import type { ReactElement } from "react";
 
 export const getStaticProps = async () => {
-
-	const res = await fetch(`${process.env.API_URL}/jobs`)
-	const allJobs = await res.json()
+	const [allJobs, contractTypes] = await Promise.all([
+		getJobsFn(),
+		getContractTypesFn(),
+	]);
 
 	return {
-		props: { allJobs },
+		props: { allJobs, contractTypes },
 	};
 };
 
-const JobsListingPage = ({ allJobs }: Props) => {
-	return <JobsListingView allJobs={allJobs} />;
+const JobsListingPage = ({ allJobs, contractTypes }: JobListingProps) => {
+	return <JobsListingView allJobs={allJobs} contractTypes={contractTypes} />;
 };
 
 JobsListingPage.getLayout = function getLayout(page: ReactElement) {

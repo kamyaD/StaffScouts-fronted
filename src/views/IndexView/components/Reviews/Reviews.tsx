@@ -45,7 +45,7 @@ function Reviews(): JSX.Element {
 		defaultMatches: true,
 	});
 
-	const data = [];
+	const data: ICandidates[] = [];
 	// @ts-ignore
 	const candidates: ICandidates[] = data?.slice(0, 3);
 

@@ -6,7 +6,7 @@ import {
 	IconButton,
 	InputBase,
 	Pagination,
-	Paper
+	Paper,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -19,15 +19,19 @@ import { useState } from "react";
 import Container from "../../components/Container";
 import JobCard from "../../components/JobCard";
 import type { IJobs, Job } from "../../types";
+import type { ContractType, PaginatedResults } from "../../types";
 import fancyId from "../../utils/fancyId";
 
 const JOBS_PER_PAGE = 10;
 
-type Props = {
-	allJobs: IJobs
-};
+export interface JobListingProps {
+	allJobs: IJobs;
+	contractTypes: {
+		results: ContractType[];
+	} & PaginatedResults;
+}
 
-function JobListing({ allJobs }: Props): JSX.Element {
+function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 	const [searchValue, setSearchValue] = useState<string>("");
 	const [page, setPage] = useState<number>(1);
 	const theme = useTheme();
@@ -66,6 +70,21 @@ function JobListing({ allJobs }: Props): JSX.Element {
 		(initialDisplayJobs?.length as number) > 0 && !searchValue
 			? initialDisplayJobs
 			: filteredJobs;
+
+	const contract = contractTypes?.results,
+		contractObject = contract?.reduce(
+			// @ts-expect-error
+			(r, { id, contract_types_name }) => ((r[id] = contract_types_name), r),
+			{},
+		);
+
+	const modifiedJobs = displayJobs?.map((job) => {
+		// @ts-expect-error
+		return {
+			...job,
+			contract_type_id: contractObject[job.contract_type_id as string],
+		};
+	});
 
 	return (
 		<>
@@ -171,7 +190,7 @@ function JobListing({ allJobs }: Props): JSX.Element {
 				<Container>
 					<Box>
 						<Grid container spacing={4}>
-							{displayJobs?.map((job: Job) => (
+							{modifiedJobs?.map((job: Job) => (
 								<JobCard key={fancyId()} job={job} />
 							))}
 							<Grid item container justifyContent="center" xs={12}>

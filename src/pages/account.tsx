@@ -1,16 +1,16 @@
 import { env } from "@/env/server.mjs";
 import { Main } from "@/layouts/index";
+import type { IUserProfile } from "@/lib/types";
 import type {
 	GetServerSideProps,
 	GetServerSidePropsContext,
-	InferGetServerSidePropsType
+	InferGetServerSidePropsType,
 } from "next";
 import { unstable_getServerSession } from "next-auth/next";
 import type { ReactElement } from "react";
 import AccountSettingsView from "views/AccountSettingsView";
 
 import { authOptions } from "./api/auth/[...nextauth]";
-import type { IUserProfile } from "@/lib/types";
 
 export const getServerSideProps: GetServerSideProps = async ({
 	req,

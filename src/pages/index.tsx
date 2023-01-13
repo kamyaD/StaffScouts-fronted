@@ -1,24 +1,24 @@
 import { Main } from "@/layouts/index";
+import { getContractTypesFn, getJobsFn } from "@/lib/api";
+import type { HomeProps } from "@/views/IndexView/IndexView";
 import type { ReactElement } from "react";
 import HomeView from "views/IndexView";
-import { IJobs, Job } from "../types";
-
-type Props = {
-	allJobs: IJobs
-};
 
 export const getStaticProps = async () => {
-	const res = await fetch(`${process.env.API_URL}/jobs`)
-	const allJobs: IJobs = await res.json()
-	const jobs = allJobs.results.slice(0, 3)
+	const [allJobs, contractTypes] = await Promise.all([
+		getJobsFn(),
+		getContractTypesFn(),
+	]);
+
+	const jobs = allJobs.results.slice(0, 3);
 
 	return {
-		props: { jobs },
+		props: { jobs, contractTypes },
 	};
 };
 
-const HomePage = ({ jobs }: { jobs: Array<Job> }) => {
-	return <HomeView jobs={jobs} />;
+const HomePage = ({ jobs, contractTypes }: HomeProps) => {
+	return <HomeView jobs={jobs} contractTypes={contractTypes} />;
 };
 
 HomePage.getLayout = function getLayout(page: ReactElement) {

@@ -1,3 +1,7 @@
+import useRequest from "@/hooks/useRequest";
+import { createCandidateJobInterestedFn } from "@/lib/api";
+import type { JobInterestedDTO } from "@/lib/types";
+import useStore from "@/store/index";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -5,16 +9,13 @@ import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import type { Job } from "../../../../types";
-import type { AxiosError } from "axios";
-import useRequest from "@/hooks/useRequest";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
-import { createCandidateJobInterestedFn } from "@/lib/api";
+import type { AxiosError } from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import useStore from "@/store/index";
-import { JobInterestedDTO } from "@/lib/types";
+
+import type { Job } from "../../../../types";
 
 const Main = (): JSX.Element => {
 	const theme = useTheme();
@@ -24,11 +25,11 @@ const Main = (): JSX.Element => {
 	const [requestLoading, setRequestLoading] = useState<boolean>(false);
 	const { displaySnackMessage } = useStore();
 
-	const router = useRouter()
+	const router = useRouter();
 
 	const { data: session } = useSession();
-	const jobId = router.query.id
-	const userId = session?.user.id
+	const jobId = router.query.id;
+	const userId = session?.user.id;
 
 	const { data: job, error }: { data: Job | undefined; error?: AxiosError } =
 		useRequest(
@@ -36,7 +37,7 @@ const Main = (): JSX.Element => {
 				url: `/api/unauthedData/${jobId}`,
 				params: {
 					url: "jobs",
-					id: router.query.id
+					id: router.query.id,
 				},
 			},
 			{ refreshInterval: 120_000 },
@@ -73,16 +74,16 @@ const Main = (): JSX.Element => {
 		},
 	);
 
-	const handleUnauthenticatedUser = () => router.push('/login')
+	const handleUnauthenticatedUser = () => router.push("/login");
 
 	const jobsData = {
 		user_id: userId as string,
 		job_id: jobId as string,
 		created_at: new Date(),
-		updated_at: new Date()
-	}
+		updated_at: new Date(),
+	};
 
-	const handleCandidateJobInterest = () => createJobInterestedIn(jobsData)
+	const handleCandidateJobInterest = () => createJobInterestedIn(jobsData);
 
 	return (
 		<Box>
@@ -99,7 +100,14 @@ const Main = (): JSX.Element => {
 					<Typography variant={"h6"}>Nairobi, Kenya · Full time</Typography>
 				</Box>
 				<Box display="flex" marginTop={{ xs: 2, md: 0 }}>
-					<Button variant="contained" color="primary" size="large" onClick={session ? handleCandidateJobInterest : handleUnauthenticatedUser}>
+					<Button
+						variant="contained"
+						color="primary"
+						size="large"
+						onClick={
+							session ? handleCandidateJobInterest : handleUnauthenticatedUser
+						}
+					>
 						Apply now
 					</Button>
 					{/*<Box*/}
@@ -120,15 +128,21 @@ const Main = (): JSX.Element => {
 						<Typography variant={"h5"} fontWeight={700} gutterBottom>
 							Job description
 						</Typography>
-						{ /* @ts-expect-error */ }
-						<Typography component={"p"} dangerouslySetInnerHTML={{__html: job?.jobs_description}} />
+						<Typography
+							component={"p"}
+							// @ts-expect-error
+							dangerouslySetInnerHTML={{ __html: job?.jobs_description }}
+						/>
 					</Box>
 					<Box marginBottom={3}>
 						<Typography variant={"h5"} fontWeight={700} gutterBottom>
 							Duties and Responsibilities
 						</Typography>
-						{ /* @ts-expect-error */ }
-						<Typography component={"p"} dangerouslySetInnerHTML={{__html: job?.duties_responsibilities}} />
+						<Typography
+							component={"p"}
+							// @ts-expect-error
+							dangerouslySetInnerHTML={{ __html: job?.duties_responsibilities }}
+						/>
 						{/*<Grid container spacing={1} sx={{ marginTop: 1 }}>*/}
 						{/*	{[*/}
 						{/*		"Our sign up is dead simple. We only require your basic company information",*/}
@@ -181,8 +195,13 @@ const Main = (): JSX.Element => {
 						<Typography variant={"h5"} fontWeight={700} gutterBottom>
 							Job Requirements
 						</Typography>
-						{ /* @ts-expect-error */ }
-						<Typography component={"p"} dangerouslySetInnerHTML={{__html: job?.qualifications_competencies}} />
+						<Typography
+							component={"p"}
+							dangerouslySetInnerHTML={{
+								// @ts-expect-error
+								__html: job?.qualifications_competencies,
+							}}
+						/>
 					</Box>
 					{/*<Box>*/}
 					{/*	<Typography variant={"h5"} fontWeight={700} gutterBottom>*/}

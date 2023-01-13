@@ -1,4 +1,5 @@
 import { MenuTab, MenuTabs } from "@/components/MenuTabs";
+import type { IUserProfile } from "@/lib/types";
 import useStore from "@/store/index";
 import { AllOutTwoTone, SecurityTwoTone } from "@mui/icons-material";
 import { Box, Card, Grid, Typography, useMediaQuery } from "@mui/material";
@@ -10,7 +11,6 @@ import { createElement, useEffect, useState } from "react";
 import Container from "../../components/Container";
 import TabPanel from "../../components/TabPanel";
 import { General, Security } from "./components";
-import type { IUserProfile } from "@/lib/types";
 
 export interface MenuComponentProps {
 	primaryText: string;

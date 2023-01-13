@@ -5,10 +5,33 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import JobCard from "../../../../components/JobCard";
+import type { ContractType, Job, PaginatedResults } from "../../../../types";
 import fancyId from "../../../../utils/fancyId";
-import type { Job } from "../../../../types";
 
-function Jobs({ jobs }: { jobs: Array<Job> }): JSX.Element {
+function Jobs({
+	jobs,
+	contractTypes,
+}: {
+	jobs: Array<Job>;
+	contractTypes: {
+		results: ContractType[];
+	} & PaginatedResults;
+}): JSX.Element {
+	const contract = contractTypes?.results,
+		contractObject = contract.reduce(
+			// @ts-expect-error
+			(r, { id, contract_types_name }) => ((r[id] = contract_types_name), r),
+			{},
+		);
+
+	const modifiedJobs = jobs.map((job) => {
+		// @ts-expect-error
+		return {
+			...job,
+			contract_type_id: contractObject[job.contract_type_id as string],
+		};
+	});
+
 	return (
 		<Box>
 			<Box marginBottom={4}>
@@ -17,10 +40,10 @@ function Jobs({ jobs }: { jobs: Array<Job> }): JSX.Element {
 				</Typography>
 			</Box>
 			<Grid container spacing={4}>
-				{jobs.map((job) => (
+				{modifiedJobs.map((job) => (
 					<JobCard key={fancyId()} job={job} />
 				))}
-				{(jobs?.length as number) > 3 ? (
+				{(modifiedJobs?.length as number) >= 3 ? (
 					<Grid item container justifyContent="center" xs={12}>
 						<Button
 							component={Link}

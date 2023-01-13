@@ -56,4 +56,17 @@ interface Job {
 	is_company_name_hidden: boolean;
 }
 
-export { IJobs, Job, ICandidates };
+interface ContractType {
+	id: number | string;
+	contract_types_name: string;
+	created_at: Date;
+	updated_at: Date;
+}
+
+interface PaginatedResults {
+	count: number;
+	next: string | null;
+	previous: string | null;
+}
+
+export { IJobs, Job, ICandidates, PaginatedResults, ContractType };

@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import React from "react";
 
 import Container from "../../components/Container";
+import type { ContractType, Job, PaginatedResults } from "../../types";
 import {
 	AboutTop,
 	Hero,
@@ -9,15 +10,17 @@ import {
 	News,
 	Newsletter,
 	Process,
-	Reviews
+	Reviews,
 } from "./components";
-import { Job } from "../../types";
 
-interface Props {
-	jobs: Array<Job>
+export interface HomeProps {
+	jobs: Array<Job>;
+	contractTypes: {
+		results: ContractType[];
+	} & PaginatedResults;
 }
 
-function IndexView({ jobs }: Props): JSX.Element {
+function IndexView({ jobs, contractTypes }: HomeProps): JSX.Element {
 	return (
 		<>
 			<Box bgcolor="alternate.main">
@@ -37,7 +40,7 @@ function IndexView({ jobs }: Props): JSX.Element {
 				</Container>
 			</Box>
 			<Container>
-				<Jobs jobs={jobs} />
+				<Jobs jobs={jobs} contractTypes={contractTypes} />
 			</Container>
 			<Box bgcolor="alternate.main">
 				<Container>

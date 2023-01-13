@@ -5,7 +5,7 @@ import {
 	Bookmark,
 	Favorite,
 	LocationOn,
-	PaymentsOutlined
+	PaymentsOutlined,
 } from "@mui/icons-material";
 import {
 	Box,
@@ -16,13 +16,13 @@ import {
 	Grid,
 	IconButton,
 	Tooltip,
-	Typography
+	Typography,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import Str from "@supercharge/strings";
+import Link from "next/link";
 
 import type { Job } from "../types";
-import Link from "next/link";
 
 interface JobProps {
 	job: Job;
