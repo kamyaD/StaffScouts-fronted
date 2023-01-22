@@ -47,7 +47,7 @@ function UserAvatar(): JSX.Element {
 		{
 			name: "Profile",
 			icon: <AccountCircleOutlined />,
-			link: "account",
+			link: "/account",
 			secondaryText: "All about you",
 		},
 	];

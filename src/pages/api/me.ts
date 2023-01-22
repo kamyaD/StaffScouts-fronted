@@ -14,6 +14,7 @@ const handler: NextApiHandler = async (
 			Authorization: `Token ${session?.user?.token}`,
 		},
 	};
+	console.log("Class: , Function: handler, Line 17 session():", session);
 
 	if (!!session) {
 		switch (method) {

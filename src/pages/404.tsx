@@ -19,7 +19,7 @@ export default function FourZeroFour() {
 				<title>Oh no...</title>
 			</Head>
 			<Main>
-				<body className="bg-white transition duration-500 dark:bg-gray-900">
+				<div className="bg-white transition duration-500 dark:bg-gray-900">
 					<ErrorPage
 						pageProps={{
 							title: "Oh no, you found a page that's missing stuff.",
@@ -27,7 +27,7 @@ export default function FourZeroFour() {
 							image: "/img/not-found.svg",
 						}}
 					/>
-				</body>
+				</div>
 			</Main>
 		</>
 	);

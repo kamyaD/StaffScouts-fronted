@@ -40,7 +40,7 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 		const res = await signIn("credentials", {
 			username,
 			password,
-			callbackUrl: `${window.location.origin}/account`,
+			callbackUrl: `${window.location.origin}/select-user`,
 			redirect: false,
 		});
 

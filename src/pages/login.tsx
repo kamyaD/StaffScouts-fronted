@@ -6,9 +6,10 @@ import type { ReactElement } from "react";
 import LoginView from "views/Login";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+	const csrfToken = await getCsrfToken(context);
 	return {
 		props: {
-			csrfToken: await getCsrfToken(context),
+			csrfToken,
 		},
 	};
 };

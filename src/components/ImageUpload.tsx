@@ -1,10 +1,11 @@
+import { updateProfileFn } from "@/lib/api";
 import type { Theme } from "@mui/material";
 import {
 	Avatar,
 	Box,
 	CircularProgress,
 	IconButton,
-	Tooltip
+	Tooltip,
 } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import type { SyntheticEvent } from "react";
@@ -12,7 +13,6 @@ import { useCallback } from "react";
 import { Controller, useController } from "react-hook-form";
 
 import useStore from "../store";
-import { updateProfileFn } from "@/lib/api";
 
 const CLOUDINARY_UPLOAD_PRESET = "zes3n5np";
 const CLOUDINARY_URL =
@@ -66,9 +66,12 @@ const ImageUpload = ({ name, control }: ImageUploadProps) => {
 
 					const data = await res.json();
 
-					const userResponse = await updateProfileFn({ ...authUser, profile_pic: data.secure_url })
+					const userResponse = await updateProfileFn({
+						...authUser,
+						profile_pic: data.secure_url,
+					});
 
-					setAuthUser(userResponse)
+					setAuthUser(userResponse);
 
 					return data;
 				})

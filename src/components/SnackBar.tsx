@@ -40,7 +40,7 @@ export function SnackBar({ snack }: SnackMessageProps): JSX.Element {
 	) => {
 		if (reason === "clickaway") return;
 		setSnackOpen(false);
-		resetSnack()
+		resetSnack();
 	};
 
 	return (

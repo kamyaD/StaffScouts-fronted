@@ -2,8 +2,8 @@ import useRequest from "@/hooks/useRequest";
 import { createCandidateJobInterestedFn } from "@/lib/api";
 import type { JobInterestedDTO } from "@/lib/types";
 import useStore from "@/store/index";
+import { LoadingButton } from "@mui/lab";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
@@ -16,13 +16,16 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import type { Job } from "../../../../types";
+import type { IJobs } from "../../../../types";
+
+type JobStateType = "applied" | "loading" | "not-applied";
 
 const Main = (): JSX.Element => {
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
 	});
-	const [requestLoading, setRequestLoading] = useState<boolean>(false);
+	const [jobState, setJobState] = useState<JobStateType>("not-applied");
 	const { displaySnackMessage } = useStore();
 
 	const router = useRouter();
@@ -30,6 +33,26 @@ const Main = (): JSX.Element => {
 	const { data: session } = useSession();
 	const jobId = router.query.id;
 	const userId = session?.user.id;
+
+	const { data: jobsInterested }: { data: IJobs | undefined } = useRequest({
+		url: `/api/data/query`,
+		params: {
+			id: "candidate/list-jobs-interested",
+		},
+	});
+
+	const buttonStates = (state: JobStateType): string => {
+		switch (state) {
+			case "not-applied":
+				return "Show interest";
+			case "loading":
+				return "Applying";
+			case "applied":
+				return "Applied";
+			default:
+				return "Show interest";
+		}
+	};
 
 	const { data: job, error }: { data: Job | undefined; error?: AxiosError } =
 		useRequest(
@@ -47,16 +70,16 @@ const Main = (): JSX.Element => {
 		(jobsData: JobInterestedDTO) => createCandidateJobInterestedFn(jobsData),
 		{
 			onMutate() {
-				setRequestLoading(true);
+				setJobState(() => "loading");
 			},
 			onSuccess() {
-				setRequestLoading(false);
+				setJobState(() => "applied");
 				displaySnackMessage({
 					message: "Thank you for creating interest in the job.",
 				});
 			},
 			onError(error: any) {
-				setRequestLoading(false);
+				setJobState(() => "not-applied");
 				if (Array.isArray((error as any).response.data.error)) {
 					(error as any).response.data.error.forEach((el: any) =>
 						displaySnackMessage({
@@ -100,16 +123,21 @@ const Main = (): JSX.Element => {
 					<Typography variant={"h6"}>Nairobi, Kenya · Full time</Typography>
 				</Box>
 				<Box display="flex" marginTop={{ xs: 2, md: 0 }}>
-					<Button
+					<LoadingButton
+						fullWidth
 						variant="contained"
+						type="submit"
 						color="primary"
 						size="large"
+						loading={jobState === "loading"}
+						loadingPosition="start"
+						disabled={jobState === "applied"}
 						onClick={
 							session ? handleCandidateJobInterest : handleUnauthenticatedUser
 						}
 					>
-						Apply now
-					</Button>
+						{buttonStates(jobState)}
+					</LoadingButton>
 					{/*<Box*/}
 					{/*	component={Button}*/}
 					{/*	variant="outlined"*/}

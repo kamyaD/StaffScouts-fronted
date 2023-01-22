@@ -1,5 +1,5 @@
 import type { IUserResponse } from "@/lib/types";
-import create from "zustand";
+import { create } from "zustand";
 
 export type Severity = "success" | "error";
 
@@ -35,7 +35,8 @@ const useStore = create<Store>((set) => ({
 			...state,
 			snack,
 		})),
-	resetSnack: () => set(state => ({ ...state, snack: { message: "", severity: "success" } })),
+	resetSnack: () =>
+		set((state) => ({ ...state, snack: { message: "", severity: "success" } })),
 	uploadingImage: false,
 	setUploadingImage: (isUploading) =>
 		set((state) => ({ ...state, uploadingImage: isUploading })),

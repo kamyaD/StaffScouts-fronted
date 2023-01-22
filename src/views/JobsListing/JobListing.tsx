@@ -6,7 +6,7 @@ import {
 	IconButton,
 	InputBase,
 	Pagination,
-	Paper
+	Paper,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -70,8 +70,6 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 		initialDisplayJobs?.length > 0 && !searchValue
 			? initialDisplayJobs
 			: filteredJobs;
-
-	console.log('Class: JobListing, Function: JobListing, Line 73 initialDisplayJobs?.length():', filteredJobs);
 
 	const contract = contractTypes?.results,
 		contractObject = contract?.reduce(
@@ -189,27 +187,26 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 				</Container>
 			</Box>
 
-				<Container>
-					<Box>
-						<Grid container spacing={4}>
-							{modifiedJobs?.map((job: Job) => (
-								<JobCard key={fancyId()} job={job} />
-							))}
-							<Grid item container justifyContent="center" xs={12}>
-								<Pagination
-									count={
-										(jobs?.count as number) / (jobs?.results.length as number)
-									}
-									page={page}
-									variant="outlined"
-									color="primary"
-									// onChange={handlePageChange}
-								/>
-							</Grid>
+			<Container>
+				<Box>
+					<Grid container spacing={4}>
+						{modifiedJobs?.map((job: Job) => (
+							<JobCard key={fancyId()} job={job} />
+						))}
+						<Grid item container justifyContent="center" xs={12}>
+							<Pagination
+								count={
+									(jobs?.count as number) / (jobs?.results.length as number)
+								}
+								page={page}
+								variant="outlined"
+								color="primary"
+								// onChange={handlePageChange}
+							/>
 						</Grid>
-					</Box>
-				</Container>
-
+					</Grid>
+				</Box>
+			</Container>
 		</>
 	);
 }

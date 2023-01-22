@@ -1,4 +1,3 @@
-import { env } from "@/env/server.mjs";
 import axios from "axios";
 import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
@@ -26,7 +25,7 @@ export const authOptions: NextAuthOptions = {
 				};
 
 				const res = await axios.post<AuthResponse>(
-					`http://127.0.0.1:8000/users/api-user-login/`,
+					`${process.env.API_URL}/users/api-user-login/`,
 					payload,
 				);
 				const user = await res.data;
@@ -40,7 +39,7 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 	],
-	secret: env.NEXTAUTH_SECRET,
+	// secret: process.env.NEXTAUTH_SECRET,
 	// Include user.id on session
 	callbacks: {
 		async jwt({ token, user, account }) {

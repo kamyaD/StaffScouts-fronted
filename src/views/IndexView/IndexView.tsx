@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import React from "react";
+import React, { Suspense } from "react";
 
 import Container from "../../components/Container";
 import type { ContractType, Job, PaginatedResults } from "../../types";
@@ -22,7 +22,7 @@ export interface HomeProps {
 
 function IndexView({ jobs, contractTypes }: HomeProps): JSX.Element {
 	return (
-		<>
+		<Suspense fallback={null}>
 			<Box bgcolor="alternate.main">
 				<Hero />
 			</Box>
@@ -50,7 +50,7 @@ function IndexView({ jobs, contractTypes }: HomeProps): JSX.Element {
 			<Container>
 				<Newsletter />
 			</Container>
-		</>
+		</Suspense>
 	);
 }
 
