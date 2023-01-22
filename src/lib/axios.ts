@@ -24,8 +24,8 @@ axiosClient.interceptors.request.use(
 		const session = await getSession();
 
 		if (session) {
-			// @ts-expect-error
 			config.headers.common = {
+				// @ts-expect-error
 				Authorization: `${session.user.token}`,
 			};
 		}

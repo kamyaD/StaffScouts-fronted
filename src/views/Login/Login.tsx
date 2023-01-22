@@ -1,9 +1,11 @@
 import { Box, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import dynamic from "next/dynamic";
 
 import Container from "../../components/Container";
-import { Form } from "./components";
+
+const Form = dynamic(() => import("./components/Form"), { ssr: false });
 
 function Login({ csrfToken }: { csrfToken: string }): JSX.Element {
 	const theme = useTheme();

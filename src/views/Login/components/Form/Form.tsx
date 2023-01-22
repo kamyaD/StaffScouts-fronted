@@ -94,7 +94,7 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 			</Box>
 			<form name="login-form" method="post" onSubmit={handleSubmit(onSubmit)}>
 				<Grid container spacing={4}>
-					<input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+					{/*<input name="csrfToken" type="hidden" defaultValue={csrfToken} />*/}
 
 					<Grid item xs={12}>
 						<FormInputText

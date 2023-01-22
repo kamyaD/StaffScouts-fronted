@@ -1,9 +1,9 @@
-import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import type { AxiosError, AxiosResponse } from "axios";
 import axios from "axios";
 import type { SWRConfiguration, SWRResponse } from "swr";
 import useSWR from "swr";
 
-export type GetRequest = AxiosRequestConfig | null;
+export type GetRequest = any;
 
 interface Return<Data, Error>
 	extends Pick<
