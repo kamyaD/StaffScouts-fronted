@@ -17,7 +17,7 @@ const validationSchema = z.object({
 	password: z.string().min(4, { message: "Please specify your password" }),
 });
 
-type ValidationSchema = z.infer<typeof validationSchema>;
+type LoginValidationSchemaInput = z.infer<typeof validationSchema>;
 
 function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 	const { displaySnackMessage } = useStore();
@@ -27,12 +27,12 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 	const { push, prefetch } = useRouter();
 	const { data: session } = useSession();
 
-	const { handleSubmit, control } = useForm<ValidationSchema>({
+	const { handleSubmit, control } = useForm<LoginValidationSchemaInput>({
 		resolver: zodResolver(validationSchema),
 		mode: "onChange",
 	});
 
-	const onSubmit: SubmitHandler<ValidationSchema> = async ({
+	const onSubmit: SubmitHandler<LoginValidationSchemaInput> = async ({
 		username,
 		password,
 	}) => {
