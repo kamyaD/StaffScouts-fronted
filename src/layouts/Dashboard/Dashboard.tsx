@@ -1,15 +1,13 @@
 import Container from "@/components/Container";
 import LinearProgressBar from "@/components/LinearProgressBar";
-import { DashboardContext } from "@/context/DashboardContext";
-import { Box, Toolbar, useMediaQuery } from "@mui/material";
+import { Box, Toolbar, useMediaQuery, useScrollTrigger } from "@mui/material";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiAppBar from "@mui/material/AppBar";
 import { alpha, styled, useTheme } from "@mui/material/styles";
 import type { ReactNode } from "react";
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
-import { candidatesLayoutNavigation } from "../navigation";
-import { Sidebar, Topbar } from "./components";
+import { Topbar } from "./components";
 import { drawerWidth } from "./components/Sidebar/Sidebar";
 
 export const sideDrawerWidth = 450;
@@ -75,13 +73,28 @@ const Dashboard = ({
 	children,
 	isSideDrawerOpen = false,
 }: Props): JSX.Element => {
-	const { isSidebarOpen, handleSidebar } = useContext(DashboardContext);
+	const [openSidebar, setOpenSidebar] = useState(false);
 
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
 	});
 	const isMounted = useMounted();
+
+	const trigger = useScrollTrigger({
+		disableHysteresis: true,
+		threshold: 0,
+	});
+
+	const handleSidebarOpen = (): void => {
+		setOpenSidebar(true);
+	};
+
+	const handleSidebarClose = (): void => {
+		setOpenSidebar(false);
+	};
+
+	const open = isMd ? false : openSidebar;
 
 	return (
 		<Box
@@ -91,29 +104,28 @@ const Dashboard = ({
 			}}
 		>
 			<AppBar
-				position="fixed"
+				position="sticky"
 				sx={{
-					background: theme.palette.alternate.main,
-					// background: theme.palette.primary.main,
-					zIndex: theme.zIndex.drawer + 10,
+					top: 0,
+					backgroundColor: trigger ? "hsla(0,0%,100%,.8)" : "transparent",
+					backdropFilter: trigger ? "blur(15px)" : "none",
 					borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+					// borderBottom: trigger
+					// 	? `1px solid ${alpha(theme.palette.divider, 0.1)}`
+					// 	: 'none',
 				}}
 				elevation={0}
 			>
-				<Toolbar variant={"dense"}>
-					<Container maxWidth={1} paddingY={{ xs: 0 }} paddingX={0}>
-						<Topbar />
-					</Container>
-				</Toolbar>
+				<Container
+					maxWidth={1}
+					paddingY={{ xs: 2, md: 1 }}
+					paddingX={{ xs: 1, md: 4 }}
+				>
+					<Topbar />
+				</Container>
 			</AppBar>
-			<Toolbar variant={"dense"} />
-			<Sidebar
-				onSidebarClose={handleSidebar}
-				open={isSidebarOpen}
-				variant={isMd ? "permanent" : "temporary"}
-				pages={candidatesLayoutNavigation}
-			/>
-			<Main open={isSideDrawerOpen}>
+			<div id="back-to-top-anchor" />
+			<main>
 				<Container
 					sx={{ position: "relative" }}
 					maxWidth={{
@@ -127,7 +139,7 @@ const Dashboard = ({
 					<Toolbar variant={"dense"} />
 					{isMounted ? children : <LinearProgressBar />}
 				</Container>
-			</Main>
+			</main>
 		</Box>
 	);
 };
