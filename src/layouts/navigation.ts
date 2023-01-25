@@ -48,35 +48,35 @@ const mainLayoutNavigation = [
 	},
 ];
 
-const dashboardLayoutNavigation = [
+const candidatesLayoutNavigation = [
 	{
-		title: "Career advisory",
-		href: "/career-advisory",
+		title: "Jobs",
+		href: "/dashboard/jobs",
 	},
-	{
-		title: "CV services",
-		href: "/cv-services",
-	},
-	{
-		title: "Find a job",
-		href: "/find-a-job",
-	},
-	{
-		title: "Post a job (Free)",
-		href: "/post-a-job",
-	},
-	{
-		title: "Find candidates",
-		href: "/find-candidates",
-	},
-	{
-		title: "Employers",
-		href: "/employers",
-	},
+	// {
+	// 	title: "CV services",
+	// 	href: "/cv-services",
+	// },
+	// {
+	// 	title: "Find a job",
+	// 	href: "/find-a-job",
+	// },
+	// {
+	// 	title: "Post a job (Free)",
+	// 	href: "/post-a-job",
+	// },
+	// {
+	// 	title: "Find candidates",
+	// 	href: "/find-candidates",
+	// },
+	// {
+	// 	title: "Employers",
+	// 	href: "/employers",
+	// },
 ];
 
 export {
 	sideLayoutNavigation,
 	mainLayoutNavigation,
-	dashboardLayoutNavigation,
+	candidatesLayoutNavigation,
 };

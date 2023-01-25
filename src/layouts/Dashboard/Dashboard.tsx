@@ -8,7 +8,7 @@ import { alpha, styled, useTheme } from "@mui/material/styles";
 import type { ReactNode } from "react";
 import { memo, useContext, useEffect, useState } from "react";
 
-import { dashboardLayoutNavigation } from "../navigation";
+import { candidatesLayoutNavigation } from "../navigation";
 import { Sidebar, Topbar } from "./components";
 import { drawerWidth } from "./components/Sidebar/Sidebar";
 
@@ -111,7 +111,7 @@ const Dashboard = ({
 				onSidebarClose={handleSidebar}
 				open={isSidebarOpen}
 				variant={isMd ? "permanent" : "temporary"}
-				pages={dashboardLayoutNavigation}
+				pages={candidatesLayoutNavigation}
 			/>
 			<Main open={isSideDrawerOpen}>
 				<Container
