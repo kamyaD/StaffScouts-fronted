@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
 import LinearProgressBar from "@/components/LinearProgressBar";
-import { Box, Toolbar, useMediaQuery, useScrollTrigger } from "@mui/material";
+import { Box, Fab, useMediaQuery, useScrollTrigger } from "@mui/material";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiAppBar from "@mui/material/AppBar";
 import { alpha, styled, useTheme } from "@mui/material/styles";
@@ -9,6 +9,9 @@ import { memo, useEffect, useState } from "react";
 
 import { Topbar } from "./components";
 import { drawerWidth } from "./components/Sidebar/Sidebar";
+import { KeyboardArrowUpRounded } from "@mui/icons-material";
+import { Footer } from "@/layouts/Main/components";
+import { ScrollTop } from "@/layouts/Main/Main";
 
 export const sideDrawerWidth = 450;
 
@@ -128,6 +131,7 @@ const Dashboard = ({
 			<main>
 				<Container
 					sx={{ position: "relative" }}
+					bgcolor="alternate.main"
 					maxWidth={{
 						sm: 720,
 						md: "100%",
@@ -136,10 +140,17 @@ const Dashboard = ({
 					paddingY={{ xs: 0 }}
 					paddingX={{ xs: 0 }}
 				>
-					<Toolbar variant={"dense"} />
 					{isMounted ? children : <LinearProgressBar />}
 				</Container>
 			</main>
+			<ScrollTop>
+				<Fab color="secondary" size="small" aria-label="scroll back to top">
+					<KeyboardArrowUpRounded />
+				</Fab>
+			</ScrollTop>
+			<Container paddingY={4}>
+				<Footer />
+			</Container>
 		</Box>
 	);
 };

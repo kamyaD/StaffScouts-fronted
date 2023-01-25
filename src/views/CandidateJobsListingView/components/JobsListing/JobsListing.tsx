@@ -11,7 +11,15 @@ const JobsListing = ({ jobs }: { jobs?: IJobs }): JSX.Element => {
 	const [openId, setOpenId] = useState(null);
 
 	return (
-		<Grid container spacing={{ xs: 4, md: 2 }}>
+		<Grid
+			container
+			spacing={{ xs: 4, md: 2 }}
+			bgcolor="background.paper"
+			sx={{
+				border: `1px solid ${theme.palette.divider}`,
+				borderRadius: 2,
+			}}
+		>
 			{jobs?.results.map((job) => (
 				<UserJobCard key={fancyId()} job={job} />
 			))}

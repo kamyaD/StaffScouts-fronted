@@ -35,7 +35,10 @@ const CandidateJobsListing = (): JSX.Element => {
 	return (
 		<>
 			<Container>
-				<SidebarFilters specialisms={specialisms} jobsCount={jobs?.count}>
+				<SidebarFilters
+					specialisms={specialisms}
+					jobsCount={jobs?.count as number}
+				>
 					<JobsListing jobs={jobs} />
 				</SidebarFilters>
 			</Container>

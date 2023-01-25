@@ -35,7 +35,9 @@ const SidebarFilters = ({
 	const open = isMd ? false : openSidebar;
 
 	return (
-		<Box display={"flex"}>
+		<Box
+			display={"flex"}
+		>
 			<Sidebar
 				onClose={handleSidebarClose}
 				open={open}

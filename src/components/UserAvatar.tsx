@@ -1,4 +1,8 @@
-import { AccountCircleOutlined, Logout } from "@mui/icons-material";
+import {
+	AccountCircleOutlined,
+	AllOutTwoTone,
+	Logout
+} from "@mui/icons-material";
 import {
 	Avatar,
 	Chip,
@@ -7,7 +11,7 @@ import {
 	Menu,
 	MenuItem,
 	Tooltip,
-	useMediaQuery,
+	useMediaQuery
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import { signOut, useSession } from "next-auth/react";
@@ -44,6 +48,12 @@ function UserAvatar(): JSX.Element {
 	const open = Boolean(anchorEl);
 
 	const menuItems = [
+		{
+			name: "Dashboard",
+			icon: <AllOutTwoTone />,
+			link: "/select-user",
+			secondaryText: "View your space",
+		},
 		{
 			name: "Profile",
 			icon: <AccountCircleOutlined />,

@@ -5,7 +5,7 @@ import {
 	Box,
 	CircularProgress,
 	IconButton,
-	Tooltip,
+	Tooltip
 } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import type { SyntheticEvent } from "react";
@@ -52,7 +52,6 @@ const ImageUpload = ({ name, control }: ImageUploadProps) => {
 			if (!target.files) return;
 			const newFile = Object.values(target.files).map((file: File) => file);
 			const formData = new FormData();
-			// @ts-expect-error
 			formData.append("file", newFile[0]);
 			formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 

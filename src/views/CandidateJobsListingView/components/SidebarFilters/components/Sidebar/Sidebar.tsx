@@ -5,6 +5,7 @@ import Drawer from "@mui/material/Drawer";
 import React from "react";
 
 import { FilterCategory, FilterSpecialism } from "./components";
+import { useTheme } from "@mui/material/styles";
 
 interface Props {
 	// eslint-disable-next-line @typescript-eslint/ban-types
@@ -20,24 +21,29 @@ const Sidebar = ({
 	onClose,
 	specialisms,
 }: Props): JSX.Element => {
+	const theme = useTheme();
 	return (
 		<Drawer
 			anchor="left"
-			onClose={() => onClose()}
+			onClose={onClose}
 			open={open}
 			variant={variant}
 			sx={{
 				"& .MuiPaper-root": {
-					position: "relative",
+					position: "sticky",
 					width: "100%",
 					maxWidth: { xs: 300, md: 260 },
 					minWidth: { xs: 300, md: 260 },
 					border: 0,
 					zIndex: 1100,
+					// position: "sticky",
+					top: theme.spacing(10),
+					border: `1px solid ${theme.palette.divider}`,
+					borderRadius: 2,
 				},
 			}}
 		>
-			<Box paddingY={{ xs: 2, md: 1 }} paddingX={{ xs: 2, md: 0 }}>
+			<Box padding={2}>
 				<FilterSpecialism specialisms={specialisms} />
 				<Divider sx={{ my: 3 }} />
 				<FilterCategory />
@@ -49,7 +55,7 @@ const Sidebar = ({
 				{/*<FilterSize />*/}
 				{/*<Divider sx={{ my: 3 }} />*/}
 				{/*<FilterColor />*/}
-				<Button variant={"outlined"} size={"large"} fullWidth sx={{ mt: 3 }}>
+				<Button variant={"contained"} size={"large"} fullWidth sx={{ mt: 3 }}>
 					Reset all
 				</Button>
 			</Box>

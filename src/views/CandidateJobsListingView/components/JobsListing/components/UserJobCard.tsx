@@ -66,7 +66,6 @@ function UserJobCard({
 			>
 				<CardContent
 					sx={{
-						width: { xs: 1, md: "80%" },
 						display: "flex",
 						flexDirection: "column",
 						justifyContent: "center",

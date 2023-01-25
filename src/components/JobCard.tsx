@@ -5,7 +5,7 @@ import {
 	Bookmark,
 	Favorite,
 	LocationOn,
-	PaymentsOutlined,
+	PaymentsOutlined
 } from "@mui/icons-material";
 import {
 	Box,
@@ -16,7 +16,7 @@ import {
 	Grid,
 	IconButton,
 	Tooltip,
-	Typography,
+	Typography
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import Str from "@supercharge/strings";
@@ -103,7 +103,7 @@ function JobCard({
 				{/* </Box> */}
 				<CardContent
 					sx={{
-						width: { xs: 1, md: "80%" },
+						// width: { xs: 1, md: "80%" },
 						display: "flex",
 						flexDirection: "column",
 						justifyContent: "center",

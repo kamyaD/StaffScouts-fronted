@@ -50,8 +50,16 @@ const mainLayoutNavigation = [
 
 const candidatesLayoutNavigation = [
 	{
-		title: "Jobs",
+		title: "Find work",
 		href: "/dashboard/jobs",
+	},
+	{
+		title: "Saved jobs",
+		href: "/dashboard/saved-jobs",
+	},
+	{
+		title: "My jobs",
+		href: "/dashboard/my-jobs",
 	},
 	// {
 	// 	title: "CV services",

@@ -1,38 +1,77 @@
 {
-	"compilerOptions": {
-		"allowJs": true,
-		"baseUrl": "src",
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"incremental": true,
-		"isolatedModules": true,
-		"jsx": "preserve",
-		"jsxImportSource": "@emotion/react",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"module": "esnext",
-		"moduleResolution": "node",
-		"noEmit": true,
-		"noUncheckedIndexedAccess": true,
-		"paths": {
-			"@/components/*": ["components/*"],
-			"@/context/*": ["context/*"],
-			"@/data/*": ["data/*"],
-			"@/env/*": ["env/*"],
-			"@/hooks/*": ["hooks/*"],
-			"@/layouts/*": ["layouts/*"],
-			"@/lib/*": ["lib/*"],
-			"@/modules/*": ["store/modules/*"],
-			"@/server/*": ["server/*"],
-			"@/store/*": ["store/*"],
-			"@/svg/*": ["svg/*"],
-			"@/utils/*": ["utils/*"],
-			"@/views/*": ["views/*"]
-		},
-		"resolveJsonModule": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"target": "es2017"
-	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
-	"exclude": ["node_modules"]
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": "src",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "jsxImportSource": "@emotion/react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/context/*": [
+        "context/*"
+      ],
+      "@/data/*": [
+        "data/*"
+      ],
+      "@/env/*": [
+        "env/*"
+      ],
+      "@/hooks/*": [
+        "hooks/*"
+      ],
+      "@/layouts/*": [
+        "layouts/*"
+      ],
+      "@/lib/*": [
+        "lib/*"
+      ],
+      "@/modules/*": [
+        "store/modules/*"
+      ],
+      "@/server/*": [
+        "server/*"
+      ],
+      "@/store/*": [
+        "store/*"
+      ],
+      "@/svg/*": [
+        "svg/*"
+      ],
+      "@/utils/*": [
+        "utils/*"
+      ],
+      "@/views/*": [
+        "views/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    //		"strict": true,
+    "target": "es2017",
+    "strict": false
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

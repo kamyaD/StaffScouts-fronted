@@ -44,13 +44,13 @@ const Main = (): JSX.Element => {
 	const buttonStates = (state: JobStateType): string => {
 		switch (state) {
 			case "not-applied":
-				return "Show interest";
+				return "Apply";
 			case "loading":
 				return "Applying";
 			case "applied":
 				return "Applied";
 			default:
-				return "Show interest";
+				return "Apply";
 		}
 	};
 

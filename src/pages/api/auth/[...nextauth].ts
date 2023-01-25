@@ -7,6 +7,7 @@ interface AuthResponse {
 	token: string;
 	id: string;
 	username: string;
+	profilePic: string;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -51,6 +52,8 @@ export const authOptions: NextAuthOptions = {
 					id: user.id || "",
 					// @ts-expect-error
 					username: user.username || "",
+					// @ts-expect-error
+					picture: user.profilePic || "",
 				};
 			}
 
@@ -65,6 +68,7 @@ export const authOptions: NextAuthOptions = {
 					id: token.id || "",
 					username: token.username || "",
 					token: token.accessToken || "",
+					image: token.picture,
 				},
 			};
 		},
