@@ -858,6 +858,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/font@npm:^13.1.4":
+  version: 13.1.4
+  resolution: "@next/font@npm:13.1.4"
+  checksum: 3c79793a241fa2074e7644b72cddcf88adc02ee086e27b4bcf2fea59fcad09d09f6fca5b8cf680e0985bb35e2c873ae996495ae9453ecee6c4037d2476c68cc1
+  languageName: node
+  linkType: hard
+
 "@next/swc-android-arm-eabi@npm:13.1.4":
   version: 13.1.4
   resolution: "@next/swc-android-arm-eabi@npm:13.1.4"
@@ -5683,6 +5690,7 @@ __metadata:
     "@mui/system": ^5.11.5
     "@mui/types": ^7.2.3
     "@next-auth/prisma-adapter": ^1.0.5
+    "@next/font": ^13.1.4
     "@prisma/client": ^4.9.0
     "@reduxjs/toolkit": ^1.9.1
     "@supercharge/strings": ^2.0.0

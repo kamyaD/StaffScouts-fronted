@@ -3,6 +3,7 @@ import createEmotionServer from "@emotion/server/create-instance";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
 import createEmotionCache from "../createEmotionCache";
+import { inter } from "../theme";
 
 const APP_NAME = "Staffscout";
 const APP_DESCRIPTION = "Offering opportunities for your talent";
@@ -10,7 +11,7 @@ const APP_DESCRIPTION = "Offering opportunities for your talent";
 export default class MyDocument extends Document {
 	render(): JSX.Element {
 		return (
-			<Html lang="en">
+			<Html lang="en" className={inter.className}>
 				<Head>
 					<meta charSet="utf-8" />
 					<meta name="application-name" content={APP_NAME} />
@@ -160,10 +161,9 @@ MyDocument.getInitialProps = async (ctx) => {
 	// 3. app.render
 	// 4. page.render
 
-	// Render app and page and get the context of the page with collected side effects.
 	const originalRenderPage = ctx.renderPage;
 
-	// You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
+	// You can consider sharing the same Emotion cache between all the SSR requests to speed up performance.
 	// However, be aware that it can have global side effects.
 	const cache = createEmotionCache();
 	const { extractCriticalToChunks } = createEmotionServer(cache);
@@ -177,7 +177,7 @@ MyDocument.getInitialProps = async (ctx) => {
 		});
 
 	const initialProps = await Document.getInitialProps(ctx);
-	// This is important. It prevents emotion to render invalid HTML.
+	// This is important. It prevents Emotion to render invalid HTML.
 	// See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
 	const emotionStyles = extractCriticalToChunks(initialProps.html);
 	const emotionStyleTags = emotionStyles.styles.map((style) => (

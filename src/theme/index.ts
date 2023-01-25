@@ -2,10 +2,18 @@ import type { Theme } from "@mui/material";
 import { responsiveFontSizes } from "@mui/material";
 import type { ComponentsOverrides } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
+import { Inter } from "@next/font/google";
 import type { CSSProperties } from "react";
 
 import { dark, light } from "./palette";
 import shadows from "./shadows";
+
+export const inter = Inter({
+	weight: ["300", "400", "500", "700"],
+	subsets: ["latin"],
+	display: "swap",
+	fallback: ["Helvetica", "Arial", "sans-serif"],
+});
 
 const getTheme = (mode: string, themeToggler: () => void): Theme =>
 	responsiveFontSizes(

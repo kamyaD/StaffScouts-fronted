@@ -2,7 +2,7 @@ import type { GeneralProfileInputSchema } from "@/views/AccountSettingsView/comp
 import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
 import axios from "axios";
 
-import type { IJobs } from "../types";
+import type { IJobs, Job } from "../types";
 import type {
 	GenericResponse,
 	IJobInterestedResponse,
@@ -65,6 +65,13 @@ export const createCandidateJobInterestedFn = async (
 
 export const getJobsFn = async (): Promise<IJobs> => {
 	const response = await apiClient.get<IJobs>(`${process.env.API_URL}/jobs`);
+	return response.data;
+};
+
+export const getJobsByIdFn = async (id: string | number): Promise<Job> => {
+	const response = await apiClient.get<Job>(
+		`${process.env.API_URL}/jobs/${id}`,
+	);
 	return response.data;
 };
 

@@ -2,6 +2,7 @@ import useRequest from "@/hooks/useRequest";
 import { createCandidateJobInterestedFn } from "@/lib/api";
 import type { JobInterestedDTO } from "@/lib/types";
 import useStore from "@/store/index";
+import { skeletonRows } from "@/utils/skeletonLoaders";
 import { LoadingButton } from "@mui/lab";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -15,8 +16,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import type { Job } from "../../../../types";
-import type { IJobs } from "../../../../types";
+import type { IJobs, Job } from "../../../../types";
 
 type JobStateType = "applied" | "loading" | "not-applied";
 
@@ -117,10 +117,22 @@ const Main = (): JSX.Element => {
 				flexDirection={{ xs: "column", sm: "row" }}
 			>
 				<Box>
-					<Typography fontWeight={700} variant={"h4"} gutterBottom>
-						{job?.jobs_title}
-					</Typography>
-					<Typography variant={"h6"}>Nairobi, Kenya · Full time</Typography>
+					{!job ? (
+						skeletonRows(1)
+					) : (
+						<Typography fontWeight={700} variant={"h4"} gutterBottom>
+							{job?.jobs_title}
+						</Typography>
+					)}
+					{!job ? (
+						skeletonRows(1)
+					) : (
+						<Typography variant={"h6"}>
+							{!job
+								? skeletonRows(1)
+								: `${job?.city}, ${job.country} - ${job.contract_type_id}`}
+						</Typography>
+					)}
 				</Box>
 				<Box display="flex" marginTop={{ xs: 2, md: 0 }}>
 					<LoadingButton
@@ -156,21 +168,29 @@ const Main = (): JSX.Element => {
 						<Typography variant={"h5"} fontWeight={700} gutterBottom>
 							Job description
 						</Typography>
-						<Typography
-							component={"p"}
-							// @ts-expect-error
-							dangerouslySetInnerHTML={{ __html: job?.jobs_description }}
-						/>
+						{!job ? (
+							skeletonRows(3)
+						) : (
+							<Typography
+								component={"p"}
+								dangerouslySetInnerHTML={{ __html: job?.jobs_description }}
+							/>
+						)}
 					</Box>
 					<Box marginBottom={3}>
 						<Typography variant={"h5"} fontWeight={700} gutterBottom>
 							Duties and Responsibilities
 						</Typography>
-						<Typography
-							component={"p"}
-							// @ts-expect-error
-							dangerouslySetInnerHTML={{ __html: job?.duties_responsibilities }}
-						/>
+						{!job ? (
+							skeletonRows(5)
+						) : (
+							<Typography
+								component={"p"}
+								dangerouslySetInnerHTML={{
+									__html: job?.duties_responsibilities,
+								}}
+							/>
+						)}
 						{/*<Grid container spacing={1} sx={{ marginTop: 1 }}>*/}
 						{/*	{[*/}
 						{/*		"Our sign up is dead simple. We only require your basic company information",*/}
@@ -223,13 +243,16 @@ const Main = (): JSX.Element => {
 						<Typography variant={"h5"} fontWeight={700} gutterBottom>
 							Job Requirements
 						</Typography>
-						<Typography
-							component={"p"}
-							dangerouslySetInnerHTML={{
-								// @ts-expect-error
-								__html: job?.qualifications_competencies,
-							}}
-						/>
+						{!job ? (
+							skeletonRows(3)
+						) : (
+							<Typography
+								component={"p"}
+								dangerouslySetInnerHTML={{
+									__html: job?.qualifications_competencies,
+								}}
+							/>
+						)}
 					</Box>
 					{/*<Box>*/}
 					{/*	<Typography variant={"h5"} fontWeight={700} gutterBottom>*/}
