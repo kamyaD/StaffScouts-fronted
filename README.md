@@ -1,28 +1,40 @@
-# Create T3 App
+<div align="center">
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Staffscouts
 
-## What's next? How do I make an app with this?
+</div>
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+<div align="center">
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+    Staffscout job portal
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+[![Staffscout](./public/img/readme.png)](https://github.com/kamyaD/StaffScouts-fronted)
+
+</div>
+
+### Development set up
+
+1. Install [`Node JS`](https://nodejs.org/en/).
+2. To clone, run `git clone https://github.com/kamyaD/StaffScouts-fronted.git`.
+3. `cd` into the root of the **project directory**.
+4. Install [`yarn`](https://yarnpkg.com/en/docs/install#mac-stable).
+5. Run `yarn install` on the terminal to install dependencies.
+6. Create a `.env.local` file in the root directory of the application. Example of the content of a `.env.local` file is shown in the `.env.example`
+7. Setup local development server.
+
+### Development server
+
+Run `yarn dev` for a dev server. Navigate to `http://127.0.0.1:3000/`. The app will automatically reload if you change any of the source files.
+
+### Build
+
+Run `yarn build` to build the project. The build artifacts will be stored in the `.next` directory
 
 ## Learn More
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+To learn more about Next.js, take a look at the following resources:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!

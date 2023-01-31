@@ -5,7 +5,7 @@ const handler: NextApiHandler = async (
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) => {
-	const { firstName, lastName, userName, password, confirmPassword, email } =
+	const { firstName, lastName, userName, password, confirmPassword, email, userType } =
 		req.body;
 
 	const body = {
@@ -20,9 +20,9 @@ const handler: NextApiHandler = async (
 		country: "",
 		job_title: "",
 		availability_status: "",
-		is_employer: false,
-		is_candidate: false,
-		is_both_employer_and_candidate: false,
+		is_employer: userType === "Employer",
+		is_candidate: userType === "Candidate",
+		is_both_employer_and_candidate: userType === "Both Candidate & Employer",
 		profile_pic:
 			"https://res.cloudinary.com/mashafrancis/image/upload/v1670917120/musings/illustrations/avatar.svg",
 	};

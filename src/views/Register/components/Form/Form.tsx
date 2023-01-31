@@ -4,7 +4,7 @@ import useStore from "@/store/index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { InputAdornment } from "@mui/material";
+import { InputAdornment, MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -12,13 +12,17 @@ import Typography from "@mui/material/Typography";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import type { MouseEvent } from "react";
 import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
+import { candidatesChoice, employerChoice } from "@/utils/fixtures";
+import fancyId from "@/utils/fancyId";
 
 const validationSchema = z
 	.object({
+		userType: z.string(),
 		firstName: z
 			.string()
 			.min(2, "First name must contain at least 2 character(s)")
@@ -45,14 +49,19 @@ const validationSchema = z
 
 export type RegisterInputSchema = z.infer<typeof validationSchema>;
 
+const UserType = [ "Candidate", "Employer", "Both Candidate & Employer"]
+
 function Form(): JSX.Element {
 	const { displaySnackMessage, setRequestLoading, requestLoading } = useStore();
+	const [alignment, setAlignment] = useState("candidate");
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const [isConfirmPasswordHidden, showConfirmPassword] =
 		useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
 	const toggleConfirmPassword = () =>
 		showConfirmPassword((prevState) => !prevState);
+	const accountType = () =>
+		alignment === "candidate" ? candidatesChoice : employerChoice;
 
 	const { push } = useRouter();
 
@@ -63,6 +72,7 @@ function Form(): JSX.Element {
 		email: "",
 		password: "",
 		confirmPassword: "",
+		userType: ""
 	};
 
 	const methods = useForm<RegisterInputSchema>({
@@ -123,6 +133,13 @@ function Form(): JSX.Element {
 		registerUser(values);
 	};
 
+	const handleFormTypeChange = (
+		event: MouseEvent<HTMLElement>,
+		newAlignment: string,
+	) => {
+		setAlignment(newAlignment);
+	};
+
 	return (
 		<Box>
 			<Box marginBottom={4}>
@@ -138,9 +155,43 @@ function Form(): JSX.Element {
 					Fill out the form to get started.
 				</Typography>
 			</Box>
+
+			 {/*<ToggleButtonGroup*/}
+				{/*fullWidth*/}
+				{/*size="small"*/}
+				{/*color="secondary"*/}
+				{/*value={alignment}*/}
+				{/*exclusive*/}
+				{/*onChange={handleFormTypeChange}*/}
+				{/*aria-label="Work"*/}
+			 {/*>*/}
+				{/*<ToggleButton value="candidate">Candidate</ToggleButton>*/}
+				{/*<ToggleButton value="employer">Employer</ToggleButton>*/}
+			 {/*</ToggleButtonGroup>*/}
+
 			<FormProvider {...methods}>
 				<form method="post" onSubmit={handleSubmit(onSubmit)}>
 					<Grid container spacing={4}>
+						 <Grid item xs={12}>
+							<FormInputText
+								select
+								autoFocus={false}
+								margin="dense"
+								name="userType"
+								placeholder=""
+								size="medium"
+								control={control}
+								label="User Type"
+								type="text"
+							>
+								{UserType?.map((item: string) => (
+									<MenuItem key={fancyId()} value={item}>
+										{item}
+									</MenuItem>
+								))}
+							</FormInputText>
+						 </Grid>
+
 						<Grid item xs={6}>
 							<FormInputText
 								required
