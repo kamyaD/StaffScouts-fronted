@@ -1,12 +1,12 @@
 import fancyId from "@/utils/fancyId";
 import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import type { IJobs } from "../../../../types";
-import { UserJobCard } from "./components";
+import { UserJobCard, UserJobCardSkeleton } from "./components";
 
-const JobsListing = ({ jobs }: { jobs?: IJobs }): JSX.Element => {
+const JobsListing = ({ jobs }: { jobs?: IJobs; }): JSX.Element => {
 	const theme = useTheme();
 	const [openId, setOpenId] = useState(null);
 
@@ -20,9 +20,9 @@ const JobsListing = ({ jobs }: { jobs?: IJobs }): JSX.Element => {
 				borderRadius: 2,
 			}}
 		>
-			{jobs?.results.map((job) => (
-				<UserJobCard key={fancyId()} job={job} />
-			))}
+			{
+				!jobs ? <><UserJobCardSkeleton /> <UserJobCardSkeleton /> <UserJobCardSkeleton /></> : jobs?.results.map((job) => (
+				<UserJobCard key={fancyId()} job={job} />))}
 		</Grid>
 	);
 };

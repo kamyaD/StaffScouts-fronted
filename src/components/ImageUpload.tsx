@@ -5,7 +5,7 @@ import {
 	Box,
 	CircularProgress,
 	IconButton,
-	Tooltip
+	Tooltip,
 } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import type { SyntheticEvent } from "react";

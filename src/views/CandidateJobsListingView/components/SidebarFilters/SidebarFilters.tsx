@@ -2,12 +2,12 @@ import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import React, { useState } from "react";
+import { ReactNode, useState } from "react";
 
 import { Sidebar, Topbar } from "./components";
 
 interface Props {
-	children: React.ReactNode;
+	children: ReactNode;
 	specialisms: any;
 	jobsCount: number;
 }
@@ -35,9 +35,7 @@ const SidebarFilters = ({
 	const open = isMd ? false : openSidebar;
 
 	return (
-		<Box
-			display={"flex"}
-		>
+		<Box display={"flex"}>
 			<Sidebar
 				onClose={handleSidebarClose}
 				open={open}
@@ -45,7 +43,7 @@ const SidebarFilters = ({
 				specialisms={specialisms}
 			/>
 			<Box marginLeft={{ xs: 0, md: 4 }} width={1}>
-				<Topbar onSidebarOpen={handleSidebarOpen} jobsCount={jobsCount} />
+				<Topbar onSidebarOpen={handleSidebarOpen} jobsCount={jobsCount ?? 0} />
 				<Box paddingY={4}>{children}</Box>
 				<Box display={"flex"} justifyContent={"center"} width={1}>
 					<Pagination count={10} size={"large"} color="primary" />

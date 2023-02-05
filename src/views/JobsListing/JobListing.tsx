@@ -6,7 +6,7 @@ import {
 	IconButton,
 	InputBase,
 	Pagination,
-	Paper,
+	Paper
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -66,14 +66,12 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 
 	// If initialDisplayPosts exist, display it if no searchValue is specified
 	const displayJobs =
-		// @ts-expect-error
 		initialDisplayJobs?.length > 0 && !searchValue
 			? initialDisplayJobs
 			: filteredJobs;
 
 	const contract = contractTypes?.results,
 		contractObject = contract?.reduce(
-			// @ts-expect-error
 			(r, { id, contract_types_name }) => ((r[id] = contract_types_name), r),
 			{},
 		);

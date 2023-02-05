@@ -1,15 +1,20 @@
 import {
 	AccountCircleOutlined,
 	AllOutTwoTone,
-	Logout
+	Logout,
+	MenuBookTwoTone,
+	WorkTwoTone
 } from "@mui/icons-material";
 import {
 	Avatar,
+	Box,
+	Button,
 	Chip,
 	ListItemIcon,
 	ListItemText,
 	Menu,
 	MenuItem,
+	Stack,
 	Tooltip,
 	useMediaQuery
 } from "@mui/material";
@@ -20,6 +25,7 @@ import type { MouseEvent } from "react";
 import { useState } from "react";
 
 import fancyId from "../utils/fancyId";
+import { usePathname } from "next/navigation";
 
 function UserAvatar(): JSX.Element {
 	const theme = useTheme();
@@ -27,11 +33,16 @@ function UserAvatar(): JSX.Element {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const { data: session } = useSession();
 	const { push } = useRouter();
+	const pathname = usePathname()
+
+	console.log('Class: UserAvatar, Function: UserAvatar, Line 38 session?.user():', session?.user);
 
 	const { username, image } = session?.user || {
 		name: "Anonymous User",
 		image: "/img/avatar.svg",
 	};
+
+	const role = "CANDIDATE"
 
 	const handleToggleProfileMenu = (event: MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -61,6 +72,22 @@ function UserAvatar(): JSX.Element {
 			secondaryText: "All about you",
 		},
 	];
+
+	const rolesViews = [
+		{ name: 'CANDIDATE', icon: <MenuBookTwoTone color="action" /> },
+		{ name: 'EMPLOYER', icon: <WorkTwoTone color="action" /> },
+	];
+
+	const roleSwitch = (role: string) => {
+		switch (role) {
+			case 'CANDIDATE':
+				return '/candidate/jobs';
+			case 'EMPLOYER':
+				return '/employer/analytics';
+			default:
+				return '/candidate/jobs';
+		}
+	};
 
 	return (
 		<>
@@ -122,6 +149,102 @@ function UserAvatar(): JSX.Element {
 				transformOrigin={{ horizontal: "right", vertical: "top" }}
 				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 			>
+				{role === 'CANDIDATE' && (
+					<MenuItem
+						key={fancyId()}
+						sx={{
+							borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+							paddingY: 1,
+						}}
+					>
+						<Stack
+							direction="row"
+							justifyContent="center"
+							alignItems="center"
+							spacing={2}
+							width={1}
+						>
+							<Tooltip title="candidate">
+								<Box
+									component={Button}
+									onClick={() => {
+										push(roleSwitch("CANDIDATE"))
+										// .then(() => setCurrentRoleBasedAccess(role.name));
+									}}
+									// variant="outlined"
+									// bgcolor={alpha(theme.palette.primary.main, 0.1)}
+									// color={theme.palette.primary.main}
+									variant={
+										pathname?.includes('/candidate/')
+											? 'contained'
+											: 'outlined'
+									}
+									aria-label="CANDIDATE"
+									sx={{
+										borderRadius: 1,
+										minWidth: 'auto',
+										// borderColor: alpha(theme.palette.divider, 0.2),
+									}}
+								>
+									<MenuBookTwoTone color="action" />
+								</Box>
+							</Tooltip>
+
+							<Tooltip title="employer">
+								<Box
+									component={Button}
+									onClick={() => {
+										push(roleSwitch("EMPLOYER"))
+										// .then(() => setCurrentRoleBasedAccess(role.name));
+									}}
+									// variant="outlined"
+									// bgcolor={alpha(theme.palette.primary.main, 0.1)}
+									// color={theme.palette.primary.main}
+									variant={
+										pathname?.includes('/employer/')
+											? 'contained'
+											: 'outlined'
+									}
+									aria-label="EMPLOYER"
+									sx={{
+										borderRadius: 1,
+										minWidth: 'auto',
+										// borderColor: alpha(theme.palette.divider, 0.2),
+									}}
+								>
+									<WorkTwoTone color="action" />
+								</Box>
+							</Tooltip>
+							{/*{rolesViews.map((role) => (*/}
+							{/*	<Tooltip key={role.name} title={role.name.toLowerCase()}>*/}
+							{/*		<Box*/}
+							{/*			component={Button}*/}
+							{/*			onClick={() => {*/}
+							{/*				push(roleSwitch(role.name))*/}
+							{/*					// .then(() => setCurrentRoleBasedAccess(role.name));*/}
+							{/*			}}*/}
+							{/*			// variant="outlined"*/}
+							{/*			// bgcolor={alpha(theme.palette.primary.main, 0.1)}*/}
+							{/*			// color={theme.palette.primary.main}*/}
+							{/*			variant={*/}
+							{/*				pathname?.includes(`/candidate/`)*/}
+							{/*					? 'contained'*/}
+							{/*					: 'outlined'*/}
+							{/*			}*/}
+							{/*			aria-label={role.name}*/}
+							{/*			sx={{*/}
+							{/*				borderRadius: 1,*/}
+							{/*				minWidth: 'auto',*/}
+							{/*				// borderColor: alpha(theme.palette.divider, 0.2),*/}
+							{/*			}}*/}
+							{/*		>*/}
+							{/*			{role.icon}*/}
+							{/*		</Box>*/}
+							{/*	</Tooltip>*/}
+							{/*))}*/}
+						</Stack>
+					</MenuItem>
+				)}
 				{menuItems.map((item) => {
 					const handleClick = async () => {
 						handleProfileClose();

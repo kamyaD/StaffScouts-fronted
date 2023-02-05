@@ -1,6 +1,8 @@
 import { FormInputText } from "@/components/FormInput";
 import { signUpUserFn } from "@/lib/api";
 import useStore from "@/store/index";
+import fancyId from "@/utils/fancyId";
+import { candidatesChoice, employerChoice } from "@/utils/fixtures";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
@@ -17,8 +19,6 @@ import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
-import { candidatesChoice, employerChoice } from "@/utils/fixtures";
-import fancyId from "@/utils/fancyId";
 
 const validationSchema = z
 	.object({
@@ -49,7 +49,7 @@ const validationSchema = z
 
 export type RegisterInputSchema = z.infer<typeof validationSchema>;
 
-const UserType = [ "Candidate", "Employer", "Both Candidate & Employer"]
+const UserType = ["Candidate", "Employer", "Both Candidate & Employer"];
 
 function Form(): JSX.Element {
 	const { displaySnackMessage, setRequestLoading, requestLoading } = useStore();
@@ -72,7 +72,7 @@ function Form(): JSX.Element {
 		email: "",
 		password: "",
 		confirmPassword: "",
-		userType: ""
+		userType: "",
 	};
 
 	const methods = useForm<RegisterInputSchema>({
@@ -156,23 +156,23 @@ function Form(): JSX.Element {
 				</Typography>
 			</Box>
 
-			 {/*<ToggleButtonGroup*/}
-				{/*fullWidth*/}
-				{/*size="small"*/}
-				{/*color="secondary"*/}
-				{/*value={alignment}*/}
-				{/*exclusive*/}
-				{/*onChange={handleFormTypeChange}*/}
-				{/*aria-label="Work"*/}
-			 {/*>*/}
-				{/*<ToggleButton value="candidate">Candidate</ToggleButton>*/}
-				{/*<ToggleButton value="employer">Employer</ToggleButton>*/}
-			 {/*</ToggleButtonGroup>*/}
+			{/*<ToggleButtonGroup*/}
+			{/*fullWidth*/}
+			{/*size="small"*/}
+			{/*color="secondary"*/}
+			{/*value={alignment}*/}
+			{/*exclusive*/}
+			{/*onChange={handleFormTypeChange}*/}
+			{/*aria-label="Work"*/}
+			{/*>*/}
+			{/*<ToggleButton value="candidate">Candidate</ToggleButton>*/}
+			{/*<ToggleButton value="employer">Employer</ToggleButton>*/}
+			{/*</ToggleButtonGroup>*/}
 
 			<FormProvider {...methods}>
 				<form method="post" onSubmit={handleSubmit(onSubmit)}>
 					<Grid container spacing={4}>
-						 <Grid item xs={12}>
+						<Grid item xs={12}>
 							<FormInputText
 								select
 								autoFocus={false}
@@ -190,7 +190,7 @@ function Form(): JSX.Element {
 									</MenuItem>
 								))}
 							</FormInputText>
-						 </Grid>
+						</Grid>
 
 						<Grid item xs={6}>
 							<FormInputText

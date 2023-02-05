@@ -1,7 +1,6 @@
 import useRequest from "@/hooks/useRequest";
 import type { AxiosError } from "axios";
 import Container from "components/Container";
-import React from "react";
 
 import type { IJobs } from "../../types";
 import { JobsListing, SidebarFilters } from "./components";
@@ -27,10 +26,6 @@ const CandidateJobsListing = (): JSX.Element => {
 		},
 		{ refreshInterval: 120_000 },
 	);
-
-	if (!jobs && !specialisms) {
-		return <div>Loading</div>;
-	}
 
 	return (
 		<>

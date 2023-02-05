@@ -1,5 +1,8 @@
 import Container from "@/components/Container";
 import LinearProgressBar from "@/components/LinearProgressBar";
+import { Footer } from "@/layouts/Main/components";
+import { ScrollTop } from "@/layouts/Main/Main";
+import { KeyboardArrowUpRounded } from "@mui/icons-material";
 import { Box, Fab, useMediaQuery, useScrollTrigger } from "@mui/material";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiAppBar from "@mui/material/AppBar";
@@ -9,9 +12,6 @@ import { memo, useEffect, useState } from "react";
 
 import { Topbar } from "./components";
 import { drawerWidth } from "./components/Sidebar/Sidebar";
-import { KeyboardArrowUpRounded } from "@mui/icons-material";
-import { Footer } from "@/layouts/Main/components";
-import { ScrollTop } from "@/layouts/Main/Main";
 
 export const sideDrawerWidth = 450;
 

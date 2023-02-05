@@ -5,8 +5,15 @@ const handler: NextApiHandler = async (
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) => {
-	const { firstName, lastName, userName, password, confirmPassword, email, userType } =
-		req.body;
+	const {
+		firstName,
+		lastName,
+		userName,
+		password,
+		confirmPassword,
+		email,
+		userType,
+	} = req.body;
 
 	const body = {
 		email,

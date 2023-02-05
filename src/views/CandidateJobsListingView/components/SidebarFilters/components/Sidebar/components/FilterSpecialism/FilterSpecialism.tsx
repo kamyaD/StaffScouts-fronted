@@ -24,7 +24,7 @@ const FilterSpecialism = ({
 		mode: "onChange",
 	});
 
-	const specialism = specialisms.results.map((item) => item.specialty);
+	const specialism = !specialisms ? ["Loading"] : specialisms.results.map((item) => item.specialty)
 
 	return (
 		<Box>
@@ -51,6 +51,7 @@ const FilterSpecialism = ({
 						control={control}
 						label="Select specialism"
 						type="text"
+						disabled={!specialisms}
 						SelectProps={{
 							native: true,
 						}}

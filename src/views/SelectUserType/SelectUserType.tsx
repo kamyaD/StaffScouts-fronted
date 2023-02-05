@@ -1,21 +1,21 @@
-import Container from "@/components/Container";
 import fancyId from "@/utils/fancyId";
-import {
-	MenuBookTwoTone,
-	PagesTwoTone,
-	RadioButtonUnchecked,
-	WorkTwoTone,
-} from "@mui/icons-material";
+import { MenuBookTwoTone, WorkTwoTone } from "@mui/icons-material";
 /* eslint-disable react/no-unescaped-entities */
-import { Card, CardContent, CardHeader, Grid, IconButton } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import {
+	Avatar,
+	Box,
+	Button,
+	Stack,
+	ToggleButton,
+	ToggleButtonGroup,
+	Typography,
+	useMediaQuery
+} from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import type { MouseEvent } from "react";
+import { useEffect, useState } from "react";
+import Container from "@/components/Container";
 
 const mock = [
 	{
@@ -25,34 +25,31 @@ const mock = [
 	},
 	{
 		title: "I am an employer",
-		icon: <PagesTwoTone color="action" />,
+		icon: <WorkTwoTone color="action" />,
 		value: "employer",
 	},
-	{
-		title: "I am both candidate and employer",
-		icon: <WorkTwoTone color="action" />,
-		value: "candidate-and-employer",
-	},
+	// {
+	// 	title: "I am both candidate and employer",
+	// 	icon: <WorkTwoTone color="action" />,
+	// 	value: "candidate-and-employer",
+	// },
 ];
 
-const StyledCard = styled(Card)(({ theme }) => ({
-	position: "relative",
-	cursor: "pointer",
-	// height: 200,
-	// [theme.breakpoints.down('sm')]: {
-	// 	width: '100% !important', // Overrides inline-style
-	// 	height: 100,
-	// },
-	"&:hover, &.Mui-focusVisible": {
-		zIndex: 1,
-		backgroundColor: alpha(theme.palette.primary.main, 0.1),
-	},
-	"&.Mui-selected": {
-		color: theme.palette.primary.main,
-		fontWeight: theme.typography.fontWeightMedium,
-		border: "none",
-		// backgroundColor: alpha(theme.palette.primary.main, 0.1),
-		// borderRadius: theme.shape.borderRadius,
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+	"& .MuiToggleButtonGroup-grouped": {
+		margin: theme.spacing(2),
+		alignItems: "center",
+		border: 1,
+		backgroundColor: alpha(theme.palette.alternate.main, 0.9),
+		"&.Mui-disabled": {
+			border: 1,
+		},
+		"&:not(:first-of-type)": {
+			borderRadius: theme.shape.borderRadius,
+		},
+		"&:first-of-type": {
+			borderRadius: theme.shape.borderRadius,
+		},
 	},
 }));
 
@@ -65,7 +62,7 @@ const SelectUserType = (): JSX.Element => {
 	});
 	const { push } = useRouter();
 
-	const [alignment, setAlignment] = useState<Alignment>("...");
+	const [alignment, setAlignment] = useState("...");
 	const [activeState, setActiveState] = useState("");
 	const [chccked, setChecked] = useState("");
 
@@ -77,48 +74,11 @@ const SelectUserType = (): JSX.Element => {
 			case "employer":
 				setActiveState("employer");
 				return;
-			case "candidate-and-employer":
-				setActiveState("candidate-and-employer");
-				return;
 			default:
+				setActiveState("...");
 				return;
 		}
 	}, [alignment]);
-
-	const handleClick = (index: number) => {
-		switch (index) {
-			case 0:
-				setAlignment("candidate");
-				setChecked("candidate is checked");
-				return;
-			case 1:
-				setAlignment("employer");
-				setChecked("employer is checked");
-				return;
-			case 2:
-				setAlignment("candidate-and-employer");
-				setChecked("candidate and employer is checked");
-				return;
-			default:
-				return;
-		}
-	};
-
-	const handleStates = (check: string, index: number) => {
-		switch (check) {
-			case "candidate is checked":
-				setChecked("candidate is checked");
-				return;
-			case "employer is checked":
-				setChecked("employer is checked");
-				return;
-			case "candidate and employer is checked":
-				setChecked("candidate and employer is checked");
-				return;
-			default:
-				return;
-		}
-	};
 
 	const handlePushToDashboardViews = async () => {
 		switch (alignment) {
@@ -128,130 +88,144 @@ const SelectUserType = (): JSX.Element => {
 			case "candidate":
 				await push("/candidate/jobs");
 				return;
-			case "candidate-and-employer":
-				await push("/dashboard/analytics");
-				return;
 			default:
 				return;
 		}
 	};
 
+	const handleAlignment = (
+		event: MouseEvent<HTMLElement>,
+		newAlignment: string,
+	) => {
+		setAlignment(newAlignment);
+	};
+
 	return (
-		<Container>
-			<Box
-				marginTop={4}
-				p={4}
-				sx={{
-					border: `1px solid ${theme.palette.divider}`,
-					borderRadius: 2,
-				}}
+		<Container width={800} marginTop={16} sx={{
+			border: `1px solid ${theme.palette.divider}`,
+			borderRadius: 2,
+		}}>
+			<Stack
+				direction="column"
+				justifyContent="center"
+				alignItems="center"
+				spacing={2}
 			>
 				<Box>
 					<Typography
-						variant="h4"
+						variant="h5"
 						align={"center"}
-						data-aos={"fade-up"}
-						gutterBottom
 						sx={{
-							fontWeight: 700,
+							fontWeight: 500,
 						}}
 					>
-						Select view as an employer, candidate or both
+						Proceed as candidate or employer
 					</Typography>
 				</Box>
-				<Container>
-					<Grid container spacing={2}>
-						{mock.map((item, index) => (
-							<Grid item xs={12} sm={6} md={4} key={fancyId()}>
-								<Box
-									key={fancyId()}
-									// value={item.value}
-									component={StyledCard}
-									padding={2}
-									width={1}
-									height="200px"
-									marginX={1}
-									variant="outlined"
-									onClick={() => handleClick(index)}
-									// sx={{
-									// 	backgroundColor: alignment === activeState ? alpha(theme.palette.primary.main, 0.1)
-									// 	: 'transparent',
-									// }}
-									// handleChange={(e, value) => handleChange}
-								>
-									<CardHeader
-										avatar={
-											<Box
-												component={Avatar}
-												width={50}
-												height={50}
-												// marginBottom={2}
-												bgcolor={theme.palette.primary.main}
-												color={theme.palette.background.paper}
-											>
-												{item.icon}
-											</Box>
-										}
-										action={
-											<IconButton aria-label="settings">
-												<RadioButtonUnchecked />
-											</IconButton>
-										}
-									/>
-									<CardContent>
-										<Box display={"flex"} flexDirection={"column"}>
-											<Typography
-												variant={"h6"}
-												gutterBottom
-												sx={{ fontWeight: 500 }}
-											>
-												{item.title}
-											</Typography>
-										</Box>
-									</CardContent>
-								</Box>
-							</Grid>
-						))}
-					</Grid>
-					<Box
-						display="flex"
-						flexDirection={{ xs: "column", sm: "row" }}
-						alignItems={{ xs: "stretched", sm: "flex-start" }}
-						justifyContent={"center"}
-						marginTop={isMd ? 12 : 4}
+					<ToggleButtonGroup
+						size="small"
+						value={alignment}
+						exclusive
+						onChange={handleAlignment}
+						aria-label="text alignment"
+						sx={{
+							marginTop: 4,
+
+						}}
 					>
-						<Button
-							variant="contained"
-							color="primary"
-							size="large"
-							fullWidth={!isMd}
-							onClick={handlePushToDashboardViews}
-							endIcon={
-								alignment !== "..." && (
-									<Box
-										component="svg"
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										width={24}
-										height={24}
+						{mock.map((item) => (
+							<Box
+								key={fancyId()}
+								value={item.value}
+								component={ToggleButton}
+								paddingX={4}
+								width={1}
+								height="200px"
+								marginX={0}
+								border={1}
+							>
+								<Stack
+									direction="column"
+									justifyContent="center"
+									alignItems="flex-start"
+									width={200}
+								>
+									<Stack
+										direction="row"
+										justifyContent="space-between"
+										alignItems="flex-start"
+										spacing={4}
+										marginBottom={4}
+										width={200}
 									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M17 8l4 4m0 0l-4 4m4-4H3"
-										/>
-									</Box>
-								)
-							}
-						>
-							{`Proceed as ${alignment.split("-").join(" ")}`}
-						</Button>
-					</Box>
-				</Container>
-			</Box>
+										<Box
+											component={Avatar}
+											width={50}
+											height={50}
+											// marginBottom={2}
+											bgcolor={theme.palette.primary.main}
+											color={theme.palette.background.paper}
+										>
+											{item.icon}
+										</Box>
+									</Stack>
+
+									<Stack
+										direction="column"
+										justifyContent="space-around"
+										alignItems="center"
+										spacing={4}
+									>
+										<Typography
+											variant={"h6"}
+											gutterBottom
+											sx={{ fontWeight: 500 }}
+										>
+											{item.title}
+										</Typography>
+									</Stack>
+								</Stack>
+							</Box>
+						))}
+					</ToggleButtonGroup>
+				<Box
+					display="flex"
+					flexDirection={{ xs: "column", sm: "row" }}
+					alignItems={{ xs: "stretched", sm: "flex-start" }}
+					justifyContent={"center"}
+					marginTop={isMd ? 12 : 4}
+				>
+					<Button
+						variant="contained"
+						color="primary"
+						size="large"
+						fullWidth={!isMd}
+						onClick={handlePushToDashboardViews}
+						endIcon={
+							alignment !== "..." || alignment === null && (
+								<Box
+									component="svg"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									width={24}
+									height={24}
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M17 8l4 4m0 0l-4 4m4-4H3"
+									/>
+								</Box>
+							)
+						}
+					>
+						{`Proceed as ${alignment ? alignment.split("-").join(" ") : "..."}`}
+					</Button>
+				</Box>
+			</Stack>
 		</Container>
 	);
 };
