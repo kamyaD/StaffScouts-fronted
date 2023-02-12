@@ -1,9 +1,14 @@
+import Container from "@/components/Container";
 import { Dashboard } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
 import type { ReactElement } from "react";
 
 const AnalyticsPage: NextPageWithAuthAndLayout = (): JSX.Element => {
-	return <div>Analytics</div>;
+	return (
+		<Container>
+			<div>Employer dashboard</div>
+		</Container>
+	);
 };
 
 AnalyticsPage.auth = true;

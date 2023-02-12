@@ -3,7 +3,7 @@ import {
 	AllOutTwoTone,
 	Logout,
 	MenuBookTwoTone,
-	WorkTwoTone
+	WorkTwoTone,
 } from "@mui/icons-material";
 import {
 	Avatar,
@@ -16,16 +16,16 @@ import {
 	MenuItem,
 	Stack,
 	Tooltip,
-	useMediaQuery
+	useMediaQuery,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import type { MouseEvent } from "react";
 import { useState } from "react";
 
 import fancyId from "../utils/fancyId";
-import { usePathname } from "next/navigation";
 
 function UserAvatar(): JSX.Element {
 	const theme = useTheme();
@@ -33,16 +33,12 @@ function UserAvatar(): JSX.Element {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const { data: session } = useSession();
 	const { push } = useRouter();
-	const pathname = usePathname()
+	const pathname = usePathname();
 
-	console.log('Class: UserAvatar, Function: UserAvatar, Line 38 session?.user():', session?.user);
-
-	const { username, image } = session?.user || {
+	const { username, image, role } = session?.user || {
 		name: "Anonymous User",
 		image: "/img/avatar.svg",
 	};
-
-	const role = "CANDIDATE"
 
 	const handleToggleProfileMenu = (event: MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -74,18 +70,18 @@ function UserAvatar(): JSX.Element {
 	];
 
 	const rolesViews = [
-		{ name: 'CANDIDATE', icon: <MenuBookTwoTone color="action" /> },
-		{ name: 'EMPLOYER', icon: <WorkTwoTone color="action" /> },
+		{ name: "CANDIDATE", icon: <MenuBookTwoTone color="action" /> },
+		{ name: "EMPLOYER", icon: <WorkTwoTone color="action" /> },
 	];
 
 	const roleSwitch = (role: string) => {
 		switch (role) {
-			case 'CANDIDATE':
-				return '/candidate/jobs';
-			case 'EMPLOYER':
-				return '/employer/analytics';
+			case "CANDIDATE":
+				return "/candidate/jobs";
+			case "EMPLOYER":
+				return "/employer/analytics";
 			default:
-				return '/candidate/jobs';
+				return "/candidate/jobs";
 		}
 	};
 
@@ -149,7 +145,7 @@ function UserAvatar(): JSX.Element {
 				transformOrigin={{ horizontal: "right", vertical: "top" }}
 				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 			>
-				{role === 'CANDIDATE' && (
+				{role === "CANDIDATE" && (
 					<MenuItem
 						key={fancyId()}
 						sx={{
@@ -168,21 +164,19 @@ function UserAvatar(): JSX.Element {
 								<Box
 									component={Button}
 									onClick={() => {
-										push(roleSwitch("CANDIDATE"))
+										push(roleSwitch("CANDIDATE"));
 										// .then(() => setCurrentRoleBasedAccess(role.name));
 									}}
 									// variant="outlined"
 									// bgcolor={alpha(theme.palette.primary.main, 0.1)}
 									// color={theme.palette.primary.main}
 									variant={
-										pathname?.includes('/candidate/')
-											? 'contained'
-											: 'outlined'
+										pathname?.includes("/candidate/") ? "contained" : "outlined"
 									}
 									aria-label="CANDIDATE"
 									sx={{
 										borderRadius: 1,
-										minWidth: 'auto',
+										minWidth: "auto",
 										// borderColor: alpha(theme.palette.divider, 0.2),
 									}}
 								>
@@ -194,21 +188,19 @@ function UserAvatar(): JSX.Element {
 								<Box
 									component={Button}
 									onClick={() => {
-										push(roleSwitch("EMPLOYER"))
+										push(roleSwitch("EMPLOYER"));
 										// .then(() => setCurrentRoleBasedAccess(role.name));
 									}}
 									// variant="outlined"
 									// bgcolor={alpha(theme.palette.primary.main, 0.1)}
 									// color={theme.palette.primary.main}
 									variant={
-										pathname?.includes('/employer/')
-											? 'contained'
-											: 'outlined'
+										pathname?.includes("/employer/") ? "contained" : "outlined"
 									}
 									aria-label="EMPLOYER"
 									sx={{
 										borderRadius: 1,
-										minWidth: 'auto',
+										minWidth: "auto",
 										// borderColor: alpha(theme.palette.divider, 0.2),
 									}}
 								>

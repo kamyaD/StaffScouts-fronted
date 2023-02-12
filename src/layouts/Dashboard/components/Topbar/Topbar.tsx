@@ -1,7 +1,10 @@
 import Logo from "@/components/Logo";
 import Notifications from "@/components/Notifications";
 import UserAvatar from "@/components/UserAvatar";
-import { candidatesLayoutNavigation } from "@/layouts/navigation";
+import {
+	candidatesLayoutNavigation,
+	employerLayoutNavigation,
+} from "@/layouts/navigation";
 import fancyId from "@/utils/fancyId";
 // components
 import type { Theme } from "@mui/material";
@@ -17,6 +20,11 @@ const Topbar = (): JSX.Element => {
 	const theme = useTheme();
 	const [activeLink, setActiveLink] = useState("");
 	const { pathname } = useRouter();
+
+	const navigationRoles = () =>
+		pathname?.includes("/candidate/")
+			? candidatesLayoutNavigation
+			: employerLayoutNavigation;
 
 	useEffect(() => {
 		setActiveLink(window && window.location ? pathname : "");
@@ -38,7 +46,7 @@ const Topbar = (): JSX.Element => {
 			</Box>
 
 			<Box sx={{ display: { xs: "none", md: "flex" } }} alignItems="flex-start">
-				{candidatesLayoutNavigation.map((page, index) => (
+				{navigationRoles().map((page, index) => (
 					<Box key={fancyId()} marginLeft={index === 0 ? 0 : 4}>
 						<Link href={page.href}>
 							<Typography

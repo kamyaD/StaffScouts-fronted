@@ -2,7 +2,8 @@ import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { ReactNode, useState } from "react";
+import type { ReactNode } from "react";
+import { useState } from "react";
 
 import { Sidebar, Topbar } from "./components";
 

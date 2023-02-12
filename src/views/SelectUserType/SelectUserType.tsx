@@ -1,3 +1,4 @@
+import Container from "@/components/Container";
 import fancyId from "@/utils/fancyId";
 import { MenuBookTwoTone, WorkTwoTone } from "@mui/icons-material";
 /* eslint-disable react/no-unescaped-entities */
@@ -9,13 +10,12 @@ import {
 	ToggleButton,
 	ToggleButtonGroup,
 	Typography,
-	useMediaQuery
+	useMediaQuery,
 } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
 import type { MouseEvent } from "react";
 import { useEffect, useState } from "react";
-import Container from "@/components/Container";
 
 const mock = [
 	{
@@ -101,10 +101,14 @@ const SelectUserType = (): JSX.Element => {
 	};
 
 	return (
-		<Container width={800} marginTop={16} sx={{
-			border: `1px solid ${theme.palette.divider}`,
-			borderRadius: 2,
-		}}>
+		<Container
+			width={800}
+			marginTop={16}
+			sx={{
+				border: `1px solid ${theme.palette.divider}`,
+				borderRadius: 2,
+			}}
+		>
 			<Stack
 				direction="column"
 				justifyContent="center"
@@ -122,72 +126,71 @@ const SelectUserType = (): JSX.Element => {
 						Proceed as candidate or employer
 					</Typography>
 				</Box>
-					<ToggleButtonGroup
-						size="small"
-						value={alignment}
-						exclusive
-						onChange={handleAlignment}
-						aria-label="text alignment"
-						sx={{
-							marginTop: 4,
-
-						}}
-					>
-						{mock.map((item) => (
-							<Box
-								key={fancyId()}
-								value={item.value}
-								component={ToggleButton}
-								paddingX={4}
-								width={1}
-								height="200px"
-								marginX={0}
-								border={1}
+				<ToggleButtonGroup
+					size="small"
+					value={alignment}
+					exclusive
+					onChange={handleAlignment}
+					aria-label="text alignment"
+					sx={{
+						marginTop: 4,
+					}}
+				>
+					{mock.map((item) => (
+						<Box
+							key={fancyId()}
+							value={item.value}
+							component={ToggleButton}
+							paddingX={4}
+							width={1}
+							height="200px"
+							marginX={0}
+							border={1}
+						>
+							<Stack
+								direction="column"
+								justifyContent="center"
+								alignItems="flex-start"
+								width={200}
 							>
 								<Stack
-									direction="column"
-									justifyContent="center"
+									direction="row"
+									justifyContent="space-between"
 									alignItems="flex-start"
+									spacing={4}
+									marginBottom={4}
 									width={200}
 								>
-									<Stack
-										direction="row"
-										justifyContent="space-between"
-										alignItems="flex-start"
-										spacing={4}
-										marginBottom={4}
-										width={200}
+									<Box
+										component={Avatar}
+										width={50}
+										height={50}
+										// marginBottom={2}
+										bgcolor={theme.palette.primary.main}
+										color={theme.palette.background.paper}
 									>
-										<Box
-											component={Avatar}
-											width={50}
-											height={50}
-											// marginBottom={2}
-											bgcolor={theme.palette.primary.main}
-											color={theme.palette.background.paper}
-										>
-											{item.icon}
-										</Box>
-									</Stack>
-
-									<Stack
-										direction="column"
-										justifyContent="space-around"
-										alignItems="center"
-										spacing={4}
-									>
-										<Typography
-											variant={"h6"}
-											gutterBottom
-											sx={{ fontWeight: 500 }}
-										>
-											{item.title}
-										</Typography>
-									</Stack>
+										{item.icon}
+									</Box>
 								</Stack>
-							</Box>
-						))}
-					</ToggleButtonGroup>
+
+								<Stack
+									direction="column"
+									justifyContent="space-around"
+									alignItems="center"
+									spacing={4}
+								>
+									<Typography
+										variant={"h6"}
+										gutterBottom
+										sx={{ fontWeight: 500 }}
+									>
+										{item.title}
+									</Typography>
+								</Stack>
+							</Stack>
+						</Box>
+					))}
+				</ToggleButtonGroup>
 				<Box
 					display="flex"
 					flexDirection={{ xs: "column", sm: "row" }}
@@ -202,7 +205,8 @@ const SelectUserType = (): JSX.Element => {
 						fullWidth={!isMd}
 						onClick={handlePushToDashboardViews}
 						endIcon={
-							alignment !== "..." || alignment === null && (
+							alignment !== "..." ||
+							(alignment === null && (
 								<Box
 									component="svg"
 									xmlns="http://www.w3.org/2000/svg"
@@ -219,7 +223,7 @@ const SelectUserType = (): JSX.Element => {
 										d="M17 8l4 4m0 0l-4 4m4-4H3"
 									/>
 								</Box>
-							)
+							))
 						}
 					>
 						{`Proceed as ${alignment ? alignment.split("-").join(" ") : "..."}`}

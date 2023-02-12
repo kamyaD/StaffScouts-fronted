@@ -19,7 +19,6 @@ function Jobs({
 }): JSX.Element {
 	const contract = contractTypes?.results,
 		contractObject = contract.reduce(
-			// @ts-expect-error
 			(r, { id, contract_types_name }) => ((r[id] = contract_types_name), r),
 			{},
 		);

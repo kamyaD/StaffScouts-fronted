@@ -1,3 +1,4 @@
+import { skeletonRows } from "@/utils/skeletonLoaders";
 import { LocationOn, PaymentsOutlined } from "@mui/icons-material";
 import {
 	Box,
@@ -6,10 +7,9 @@ import {
 	CardContent,
 	Grid,
 	Skeleton,
-	Typography
+	Typography,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-import { skeletonRows } from "@/utils/skeletonLoaders";
 
 function UserJobCard(): JSX.Element {
 	const theme = useTheme();
@@ -36,14 +36,14 @@ function UserJobCard(): JSX.Element {
 						display: "flex",
 						flexDirection: "column",
 						justifyContent: "center",
-						width: "100%"
+						width: "100%",
 					}}
 				>
-						<Skeleton width="30%">
+					<Skeleton width="30%">
 						<Typography variant="h5" fontWeight={700}>
 							.
 						</Typography>
-						</Skeleton>
+					</Skeleton>
 					<Box marginY={1}>
 						<Box
 							component={Button}
@@ -67,7 +67,12 @@ function UserJobCard(): JSX.Element {
 						</Box>
 					</Box>
 					<Typography color="text.secondary">{skeletonRows(3)}</Typography>
-					<Box marginTop={2} display="flex" justifyContent="space-between" width="30%">
+					<Box
+						marginTop={2}
+						display="flex"
+						justifyContent="space-between"
+						width="30%"
+					>
 						<Box marginY={1} width="100%">
 							<Skeleton width="100%">
 								<Typography>.</Typography>

@@ -51,40 +51,36 @@ const mainLayoutNavigation = [
 const candidatesLayoutNavigation = [
 	{
 		title: "Find work",
-		href: "/dashboard/jobs",
+		href: "/candidate/jobs",
 	},
 	{
 		title: "Saved jobs",
-		href: "/dashboard/saved-jobs",
+		href: "/candidate/saved-jobs",
 	},
 	{
 		title: "My jobs",
-		href: "/dashboard/my-jobs",
+		href: "/candidate/my-jobs",
 	},
-	// {
-	// 	title: "CV services",
-	// 	href: "/cv-services",
-	// },
-	// {
-	// 	title: "Find a job",
-	// 	href: "/find-a-job",
-	// },
-	// {
-	// 	title: "Post a job (Free)",
-	// 	href: "/post-a-job",
-	// },
-	// {
-	// 	title: "Find candidates",
-	// 	href: "/find-candidates",
-	// },
-	// {
-	// 	title: "Employers",
-	// 	href: "/employers",
-	// },
+];
+
+const employerLayoutNavigation = [
+	{
+		title: "All jobs",
+		href: "/employer/jobs",
+	},
+	{
+		title: "Candidates",
+		href: "/employer/saved-jobs",
+	},
+	{
+		title: "Reports",
+		href: "/employer/my-jobs",
+	},
 ];
 
 export {
 	sideLayoutNavigation,
 	mainLayoutNavigation,
 	candidatesLayoutNavigation,
+	employerLayoutNavigation,
 };

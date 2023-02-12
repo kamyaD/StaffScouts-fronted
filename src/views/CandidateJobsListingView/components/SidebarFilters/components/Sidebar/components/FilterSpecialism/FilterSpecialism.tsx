@@ -24,7 +24,9 @@ const FilterSpecialism = ({
 		mode: "onChange",
 	});
 
-	const specialism = !specialisms ? ["Loading"] : specialisms.results.map((item) => item.specialty)
+	const specialism = !specialisms
+		? ["Loading"]
+		: specialisms.results.map((item) => item.specialty);
 
 	return (
 		<Box>

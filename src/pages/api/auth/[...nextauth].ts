@@ -10,6 +10,20 @@ interface AuthResponse {
 	profilePic: string;
 }
 
+const assignRole = (user) => {
+	let role = "CANDIDATE";
+
+	if (user.isBothEmployerAndCandidate) {
+		role = "BOTH";
+	} else if (user.isCandidate) {
+		role = "CANDIDATE";
+	} else if (user.isEmployer) {
+		role = "EMPLOYER";
+	}
+
+	return role;
+};
+
 export const authOptions: NextAuthOptions = {
 	providers: [
 		CredentialsProvider({
@@ -54,6 +68,7 @@ export const authOptions: NextAuthOptions = {
 					username: user.username || "",
 					// @ts-expect-error
 					picture: user.profilePic || "",
+					role: assignRole(user),
 				};
 			}
 
@@ -69,6 +84,7 @@ export const authOptions: NextAuthOptions = {
 					username: token.username || "",
 					token: token.accessToken || "",
 					image: token.picture,
+					role: token.role,
 				},
 			};
 		},
@@ -88,6 +104,7 @@ declare module "next-auth" {
 			id: string | null;
 			token: string | null;
 			image: string | null;
+			role: string;
 		};
 	}
 }
