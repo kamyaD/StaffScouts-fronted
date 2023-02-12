@@ -1,4 +1,4 @@
-import UserAvatar from "@/components/UserAvatar";
+import AuthedAvatar from "@/components/AuthedAvatar";
 // components
 import { ArrowBackRounded } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
@@ -35,9 +35,8 @@ const Topbar = (): JSX.Element => {
 					{router.pathname === "/account" ? "back" : "home"}
 				</Typography>
 			</Box>
-			<Box sx={{ display: { xs: "none", md: "flex" } }}>
-				<UserAvatar />
-			</Box>
+
+			<AuthedAvatar />
 		</Box>
 	);
 };
