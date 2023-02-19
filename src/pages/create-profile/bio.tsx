@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import type { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 
-const CreateTitlePage: NextPageWithAuthAndLayout = () => {
+const CreateBioPage: NextPageWithAuthAndLayout = () => {
 	const { control } = useForm<RegisterInputSchema>({
 		mode: "onChange",
 	});
@@ -22,7 +22,7 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 					fontWeight: 700,
 				}}
 			>
-				Add a title to tell us what you do.
+				Tell us more about yourself.
 			</Typography>
 
 			<form>
@@ -35,33 +35,32 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 								fontWeight: 500,
 							}}
 						>
-							Stand out by describing your expertise in your own words.
+							A short bio to get help us know you better.
 						</Typography>
 						<FormInputText
 							autoFocus
 							required
-							name="title"
+							name="bio"
 							margin="dense"
 							size="medium"
 							control={control}
-							label="Title"
-							placeholder="Example: Customer service executive"
+							label="Bio"
+							placeholder="I am..."
 							type="text"
+							multiline
+							rows={4}
 						/>
 					</Grid>
 				</Grid>
 			</form>
 
-			<ProfileBottomNavigation
-				nextPageUrl="/create-profile/skills"
-				nextPageTitle="Share your skills"
-			/>
+			<ProfileBottomNavigation nextPageUrl="/account" nextPageTitle="Finish" />
 		</Container>
 	);
 };
 
-CreateTitlePage.getLayout = function getLayout(page: ReactElement) {
+CreateBioPage.getLayout = function getLayout(page: ReactElement) {
 	return <Minimal>{page}</Minimal>;
 };
 
-export default CreateTitlePage;
+export default CreateBioPage;

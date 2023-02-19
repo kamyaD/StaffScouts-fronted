@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import React, { Suspense } from "react";
 
 import Container from "../../components/Container";
-import type { ContractType, Job, PaginatedResults } from "../../types";
+import type { ContractType, Job } from "../../types";
 import {
 	AboutTop,
 	Hero,
@@ -15,9 +15,7 @@ import {
 
 export interface HomeProps {
 	jobs: Array<Job>;
-	contractTypes: {
-		results: ContractType[];
-	} & PaginatedResults;
+	contractTypes: ContractType[];
 }
 
 function IndexView({ jobs, contractTypes }: HomeProps): JSX.Element {

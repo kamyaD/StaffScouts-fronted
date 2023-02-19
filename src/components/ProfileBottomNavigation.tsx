@@ -1,8 +1,8 @@
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Box, Button, Paper, Stack } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
-import React from "preact/compat";
 
 interface Props {
 	nextPageUrl: string;
@@ -15,6 +15,8 @@ const ProfileBottomNavigation = ({
 }: Props): JSX.Element => {
 	const theme = useTheme();
 	const { push, back } = useRouter();
+	const pathname = usePathname();
+	const linkPath = pathname.split("/").at(-1);
 
 	const handleBack = () => back();
 	const handleNext = () => push(nextPageUrl);
@@ -41,19 +43,23 @@ const ProfileBottomNavigation = ({
 					alignItems="center"
 					spacing={2}
 				>
-					<Button
-						variant="contained"
-						onClick={handleBack}
-						startIcon={
-							theme.direction === "rtl" ? (
-								<KeyboardArrowRight />
-							) : (
-								<KeyboardArrowLeft />
-							)
-						}
-					>
-						Back
-					</Button>
+					{linkPath !== "title" ? (
+						<Button
+							variant="contained"
+							onClick={handleBack}
+							startIcon={
+								theme.direction === "rtl" ? (
+									<KeyboardArrowRight />
+								) : (
+									<KeyboardArrowLeft />
+								)
+							}
+						>
+							Back
+						</Button>
+					) : (
+						<div />
+					)}
 					<Button
 						variant="contained"
 						onClick={handleNext}

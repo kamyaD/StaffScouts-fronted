@@ -10,7 +10,7 @@ export const getStaticProps = async () => {
 		getContractTypesFn(),
 	]);
 
-	const jobs = allJobs.results.slice(0, 3);
+	const jobs = allJobs.slice(0, 3);
 
 	return {
 		props: { jobs, contractTypes },

@@ -35,6 +35,7 @@ export type SkillsInputSchema = z.infer<typeof validationSchema>;
 
 const CreateSkillsPage: NextPageWithAuthAndLayout = () => {
 	const [skillType, setSkillType] = useState<string[]>([]);
+	const [speciality, setSpeciality] = useState<string>("");
 
 	const theme = useTheme();
 	const MenuProps = {
@@ -62,11 +63,6 @@ const CreateSkillsPage: NextPageWithAuthAndLayout = () => {
 
 	const specialism = Speciality[watch("speciality")] || [];
 
-	console.log(
-		"Class: , Function: CreateSkillsPage, Line 64 watch()():",
-		specialism,
-	);
-
 	// useEffect(() => {
 	// 	setSkillType([])
 	// }, [specialism])
@@ -92,16 +88,23 @@ const CreateSkillsPage: NextPageWithAuthAndLayout = () => {
 								fontWeight: 500,
 							}}
 						>
-							Your skills show clients what you can other and help us choose
-							which jobs to recommend to vou Add or remove the ones we&lsquo;ve
-							suggested, or start typing to pick more. It&lsquo;s up to you.
+							Your skills show clients what you can offer and help us choose
+							which jobs to recommend to you. Add or remove the ones we&lsquo;ve
+							suggested, or scroll from our list below. It&lsquo;s up to you.
 						</Typography>
 
 						{/*<Controller*/}
-						{/*	// @ts-expect-error*/}
-						{/*	name="skills"*/}
+						{/*	name="speciality"*/}
 						{/*	control={control}*/}
 						{/*	render={({ field: { onChange, value, ...props } }) => (*/}
+						{/*		// <Autocomplete*/}
+						{/*		// 	id="speciality"*/}
+						{/*		// 	options={Object.keys(Speciality)}*/}
+						{/*		// 	getOptionLabel={(option) => option}*/}
+						{/*		// 	renderInput={(params) => (*/}
+						{/*		// 		<TextField {...params} label="Select speciality" placeholder="Speciality" />*/}
+						{/*		// 	)}*/}
+						{/*		// />*/}
 						{/*		<FormControl sx={{ width: "100%" }}>*/}
 						{/*			<InputLabel id="event-type-select">*/}
 						{/*				Select speciality*/}
@@ -124,6 +127,15 @@ const CreateSkillsPage: NextPageWithAuthAndLayout = () => {
 						{/*				))}*/}
 						{/*			</Select>*/}
 						{/*		</FormControl>*/}
+						{/*	)}*/}
+						{/*/>*/}
+
+						{/*<Autocomplete*/}
+						{/*	id="speciality"*/}
+						{/*	options={Object.keys(Speciality)}*/}
+						{/*	getOptionLabel={(option) => option}*/}
+						{/*	renderInput={(params) => (*/}
+						{/*		<TextField {...params} label="Select speciality" placeholder="Speciality" />*/}
 						{/*	)}*/}
 						{/*/>*/}
 
@@ -151,48 +163,97 @@ const CreateSkillsPage: NextPageWithAuthAndLayout = () => {
 						</FormInputText>
 					</Grid>
 
-					<Grid item xs={12}>
-						<Controller
-							// @ts-expect-error
-							name="skills"
-							control={control}
-							render={({ field: { onChange, value, ...props } }) => (
-								<FormControl sx={{ width: "100%" }}>
-									<InputLabel id="event-type-select">Select skills</InputLabel>
-									<Select
-										fullWidth
-										disabled={specialism.length === 0}
-										labelId="event type"
-										id="event-type-select"
-										multiple
-										value={skillType}
-										onChange={handleSelectChange}
-										input={<OutlinedInput label="Filter by event" />}
-										renderValue={(selected) => (
-											<Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-												{selected.map((value) => (
-													<Chip
-														key={value}
-														label={value}
-														size="small"
-														onDelete={handleChipDelete}
-													/>
-												))}
-											</Box>
-										)}
-										MenuProps={MenuProps}
-									>
-										{specialism.map((event) => (
-											<MenuItem divider key={event} value={event}>
-												{/*<Checkbox checked={eventType.indexOf(event) > -1} />*/}
-												<ListItemText primary={event} />
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-							)}
-						/>
-					</Grid>
+					{/*<Grid item xs={12}>*/}
+					{/*	<Controller*/}
+					{/*		name="speciality"*/}
+					{/*		control={control}*/}
+					{/*		render={({ field: { onChange, value, ...props } }) => (*/}
+					{/*			<FormControl sx={{ width: "100%" }}>*/}
+					{/*				<InputLabel id="speciality">*/}
+					{/*					Select speciality*/}
+					{/*				</InputLabel>*/}
+					{/*				<Select*/}
+					{/*					fullWidth*/}
+					{/*					labelId="event type"*/}
+					{/*					id="event-type-select"*/}
+					{/*					value={speciality}*/}
+					{/*					onChange={handleSelectChange}*/}
+					{/*					input={<OutlinedInput label="Filter by event" />}*/}
+					{/*					renderValue={(selected) => (*/}
+					{/*						selected*/}
+					{/*					)}*/}
+					{/*					MenuProps={MenuProps}*/}
+					{/*				>*/}
+					{/*					{Object.keys(Speciality)?.map((item: string) => (*/}
+					{/*						<MenuItem key={item} value={item}>*/}
+					{/*							{item}*/}
+					{/*						</MenuItem>*/}
+					{/*					))}*/}
+					{/*				</Select>*/}
+					{/*			</FormControl>*/}
+					{/*		)}*/}
+					{/*	/>*/}
+					{/*</Grid>*/}
+
+					{/*<Autocomplete*/}
+					{/*	multiple*/}
+					{/*	id="multiple-limit-tags"*/}
+					{/*	options={Object.keys(Speciality)}*/}
+					{/*	getOptionLabel={(option) => option}*/}
+					{/*	renderInput={(params) => (*/}
+					{/*		<TextField {...params} label="limitTags" placeholder="Favorites" />*/}
+					{/*	)}*/}
+					{/*	sx={{ width: '500px' }}*/}
+					{/*/>*/}
+
+					{specialism.length !== 0 ? (
+						<Grid item xs={12}>
+							<Controller
+								// @ts-expect-error
+								name="skills"
+								control={control}
+								render={({ field: { onChange, value, ...props } }) => (
+									<FormControl sx={{ width: "100%" }}>
+										<InputLabel id="event-type-select">
+											Select skills
+										</InputLabel>
+										<Select
+											fullWidth
+											disabled={specialism.length === 0}
+											labelId="event type"
+											id="event-type-select"
+											multiple
+											value={skillType}
+											onChange={handleSelectChange}
+											input={<OutlinedInput label="Select specialism" />}
+											renderValue={(selected) => (
+												<Box
+													sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+												>
+													{selected.map((value) => (
+														<Chip
+															key={value}
+															label={value}
+															size="small"
+															onDelete={handleChipDelete}
+														/>
+													))}
+												</Box>
+											)}
+											MenuProps={MenuProps}
+										>
+											{specialism.map((event) => (
+												<MenuItem divider key={event} value={event}>
+													{/*<Checkbox checked={eventType.indexOf(event) > -1} />*/}
+													<ListItemText primary={event} />
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								)}
+							/>
+						</Grid>
+					) : null}
 				</Grid>
 			</form>
 

@@ -1,9 +1,4 @@
-interface IJobs {
-	results: Array<Job>;
-	count: string | number;
-	next: string | null;
-	previous: string | null;
-}
+type IJobs = Array<Job>;
 
 interface ICandidates {
 	id: number;

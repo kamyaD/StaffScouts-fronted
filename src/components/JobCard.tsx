@@ -1,5 +1,4 @@
 import dayjsTime from "@/utils/dayjsTime";
-import isBrowser from "@/utils/isBrowser";
 import stripHtml from "@/utils/stripHtml";
 import {
 	Bookmark,
@@ -43,9 +42,9 @@ function JobCard({
 }: JobProps): JSX.Element {
 	const theme = useTheme();
 
-	const jobDescription = isBrowser
-		? Str(stripHtml(jobs_description).toString()).limit(300, "...").get()
-		: "";
+	const jobDescription = Str(stripHtml(jobs_description).toString())
+		.limit(300, "...")
+		.get();
 
 	return (
 		<Grid item xs={12}>

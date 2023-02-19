@@ -2,22 +2,24 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 
-import JobCard from "../../../../components/JobCard";
-import type { ContractType, Job, PaginatedResults } from "../../../../types";
+import type { ContractType, Job } from "../../../../types";
 import fancyId from "../../../../utils/fancyId";
+
+const JobCard = dynamic(() => import("../../../../components/JobCard"), {
+	ssr: false,
+});
 
 function Jobs({
 	jobs,
 	contractTypes,
 }: {
 	jobs: Array<Job>;
-	contractTypes: {
-		results: ContractType[];
-	} & PaginatedResults;
+	contractTypes: ContractType[];
 }): JSX.Element {
-	const contract = contractTypes?.results,
+	const contract = contractTypes,
 		contractObject = contract.reduce(
 			(r, { id, contract_types_name }) => ((r[id] = contract_types_name), r),
 			{},

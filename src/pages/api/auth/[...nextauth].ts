@@ -69,6 +69,8 @@ export const authOptions: NextAuthOptions = {
 					// @ts-expect-error
 					picture: user.profilePic || "",
 					role: assignRole(user),
+					// @ts-expect-error
+					newUser: user.jobTitle === "",
 				};
 			}
 
@@ -85,6 +87,7 @@ export const authOptions: NextAuthOptions = {
 					token: token.accessToken || "",
 					image: token.picture,
 					role: token.role,
+					newUser: token.newUser,
 				},
 			};
 		},
@@ -105,6 +108,7 @@ declare module "next-auth" {
 			token: string | null;
 			image: string | null;
 			role: string;
+			newUser: boolean;
 		};
 	}
 }

@@ -24,7 +24,8 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 	const [isPasswordHidden, showPassword] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const togglePassword = () => showPassword((prevState) => !prevState);
-	const { push, prefetch } = useRouter();
+	const { push, prefetch, query } = useRouter();
+	const callbackUrl = (query?.callbackUrl as string) ?? "/";
 	const { data: session } = useSession();
 
 	const { handleSubmit, control } = useForm<LoginValidationSchemaInput>({
@@ -40,7 +41,7 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 		const res = await signIn("credentials", {
 			username,
 			password,
-			callbackUrl: `${window.location.origin}/create-account`,
+			// callbackUrl: `${window.location.origin}/${ session?.user?.newUser ? 'create-profile/title' : 'account'}`,
 			redirect: false,
 		});
 
@@ -53,15 +54,11 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 			displaySnackMessage({
 				message: "You have successfully logged in",
 			});
+			// if (res?.url) await push(res?.url);
+			await push(callbackUrl);
+			setIsLoading(false);
 		}
-
-		if (res?.url) await push(res?.url);
-		setIsLoading(false);
 	};
-
-	useEffect(() => {
-		prefetch("account");
-	}, []);
 
 	useEffect(() => {
 		localStorage.setItem("token", session?.user.token as string);
