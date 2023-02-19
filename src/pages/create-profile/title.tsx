@@ -2,17 +2,69 @@ import Container from "@/components/Container";
 import { FormInputText } from "@/components/FormInput";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
 import { Minimal } from "@/layouts/index";
+import { createProfileFn } from "@/lib/api";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
-import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
+import useStore from "@/store/index";
+import { profileValidationSchema } from "@/utils/profileValidationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import { useMutation } from "@tanstack/react-query";
 import type { ReactElement } from "react";
+import { useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import type * as z from "zod";
+
+export type CreateProfileTitleInputSchema = Pick<
+	z.infer<typeof profileValidationSchema>,
+	"job_title"
+>;
 
 const CreateTitlePage: NextPageWithAuthAndLayout = () => {
-	const { control } = useForm<RegisterInputSchema>({
+	const [requestLoading, setRequestLoading] = useState<boolean>(false);
+	const { displaySnackMessage } = useStore();
+	const { handleSubmit, control } = useForm<CreateProfileTitleInputSchema>({
 		mode: "onChange",
+		resolver: zodResolver(profileValidationSchema),
 	});
+
+	const { mutate: createProfile } = useMutation(
+		(profileTitle: CreateProfileTitleInputSchema) =>
+			createProfileFn(profileTitle),
+		{
+			onMutate() {
+				setRequestLoading(true);
+			},
+			onSuccess() {
+				setRequestLoading(false);
+				displaySnackMessage({
+					message: "Profile title updated successful.",
+				});
+			},
+			onError(error: any) {
+				setRequestLoading(false);
+				console.log("Class: , Function: onError, Line 43 error():", error);
+				if (Array.isArray((error as any).response.data.error)) {
+					(error as any).response.data.error.forEach((el: any) =>
+						displaySnackMessage({
+							message: el.message,
+							severity: "error",
+						}),
+					);
+				} else {
+					displaySnackMessage({
+						message: (error as any).response.data.message,
+						severity: "error",
+					});
+				}
+			},
+		},
+	);
+
+	const onSubmit: SubmitHandler<CreateProfileTitleInputSchema> = (values) => {
+		createProfile(values);
+	};
 
 	return (
 		<Container maxWidth={720}>
@@ -25,7 +77,11 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 				Add a title to tell us what you do.
 			</Typography>
 
-			<form>
+			<form
+				name="profile-title"
+				method="post"
+				onSubmit={handleSubmit(onSubmit)}
+			>
 				<Grid container spacing={4} marginTop={2}>
 					<Grid item xs={12}>
 						<Typography
@@ -40,7 +96,7 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 						<FormInputText
 							autoFocus
 							required
-							name="title"
+							name="job_title"
 							margin="dense"
 							size="medium"
 							control={control}
@@ -50,12 +106,12 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 						/>
 					</Grid>
 				</Grid>
+				<ProfileBottomNavigation
+					loading={requestLoading}
+					nextPageUrl="/create-profile/skills"
+					nextPageTitle="Share your skills"
+				/>
 			</form>
-
-			<ProfileBottomNavigation
-				nextPageUrl="/create-profile/skills"
-				nextPageTitle="Share your skills"
-			/>
 		</Container>
 	);
 };

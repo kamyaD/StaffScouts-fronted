@@ -2,7 +2,6 @@ import { FormInputText } from "@/components/FormInput";
 import { signUpUserFn } from "@/lib/api";
 import useStore from "@/store/index";
 import fancyId from "@/utils/fancyId";
-import { candidatesChoice, employerChoice } from "@/utils/fixtures";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
@@ -19,6 +18,11 @@ import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
+
+import {
+	candidatesChoice,
+	employerChoice,
+} from "../../../../pages/create-profile/fixtures";
 
 const validationSchema = z
 	.object({

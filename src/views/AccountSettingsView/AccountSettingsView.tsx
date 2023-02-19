@@ -100,7 +100,6 @@ function AccountSettingsView({ user }: { user: IUserProfile }): JSX.Element {
 						>
 							<MenuTabs
 								value={selectedTabIndex}
-								// @ts-expect-error ignore error now
 								onChange={handleOnChange}
 								orientation={isSm ? "vertical" : "horizontal"}
 								scrollButtons={false}

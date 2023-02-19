@@ -10,7 +10,7 @@ import {
 	News,
 	Newsletter,
 	Process,
-	Reviews
+	Reviews,
 } from "./components";
 
 export interface HomeProps {

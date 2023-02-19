@@ -2,6 +2,7 @@ import type { GeneralProfileInputSchema } from "@/views/AccountSettingsView/comp
 import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
 import axios from "axios";
 
+import type { CreateProfileTitleInputSchema } from "../pages/create-profile/title";
 import type { IJobs, Job } from "../types";
 import type {
 	GenericResponse,
@@ -46,6 +47,13 @@ export const getMeFn = async (): Promise<IUserResponse> => {
 	return response.data;
 };
 
+export const createProfileFn = async (
+	profile: CreateProfileTitleInputSchema,
+): Promise<IUserResponse> => {
+	const response = await apiClient.post<IUserResponse>(`/api/profile`, profile);
+	return response.data;
+};
+
 export const updateProfileFn = async (
 	user: GeneralProfileInputSchema,
 ): Promise<IUserResponse> => {
@@ -65,6 +73,13 @@ export const createCandidateJobInterestedFn = async (
 
 export const getJobsFn = async (): Promise<IJobs> => {
 	const response = await apiClient.get<IJobs>(`${process.env.API_URL}/jobs`);
+	return response.data;
+};
+
+export const getSpecialityFn = async (): Promise<IJobs> => {
+	const response = await apiClient.get<IJobs>(
+		`${process.env.API_URL}/jobs/list-specialism/`,
+	);
 	return response.data;
 };
 
