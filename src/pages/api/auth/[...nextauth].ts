@@ -94,7 +94,7 @@ export const authOptions: NextAuthOptions = {
 	},
 	pages: {
 		signIn: "/login",
-		newUser: "/account", // If set, new users will be directed here on first sign in
+		newUser: "/create-profile/title", // If set, new users will be directed here on first sign in
 	},
 	debug: process.env.NODE_ENV === "development",
 };

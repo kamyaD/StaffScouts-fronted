@@ -10,12 +10,12 @@ import {
 	News,
 	Newsletter,
 	Process,
-	Reviews,
+	Reviews
 } from "./components";
 
 export interface HomeProps {
 	jobs: Array<Job>;
-	contractTypes: ContractType[];
+	contractTypes: Array<ContractType>;
 }
 
 function IndexView({ jobs, contractTypes }: HomeProps): JSX.Element {

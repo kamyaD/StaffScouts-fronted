@@ -33,6 +33,7 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 		mode: "onChange",
 	});
 
+	console.log('Class: Form, Function: Form, Line 36 session():', session);
 	const onSubmit: SubmitHandler<LoginValidationSchemaInput> = async ({
 		username,
 		password,
@@ -54,11 +55,21 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 			displaySnackMessage({
 				message: "You have successfully logged in",
 			});
-			// if (res?.url) await push(res?.url);
-			await push(callbackUrl);
+			if (res?.url) await push(res?.url);
+			// await push(callbackUrl);
 			setIsLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		if (session?.user.newUser && session?.user.token) {
+			push('create-profile/title')
+		}
+
+		if (!session?.user.newUser && session?.user.token){
+			push('account')
+		}
+	}, [session?.user?.newUser, session?.user.token])
 
 	useEffect(() => {
 		localStorage.setItem("token", session?.user.token as string);
