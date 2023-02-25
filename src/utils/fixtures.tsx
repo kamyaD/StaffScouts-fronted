@@ -338,6 +338,6 @@ const employerChoice = [
 	"Wine, Beer & Liquor",
 ];
 
-const candidatesChoice = ["Professional", "General/Technical workers"];
+const candidatesChoice = ["Professional", "General / Technical workers"];
 
 export { employerChoice, candidatesChoice };

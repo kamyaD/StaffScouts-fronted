@@ -62,7 +62,7 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 
 	useEffect(() => {
 		if (session?.user.newUser && session?.user.token) {
-			push("create-profile/title");
+			push("create-profile/select-role");
 		}
 
 		if (!session?.user.newUser && session?.user.token) {

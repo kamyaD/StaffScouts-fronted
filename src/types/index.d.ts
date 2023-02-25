@@ -58,10 +58,19 @@ interface ContractType {
 	updated_at: Date;
 }
 
+interface Specialism {
+	id: string;
+	speciality: string;
+	type: string;
+	specific_specialty: string;
+	created_at: Date;
+	updated_at: Date;
+}
+
 interface PaginatedResults {
 	count: number;
 	next: string | null;
 	previous: string | null;
 }
 
-export { IJobs, Job, ICandidates, PaginatedResults, ContractType };
+export { IJobs, Job, ICandidates, PaginatedResults, ContractType, Specialism };

@@ -2,14 +2,12 @@ import Container from "@/components/Container";
 import { FormInputText } from "@/components/FormInput";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
 import { Minimal } from "@/layouts/index";
-import { createProfileFn } from "@/lib/api";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
 import useStore from "@/store/index";
 import { profileValidationSchema } from "@/utils/profileValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useMutation } from "@tanstack/react-query";
 import type { ReactElement } from "react";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
@@ -23,47 +21,48 @@ export type CreateProfileTitleInputSchema = Pick<
 
 const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 	const [requestLoading, setRequestLoading] = useState<boolean>(false);
-	const { displaySnackMessage } = useStore();
+	const { displaySnackMessage, setProfile } = useStore();
 	const { handleSubmit, control } = useForm<CreateProfileTitleInputSchema>({
 		mode: "onChange",
 		resolver: zodResolver(profileValidationSchema),
 	});
 
-	const { mutate: createProfile } = useMutation(
-		(profileTitle: CreateProfileTitleInputSchema) =>
-			createProfileFn(profileTitle),
-		{
-			onMutate() {
-				setRequestLoading(true);
-			},
-			onSuccess() {
-				setRequestLoading(false);
-				displaySnackMessage({
-					message: "Profile title updated successful.",
-				});
-			},
-			onError(error: any) {
-				setRequestLoading(false);
-				console.log("Class: , Function: onError, Line 43 error():", error);
-				if (Array.isArray((error as any).response.data.error)) {
-					(error as any).response.data.error.forEach((el: any) =>
-						displaySnackMessage({
-							message: el.message,
-							severity: "error",
-						}),
-					);
-				} else {
-					displaySnackMessage({
-						message: (error as any).response.data.message,
-						severity: "error",
-					});
-				}
-			},
-		},
-	);
+	// const { mutate: createProfile } = useMutation(
+	// 	(profileTitle: CreateProfileTitleInputSchema) =>
+	// 		createProfileFn(profileTitle),
+	// 	{
+	// 		onMutate() {
+	// 			setRequestLoading(true);
+	// 		},
+	// 		onSuccess() {
+	// 			setRequestLoading(false);
+	// 			displaySnackMessage({
+	// 				message: "Profile title updated successful.",
+	// 			});
+	// 		},
+	// 		onError(error: any) {
+	// 			setRequestLoading(false);
+	// 			console.log("Class: , Function: onError, Line 43 error():", error);
+	// 			if (Array.isArray((error as any).response.data.error)) {
+	// 				(error as any).response.data.error.forEach((el: any) =>
+	// 					displaySnackMessage({
+	// 						message: el.message,
+	// 						severity: "error",
+	// 					}),
+	// 				);
+	// 			} else {
+	// 				displaySnackMessage({
+	// 					message: (error as any).response.data.message,
+	// 					severity: "error",
+	// 				});
+	// 			}
+	// 		},
+	// 	},
+	// );
 
 	const onSubmit: SubmitHandler<CreateProfileTitleInputSchema> = (values) => {
-		createProfile(values);
+		console.log("Class: , Function: onSubmit, Line 64 values():", values);
+		setProfile(values);
 	};
 
 	return (

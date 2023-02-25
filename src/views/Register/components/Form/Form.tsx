@@ -1,11 +1,11 @@
 import { FormInputText } from "@/components/FormInput";
 import { signUpUserFn } from "@/lib/api";
 import useStore from "@/store/index";
-import fancyId from "@/utils/fancyId";
+import { candidatesChoice, employerChoice } from "@/utils/fixtures";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { InputAdornment, MenuItem } from "@mui/material";
+import { InputAdornment, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -18,11 +18,6 @@ import { useEffect, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
-
-import {
-	candidatesChoice,
-	employerChoice,
-} from "../../../../pages/create-profile/fixtures";
 
 const validationSchema = z
 	.object({
@@ -53,7 +48,8 @@ const validationSchema = z
 
 export type RegisterInputSchema = z.infer<typeof validationSchema>;
 
-const UserType = ["Candidate", "Employer", "Both Candidate & Employer"];
+// const UserType = ["Candidate", "Employer", "Both Candidate & Employer"];
+const ExperienceType = ["Professional", "General / Technical Worker"];
 
 function Form(): JSX.Element {
 	const { displaySnackMessage, setRequestLoading, requestLoading } = useStore();
@@ -64,7 +60,7 @@ function Form(): JSX.Element {
 	const togglePassword = () => showPassword((prevState) => !prevState);
 	const toggleConfirmPassword = () =>
 		showConfirmPassword((prevState) => !prevState);
-	const accountType = () =>
+	const accountType =
 		alignment === "candidate" ? candidatesChoice : employerChoice;
 
 	const { push } = useRouter();
@@ -134,7 +130,11 @@ function Form(): JSX.Element {
 	}, [isSubmitSuccessful]);
 
 	const onSubmit: SubmitHandler<RegisterInputSchema> = (values) => {
-		registerUser(values);
+		const payload = {
+			...values,
+			userType: alignment,
+		};
+		registerUser(payload);
 	};
 
 	const handleFormTypeChange = (
@@ -160,41 +160,42 @@ function Form(): JSX.Element {
 				</Typography>
 			</Box>
 
-			{/*<ToggleButtonGroup*/}
-			{/*fullWidth*/}
-			{/*size="small"*/}
-			{/*color="secondary"*/}
-			{/*value={alignment}*/}
-			{/*exclusive*/}
-			{/*onChange={handleFormTypeChange}*/}
-			{/*aria-label="Work"*/}
-			{/*>*/}
-			{/*<ToggleButton value="candidate">Candidate</ToggleButton>*/}
-			{/*<ToggleButton value="employer">Employer</ToggleButton>*/}
-			{/*</ToggleButtonGroup>*/}
+			<ToggleButtonGroup
+				fullWidth
+				size="small"
+				color="standard"
+				value={alignment}
+				exclusive
+				onChange={handleFormTypeChange}
+				aria-label="Work"
+				sx={{ marginBottom: "28px" }}
+			>
+				<ToggleButton value="candidate">Candidate</ToggleButton>
+				<ToggleButton value="employer">Employer</ToggleButton>
+			</ToggleButtonGroup>
 
 			<FormProvider {...methods}>
 				<form method="post" onSubmit={handleSubmit(onSubmit)}>
 					<Grid container spacing={4}>
-						<Grid item xs={12}>
-							<FormInputText
-								select
-								autoFocus={false}
-								margin="dense"
-								name="userType"
-								placeholder=""
-								size="medium"
-								control={control}
-								label="User Type"
-								type="text"
-							>
-								{UserType?.map((item: string) => (
-									<MenuItem key={fancyId()} value={item}>
-										{item}
-									</MenuItem>
-								))}
-							</FormInputText>
-						</Grid>
+						{/*<Grid item xs={12}>*/}
+						{/*	<FormInputText*/}
+						{/*		select*/}
+						{/*		autoFocus={false}*/}
+						{/*		margin="dense"*/}
+						{/*		name="userType"*/}
+						{/*		placeholder="Professional or General Technical workers"*/}
+						{/*		size="medium"*/}
+						{/*		control={control}*/}
+						{/*		label="Experience level"*/}
+						{/*		type="text"*/}
+						{/*	>*/}
+						{/*		{accountType.map((item: string) => (*/}
+						{/*			<MenuItem key={fancyId()} value={item}>*/}
+						{/*				{item}*/}
+						{/*			</MenuItem>*/}
+						{/*		))}*/}
+						{/*	</FormInputText>*/}
+						{/*</Grid>*/}
 
 						<Grid item xs={6}>
 							<FormInputText

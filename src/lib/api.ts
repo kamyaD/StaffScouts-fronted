@@ -3,13 +3,14 @@ import type { RegisterInputSchema } from "@/views/Register/components/Form/Form"
 import axios from "axios";
 
 import type { CreateProfileTitleInputSchema } from "../pages/create-profile/title";
-import type { IJobs, Job } from "../types";
+import type { IJobs, Job, Specialism } from "../types";
 import type {
 	GenericResponse,
 	IJobInterestedResponse,
 	IUserResponse,
 	JobInterestedDTO,
 } from "./types";
+import { IProfileResponse } from "./types";
 
 const BASE_URL = "/";
 
@@ -49,8 +50,15 @@ export const getMeFn = async (): Promise<IUserResponse> => {
 
 export const createProfileFn = async (
 	profile: CreateProfileTitleInputSchema,
-): Promise<IUserResponse> => {
-	const response = await apiClient.post<IUserResponse>(`/api/profile`, profile);
+): Promise<IProfileResponse> => {
+	console.log(
+		"Class: , Function: createProfileFn, Line 62 profile():",
+		profile,
+	);
+	const response = await apiClient.post<IProfileResponse>(
+		`/api/profile`,
+		profile,
+	);
 	return response.data;
 };
 
@@ -76,8 +84,8 @@ export const getJobsFn = async (): Promise<IJobs> => {
 	return response.data;
 };
 
-export const getSpecialityFn = async (): Promise<IJobs> => {
-	const response = await apiClient.get<IJobs>(
+export const getSpecialityFn = async (): Promise<Array<Specialism>> => {
+	const response = await apiClient.get<Array<Specialism>>(
 		`${process.env.API_URL}/jobs/list-specialism/`,
 	);
 	return response.data;

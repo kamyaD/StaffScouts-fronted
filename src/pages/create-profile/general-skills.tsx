@@ -2,8 +2,11 @@ import Container from "@/components/Container";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
 import SideDrawerDetails from "@/components/SideDrawerDetails";
 import { Minimal } from "@/layouts/index";
-import { getSpecialityFn } from "@/lib/api";
+import { createProfileFn, getSpecialityFn } from "@/lib/api";
+import useStore from "@/store/index";
 import fancyId from "@/utils/fancyId";
+import { profileValidationSchema } from "@/utils/profileValidationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	Autocomplete,
 	Box,
@@ -17,34 +20,36 @@ import {
 	Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import type { ChangeEvent, ReactElement } from "react";
+import { useMutation } from "@tanstack/react-query";
+import type { ReactElement } from "react";
 import { useEffect, useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
+import type * as z from "zod";
 
 export const getStaticProps = async () => {
 	const [allSpeciality] = await Promise.all([getSpecialityFn()]);
 
 	return {
-		props: { allSpeciality },
+		props: {
+			allSpeciality: allSpeciality.filter(
+				(skills) => skills.type === "semi-skilled",
+			),
+		},
 	};
 };
 
-const validationSchema = z.object({
-	speciality: z.string().nullish(),
-});
+export type CreateProfileSpecialityInputSchema = Pick<
+	z.infer<typeof profileValidationSchema>,
+	"speciality" | "skills"
+>;
 
-export type SkillsInputSchema = z.infer<typeof validationSchema>;
-
-const CreateSkillsPage = ({ allSpeciality }) => {
+const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 	let allSpecialtiesData = [];
-	const [skillType, setSkillType] = useState<string[]>([]);
-	const [speciality, setSpeciality] = useState<string>("");
-	const [expanded, setExpanded] = useState<string | false>(false);
-	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+	const [requestLoading, setRequestLoading] = useState<boolean>(false);
 	const [isSkillsDetailsOpen, setSkillsDetailsOpen] = useState<boolean>(false);
-
 	const [skillsChecked, setSkillsChecked] = useState([]);
+	const { displaySnackMessage, profile } = useStore();
 
 	const handleToggle = (value: number) => () => {
 		const currentIndex = skillsChecked.indexOf(value);
@@ -68,18 +73,11 @@ const CreateSkillsPage = ({ allSpeciality }) => {
 	// 	setSkillType(typeof value === "string" ? value.split(",") : value);
 	// };
 
-	const handleSelectSpecialityChange = (
-		event: ChangeEvent<HTMLInputElement>,
-	) => {
-		setSkillType({
-			...skillType,
-			[event.target.name]: event.target.checked,
+	const { control, watch, handleSubmit } =
+		useForm<CreateProfileSpecialityInputSchema>({
+			mode: "onChange",
+			resolver: zodResolver(profileValidationSchema),
 		});
-	};
-
-	const { control, watch } = useForm<SkillsInputSchema>({
-		mode: "onChange",
-	});
 
 	const specialism = watch("speciality");
 
@@ -98,11 +96,6 @@ const CreateSkillsPage = ({ allSpeciality }) => {
 	const toggleDrawerSkills = () => {
 		setSkillsDetailsOpen((prevState) => !prevState);
 	};
-
-	console.log(
-		"Class: , Function: CreateSkillsPage, Line 115 skillType():",
-		skillsChecked,
-	);
 
 	const renderSkillsBody = () => (
 		<Box padding={1} sx={{ backgroundColor: "#ffffff" }}>
@@ -137,6 +130,46 @@ const CreateSkillsPage = ({ allSpeciality }) => {
 		);
 	};
 
+	const { mutate: createProfile } = useMutation(
+		(profileSpeciality: CreateProfileSpecialityInputSchema) =>
+			createProfileFn(profileSpeciality),
+		{
+			onMutate() {
+				setRequestLoading(true);
+			},
+			onSuccess() {
+				setRequestLoading(false);
+				displaySnackMessage({
+					message: "Profile speciality updated successful.",
+				});
+			},
+			onError(error: any) {
+				setRequestLoading(false);
+				console.log("Class: , Function: onError, Line 43 error():", error);
+				if (Array.isArray((error as any).response.data.error)) {
+					(error as any).response.data.error.forEach((el: any) =>
+						displaySnackMessage({
+							message: el.message,
+							severity: "error",
+						}),
+					);
+				} else {
+					displaySnackMessage({
+						message: (error as any).response.data.message,
+						severity: "error",
+					});
+				}
+			},
+		},
+	);
+
+	const onSubmit: SubmitHandler<CreateProfileSpecialityInputSchema> = (
+		values,
+	) => {
+		console.log("Class: , Function: onSubmit, Line 162 values():", values);
+		createProfile(values);
+	};
+
 	return (
 		<Container maxWidth={720}>
 			<Typography
@@ -148,7 +181,11 @@ const CreateSkillsPage = ({ allSpeciality }) => {
 				What work are you here to do?
 			</Typography>
 
-			<form>
+			<form
+				name="profile-speciality"
+				method="post"
+				onSubmit={handleSubmit(onSubmit)}
+			>
 				<Grid container spacing={4} marginTop={2}>
 					<Grid item xs={12}>
 						<Typography
@@ -173,8 +210,8 @@ const CreateSkillsPage = ({ allSpeciality }) => {
 								<Autocomplete
 									{...props}
 									id="add-speciality"
-									multiple
-									limitTags={3}
+									// multiple
+									// limitTags={3}
 									disableCloseOnSelect
 									options={allSpeciality.map((item) => item.specialty)}
 									freeSolo
@@ -227,26 +264,19 @@ const CreateSkillsPage = ({ allSpeciality }) => {
 					</Grid>
 
 					<Grid item xs={12}>
-						<Typography
-							variant="body1"
-							marginBottom={2}
-							sx={{
-								fontWeight: 500,
-							}}
-						>
-							{skillsChecked.map((option: string) => (
-								<Chip
-									key={fancyId()}
-									color="primary"
-									label={option}
-									sx={{ margin: 0.5 }}
-								/>
-							))}
-						</Typography>
+						{skillsChecked.map((option: string) => (
+							<Chip
+								key={fancyId()}
+								color="primary"
+								label={option}
+								sx={{ margin: 0.5 }}
+							/>
+						))}
 					</Grid>
 				</Grid>
 				{renderSpecialismSkills()}
 				<ProfileBottomNavigation
+					loading={requestLoading}
 					nextPageUrl="/create-profile/bio"
 					nextPageTitle="Add your bio"
 				/>
@@ -255,8 +285,10 @@ const CreateSkillsPage = ({ allSpeciality }) => {
 	);
 };
 
-CreateSkillsPage.getLayout = function getLayout(page: ReactElement) {
+CreateProfessionalSkillsPage.getLayout = function getLayout(
+	page: ReactElement,
+) {
 	return <Minimal>{page}</Minimal>;
 };
 
-export default CreateSkillsPage;
+export default CreateProfessionalSkillsPage;

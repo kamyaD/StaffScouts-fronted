@@ -1,4 +1,4 @@
-import type { IUserResponse } from "@/lib/types";
+import type { IProfileResponse, IUserResponse } from "@/lib/types";
 import { create } from "zustand";
 
 export type Severity = "success" | "error";
@@ -18,6 +18,8 @@ type Store = {
 	resetSnack: () => void;
 	setUploadingImage: (isUploading: boolean) => void;
 	uploadingImage: boolean;
+	profile: Partial<IProfileResponse> | null;
+	setProfile: (profile: Partial<IProfileResponse> | null) => void;
 };
 
 const useStore = create<Store>((set) => ({
@@ -40,6 +42,8 @@ const useStore = create<Store>((set) => ({
 	uploadingImage: false,
 	setUploadingImage: (isUploading) =>
 		set((state) => ({ ...state, uploadingImage: isUploading })),
+	profile: null,
+	setProfile: (profile) => set((state) => ({ ...state, profile })),
 }));
 
 export default useStore;
