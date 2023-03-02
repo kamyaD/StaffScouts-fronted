@@ -76,8 +76,8 @@ const CreateBioPage: NextPageWithAuthAndLayout = () => {
 			</form>
 
 			<ProfileBottomNavigation
-				nextPageUrl="/create-profile/education"
-				nextPageTitle="Education"
+				nextPageUrl="/create-profile/work"
+				nextPageTitle="Work Experience"
 			/>
 		</Container>
 	);

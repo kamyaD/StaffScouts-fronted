@@ -3,11 +3,23 @@ import { FormInputText } from "@/components/FormInput";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
 import { Minimal } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
+import fancyId from "@/utils/fancyId";
 import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
+import { MenuItem } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import type { ReactElement } from "react";
 import { useForm } from "react-hook-form";
+
+const educationLevel = [
+	"High school certificate",
+	"Certificate",
+	"Diploma",
+	"Advanced diploma",
+	"Bachelors degree",
+	"Masters degree",
+	"PHD",
+];
 
 const CreateBioPage: NextPageWithAuthAndLayout = () => {
 	const { control } = useForm<RegisterInputSchema>({
@@ -22,7 +34,7 @@ const CreateBioPage: NextPageWithAuthAndLayout = () => {
 					fontWeight: 700,
 				}}
 			>
-				Tell us more about yourself.
+				Education experience
 			</Typography>
 
 			<form>
@@ -35,49 +47,59 @@ const CreateBioPage: NextPageWithAuthAndLayout = () => {
 								fontWeight: 500,
 							}}
 						>
-							A short bio to get help us know you better.
+							The level of education you have achieved
 						</Typography>
 						<FormInputText
-							autoFocus
-							required
+							name="company"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="Institution name"
+							type="text"
+						/>
+						<FormInputText
+							select
+							autoFocus={false}
+							margin="dense"
+							name="userType"
+							placeholder="Professional or General Technical workers"
+							size="medium"
+							control={control}
+							label="Education level"
+							type="text"
+						>
+							{educationLevel.map((item: string) => (
+								<MenuItem key={fancyId()} value={item}>
+									{item}
+								</MenuItem>
+							))}
+						</FormInputText>
+						<FormInputText
+							name="company"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="Course"
+							type="text"
+						/>
+						<FormInputText
 							name="bio"
 							margin="dense"
 							size="medium"
 							control={control}
-							label="Bio"
-							placeholder="I am..."
+							label="Activities"
+							placeholder=""
 							type="text"
 							multiline
 							rows={4}
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<Typography
-							variant="body1"
-							marginBottom={2}
-							sx={{
-								fontWeight: 500,
-							}}
-						>
-							Upload a video cv link more about yourself
-						</Typography>
-						<FormInputText
-							required
-							name="videoCv"
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Video CV URL"
-							placeholder="https://yout.be"
-							type="text"
 						/>
 					</Grid>
 				</Grid>
 			</form>
 
 			<ProfileBottomNavigation
-				nextPageUrl="/create-profile/education"
-				nextPageTitle="Education"
+				nextPageUrl="/create-profile/work"
+				nextPageTitle="Work Experience"
 			/>
 		</Container>
 	);

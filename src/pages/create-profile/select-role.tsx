@@ -30,14 +30,14 @@ export type CreateProfileTitleInputSchema = Pick<
 
 const mock = [
 	{
-		title: "Experienced Professional",
+		title: "Graduate / Professional",
 		icon: <MenuBookTwoTone color="action" />,
-		value: "Experienced Professional",
+		value: "Graduate / Professional",
 	},
 	{
-		title: "General / Technical worker",
+		title: "Skilled / Semi-skilled Workers",
 		icon: <WorkTwoTone color="action" />,
-		value: "General / Technical Worker",
+		value: "Skilled / Semi-skilled Workers",
 	},
 ];
 
@@ -122,10 +122,10 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 
 	const handlePushToDashboardViews = async () => {
 		switch (alignment) {
-			case "Experienced Professional":
+			case "Graduate / Professional":
 				await push("/create-profile/professional-skills");
 				return;
-			case "General / Technical Worker":
+			case "Skilled / Semi-skilled Workers":
 				await push("/create-profile/general-skills");
 				return;
 			default:

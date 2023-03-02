@@ -1,27 +1,14 @@
 import Container from "@/components/Container";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
-import SideDrawerDetails from "@/components/SideDrawerDetails";
-import SpecialityAndSkillsTextFields from "@/components/SpecialityAndSkillsTextFields";
+import SpecialityAndSkillsTextFields
+	from "@/components/SpecialityAndSkillsTextFields";
 import { Minimal } from "@/layouts/index";
 import { createProfileFn, getSpecialityFn } from "@/lib/api";
 import useStore from "@/store/index";
-import fancyId from "@/utils/fancyId";
 import { profileValidationSchema } from "@/utils/profileValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Add, Clear } from "@mui/icons-material";
-import {
-	Box,
-	Button,
-	Checkbox,
-	FormControl,
-	FormControlLabel,
-	FormGroup,
-	Grid,
-	IconButton,
-	Stack,
-	Typography,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Add } from "@mui/icons-material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import type { ReactElement } from "react";
 import { useEffect, useMemo, useState } from "react";
@@ -49,6 +36,7 @@ export type CreateProfileSpecialityInputSchema = Pick<
 const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 	let allSpecialtiesData = [];
 	const [requestLoading, setRequestLoading] = useState<boolean>(false);
+	const [ speciality, setSpeciality ] = useState(allSpeciality)
 	const [isSkillsDetailsOpen, setSkillsDetailsOpen] = useState<boolean>(false);
 	const [skillsChecked, setSkillsChecked] = useState([]);
 	const [specialityAndSkillsComp, setSpecialityAndSkillsComp] = useState<
@@ -56,20 +44,18 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 	>([{ id: 0 }]);
 	const { displaySnackMessage, profile } = useStore();
 
-	const handleToggle = (value: number) => () => {
-		const currentIndex = skillsChecked.indexOf(value);
-		const newChecked = [...skillsChecked];
-
-		if (currentIndex === -1) {
-			newChecked.push(value);
-		} else {
-			newChecked.splice(currentIndex, 1);
-		}
-
-		setSkillsChecked(newChecked);
-	};
-
-	const theme = useTheme();
+	// const handleToggle = (value: number) => () => {
+	// 	const currentIndex = skillsChecked.indexOf(value);
+	// 	const newChecked = [...skillsChecked];
+	//
+	// 	if (currentIndex === -1) {
+	// 		newChecked.push(value);
+	// 	} else {
+	// 		newChecked.splice(currentIndex, 1);
+	// 	}
+	//
+	// 	setSkillsChecked(newChecked);
+	// };
 
 	// const handleSelectSpecialityChange = (event: SelectChangeEvent<typeof skillType>) => {
 	// 	const {
@@ -101,43 +87,6 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 	if (typeof allSpecialties !== "undefined") {
 		allSpecialtiesData = JSON.parse(allSpecialties);
 	}
-
-	const toggleDrawerSkills = () => {
-		setSkillsDetailsOpen((prevState) => !prevState);
-	};
-
-	const renderSkillsBody = () => (
-		<Box padding={1} sx={{ backgroundColor: "#ffffff" }}>
-			<FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
-				<FormGroup>
-					{allSpecialtiesData?.map((value) => (
-						<FormControlLabel
-							key={fancyId()}
-							control={
-								<Checkbox
-									checked={skillsChecked.indexOf(value) !== -1}
-									onChange={handleToggle(value)}
-									name={value}
-								/>
-							}
-							label={value}
-						/>
-					))}
-				</FormGroup>
-			</FormControl>
-		</Box>
-	);
-
-	const renderSpecialismSkills = () => {
-		return (
-			<SideDrawerDetails
-				drawerTitle={specialism}
-				drawerBody={renderSkillsBody()}
-				isDrawerOpen={isSkillsDetailsOpen}
-				handleToggleDrawer={toggleDrawerSkills}
-			/>
-		);
-	};
 
 	const { mutate: createProfile } = useMutation(
 		(profileSpeciality: CreateProfileSpecialityInputSchema) =>
@@ -179,19 +128,6 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		createProfile(values);
 	};
 
-	console.log(
-		"Class: , Function: CreateProfessionalSkillsPage, Line 190 specialism():",
-		specialism,
-	);
-
-	// const compareIds = (a, b) => {
-	// 	if (a.id > b.id) return -1;
-	// 	if (a.id < b.id) return 1;
-	// 	return 0;
-	// }
-
-	const compareIds = (a, b) => a.id - b.id;
-
 	const handleAddSpecialityAndSkillsTextFields = () =>
 		setSpecialityAndSkillsComp((prevState) =>
 			prevState.concat({ id: prevState[0].id++ }),
@@ -201,11 +137,6 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		setSpecialityAndSkillsComp((prevState) =>
 			prevState.filter((item) => item.id !== id),
 		);
-
-	console.log(
-		"Class: , Function: CreateProfessionalSkillsPage, Line 188 specialityAndSkillsComp():",
-		specialityAndSkillsComp.slice().sort((a, b) => a.id - b.id),
-	);
 
 	return (
 		<Container maxWidth={720}>
@@ -251,24 +182,15 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 									marginBottom={4}
 								>
 									<SpecialityAndSkillsTextFields
+										id={item.id}
 										name="speciality"
 										control={control}
 										label="Speciality"
 										allSpeciality={allSpeciality}
 										allSpecialtiesData={allSpecialtiesData}
 										specialism={specialism}
-										// handleDelete={handleRemoveSpecialityAndSkillsTextFields}
+										handleDelete={handleRemoveSpecialityAndSkillsTextFields}
 									/>
-									{item.id > 0 ? (
-										<IconButton
-											aria-label="delete"
-											onClick={() =>
-												handleRemoveSpecialityAndSkillsTextFields(item.id)
-											}
-										>
-											<Clear color="error" />
-										</IconButton>
-									) : null}
 								</Stack>
 							))}
 					</Grid>
@@ -283,22 +205,7 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 							ADD SPECIALITY
 						</Button>
 					</Grid>
-
-					{/*<Grid item xs={12}>*/}
-					{/*	<Typography sx={{ marginLeft: 1 }} borderBottom={1}>*/}
-					{/*		Data Science*/}
-					{/*	</Typography>*/}
-					{/*	{skillsChecked.map((option: string) => (*/}
-					{/*		<Chip*/}
-					{/*			key={fancyId()}*/}
-					{/*			color="primary"*/}
-					{/*			label={option}*/}
-					{/*			sx={{ margin: 0.5 }}*/}
-					{/*		/>*/}
-					{/*	))}*/}
-					{/*</Grid>*/}
 				</Grid>
-				{/*{renderSpecialismSkills()}*/}
 				<ProfileBottomNavigation
 					loading={requestLoading}
 					nextPageUrl="/create-profile/bio"
