@@ -11,7 +11,7 @@ import { Add } from "@mui/icons-material";
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import type { ReactElement } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
@@ -37,8 +37,7 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 	let allSpecialtiesData = [];
 	const [requestLoading, setRequestLoading] = useState<boolean>(false);
 	const [ speciality, setSpeciality ] = useState(allSpeciality)
-	const [isSkillsDetailsOpen, setSkillsDetailsOpen] = useState<boolean>(false);
-	const [skillsChecked, setSkillsChecked] = useState([]);
+	const [ specialitiesSelected, setSelectedSpecialities ] = useState<Array<string>>([])
 	const [specialityAndSkillsComp, setSpecialityAndSkillsComp] = useState<
 		Array<Record<string, number>>
 	>([{ id: 0 }]);
@@ -72,16 +71,12 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 
 	const specialism = watch("speciality");
 
-	useEffect(() => {
-		setSkillsDetailsOpen(specialism?.length > 0);
-	}, [specialism]);
-
 	const allSpecialties = useMemo(
 		() =>
-			allSpeciality
+			speciality
 				?.filter((item) => item.specialty === specialism)[0]
 				?.specific_specialty.trim(),
-		[allSpeciality, specialism],
+		[speciality, specialism],
 	);
 
 	if (typeof allSpecialties !== "undefined") {
@@ -125,13 +120,17 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		values,
 	) => {
 		console.log("Class: , Function: onSubmit, Line 162 values():", values);
-		createProfile(values);
+		// createProfile(values);
 	};
 
-	const handleAddSpecialityAndSkillsTextFields = () =>
+	const handleAddSpecialityAndSkillsTextFields = () => {
 		setSpecialityAndSkillsComp((prevState) =>
 			prevState.concat({ id: prevState[0].id++ }),
 		);
+		setSpeciality(prevState => prevState.filter(item => item.specialty !== specialism ))
+		const filteredSpeciality = speciality.filter(item => item.specialty === specialism)
+		setSelectedSpecialities(prevState => [...prevState, filteredSpeciality[0].specialty])
+	}
 
 	const handleRemoveSpecialityAndSkillsTextFields = (id: number) =>
 		setSpecialityAndSkillsComp((prevState) =>
@@ -186,7 +185,7 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 										name="speciality"
 										control={control}
 										label="Speciality"
-										allSpeciality={allSpeciality}
+										allSpeciality={speciality}
 										allSpecialtiesData={allSpecialtiesData}
 										specialism={specialism}
 										handleDelete={handleRemoveSpecialityAndSkillsTextFields}
@@ -206,6 +205,25 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 						</Button>
 					</Grid>
 				</Grid>
+				<input type="submit" value="submit"/>
+				{/*<LoadingButton*/}
+				{/*	variant="contained"*/}
+				{/*	type="submit"*/}
+				{/*	color="primary"*/}
+				{/*	size="large"*/}
+				{/*	loading={requestLoading}*/}
+				{/*	loadingPosition="end"*/}
+				{/*	// onClick={handleNext}*/}
+				{/*	// endIcon={*/}
+				{/*	// 	theme.direction === "rtl" ? (*/}
+				{/*	// 		<KeyboardArrowLeft />*/}
+				{/*	// 	) : (*/}
+				{/*	// 		<KeyboardArrowRight />*/}
+				{/*	// 	)*/}
+				{/*	// }*/}
+				{/*>*/}
+				{/*	{"Next"}*/}
+				{/*</LoadingButton>*/}
 				<ProfileBottomNavigation
 					loading={requestLoading}
 					nextPageUrl="/create-profile/bio"

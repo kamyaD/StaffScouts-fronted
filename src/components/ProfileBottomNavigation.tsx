@@ -70,7 +70,7 @@ const ProfileBottomNavigation = ({
 						size="large"
 						loading={loading}
 						loadingPosition="end"
-						onClick={handleNext}
+						// onClick={handleNext}
 						endIcon={
 							theme.direction === "rtl" ? (
 								<KeyboardArrowLeft />
@@ -81,21 +81,6 @@ const ProfileBottomNavigation = ({
 					>
 						{nextPageTitle ?? "Next"}
 					</LoadingButton>
-
-					{/*<Button*/}
-					{/*	variant="contained"*/}
-					{/*	type="submit"*/}
-					{/*	onClick={handleNext}*/}
-					{/*	endIcon={*/}
-					{/*		theme.direction === "rtl" ? (*/}
-					{/*			<KeyboardArrowLeft />*/}
-					{/*		) : (*/}
-					{/*			<KeyboardArrowRight />*/}
-					{/*		)*/}
-					{/*	}*/}
-					{/*>*/}
-					{/*	{nextPageTitle ?? "Next"}*/}
-					{/*</Button>*/}
 				</Stack>
 			</Paper>
 		</Box>
