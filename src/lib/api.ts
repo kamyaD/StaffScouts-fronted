@@ -1,4 +1,4 @@
-import type { GeneralProfileInputSchema } from "@/views/AccountSettingsView/components/General/General";
+import type { ProfileInputSchema } from "@/utils/profileValidationSchema";
 import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
 import axios from "axios";
 
@@ -7,10 +7,10 @@ import type { IJobs, Job, Specialism } from "../types";
 import type {
 	GenericResponse,
 	IJobInterestedResponse,
+	IProfileResponse,
 	IUserResponse,
 	JobInterestedDTO,
 } from "./types";
-import type { IProfileResponse } from "./types";
 
 const BASE_URL = "/";
 
@@ -63,9 +63,16 @@ export const createProfileFn = async (
 };
 
 export const updateProfileFn = async (
-	user: GeneralProfileInputSchema,
-): Promise<IUserResponse> => {
-	const response = await apiClient.put<IUserResponse>(`/api/me`, user);
+	profile: ProfileInputSchema,
+): Promise<IProfileResponse> => {
+	console.log(
+		"Class: , Function: updateProfileFn, Line 69 profile():",
+		profile,
+	);
+	const response = await apiClient.put<IProfileResponse>(
+		`/api/profile`,
+		profile,
+	);
 	return response.data;
 };
 

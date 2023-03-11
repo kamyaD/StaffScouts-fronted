@@ -2,7 +2,7 @@ import Container from "@/components/Container";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
 import SpecialityAndSkillsTextFields from "@/components/SpecialityAndSkillsTextFields";
 import { Minimal } from "@/layouts/index";
-import { createProfileFn, getSpecialityFn } from "@/lib/api";
+import { getSpecialityFn, updateProfileFn } from "@/lib/api";
 import useStore from "@/store/index";
 import { profileValidationSchema } from "@/utils/profileValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,9 +26,8 @@ export const getStaticProps = async () => {
 	};
 };
 
-export type CreateProfileSpecialityInputSchema = Pick<
-	z.infer<typeof profileValidationSchema>,
-	"speciality" | "skills"
+type CreateProfileSpecialityInputSchema = z.infer<
+	typeof profileValidationSchema
 >;
 
 const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
@@ -39,27 +38,7 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 	const [specialityAndSkillsComp, setSpecialityAndSkillsComp] = useState<
 		Array<Record<string, number>>
 	>([{ id: 0 }]);
-	const { displaySnackMessage, profile } = useStore();
-
-	// const handleToggle = (value: number) => () => {
-	// 	const currentIndex = skillsChecked.indexOf(value);
-	// 	const newChecked = [...skillsChecked];
-	//
-	// 	if (currentIndex === -1) {
-	// 		newChecked.push(value);
-	// 	} else {
-	// 		newChecked.splice(currentIndex, 1);
-	// 	}
-	//
-	// 	setSkillsChecked(newChecked);
-	// };
-
-	// const handleSelectSpecialityChange = (event: SelectChangeEvent<typeof skillType>) => {
-	// 	const {
-	// 		target: { value },
-	// 	} = event;
-	// 	setSkillType(typeof value === "string" ? value.split(",") : value);
-	// };
+	const { displaySnackMessage } = useStore();
 
 	const { control, watch, handleSubmit } =
 		useForm<CreateProfileSpecialityInputSchema>({
@@ -68,7 +47,7 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		});
 
 	const specialism = watch("speciality");
-	const skills = watch("skills");
+	const skills = watch("specialitySkills");
 
 	const allSpecialties = useMemo(
 		() =>
@@ -78,18 +57,13 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		[speciality, specialism],
 	);
 
-	console.log(
-		"Class: , Function: CreateProfessionalSkillsPage, Line 84 specialitiesSelected():",
-		JSON.stringify(Object.fromEntries(specialitiesSelected.entries())),
-	);
-
 	if (typeof allSpecialties !== "undefined") {
 		allSpecialtiesData = JSON.parse(allSpecialties);
 	}
 
-	const { mutate: createProfile } = useMutation(
-		(profileSpeciality: CreateProfileSpecialityInputSchema) =>
-			createProfileFn(profileSpeciality),
+	const { mutate: updateProfile } = useMutation(
+		(profileSpeciality: { skills: string }) =>
+			updateProfileFn(profileSpeciality),
 		{
 			onMutate() {
 				setRequestLoading(true);
@@ -102,7 +76,6 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 			},
 			onError(error: any) {
 				setRequestLoading(false);
-				console.log("Class: , Function: onError, Line 43 error():", error);
 				if (Array.isArray((error as any).response.data.error)) {
 					(error as any).response.data.error.forEach((el: any) =>
 						displaySnackMessage({
@@ -121,11 +94,10 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 	);
 
 	const onSubmit = () => {
-		const val = JSON.stringify(
+		const skills = JSON.stringify(
 			Object.fromEntries(specialitiesSelected.entries()),
 		);
-		console.log("Class: , Function: onSubmit, Line 162 values():", val);
-		// createProfile(values);
+		updateProfile({ skills });
 	};
 
 	const updateSpeciality = (key, value) =>

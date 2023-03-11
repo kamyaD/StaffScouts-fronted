@@ -66,7 +66,7 @@ const SpecialityAndSkillsTextFields = ({
 				/>
 
 				<Controller
-					name="skills"
+					name="specialitySkills"
 					control={control}
 					// onChange={([, data]) => data}
 					render={({
@@ -115,7 +115,7 @@ const SpecialityAndSkillsTextFields = ({
 							renderInput={(params) => (
 								<TextField
 									{...params}
-									name="skills"
+									name="specialitySkills"
 									size="medium"
 									margin="dense"
 									label="Skills"

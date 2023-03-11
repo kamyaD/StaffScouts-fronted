@@ -2,7 +2,7 @@ import Container from "@/components/Container";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
 import SpecialityAndSkillsTextFields from "@/components/SpecialityAndSkillsTextFields";
 import { Minimal } from "@/layouts/index";
-import { createProfileFn, getSpecialityFn } from "@/lib/api";
+import { getSpecialityFn, updateProfileFn } from "@/lib/api";
 import useStore from "@/store/index";
 import { profileValidationSchema } from "@/utils/profileValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,7 +11,6 @@ import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import type { ReactElement } from "react";
 import { useMemo, useState } from "react";
-import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
@@ -27,42 +26,19 @@ export const getStaticProps = async () => {
 	};
 };
 
-export type CreateProfileSpecialityInputSchema = Pick<
-	z.infer<typeof profileValidationSchema>,
-	"speciality" | "skills"
+type CreateProfileSpecialityInputSchema = z.infer<
+	typeof profileValidationSchema
 >;
 
 const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 	let allSpecialtiesData = [];
 	const [requestLoading, setRequestLoading] = useState<boolean>(false);
 	const [speciality, setSpeciality] = useState(allSpeciality);
-	const [specialitiesSelected, setSelectedSpecialities] = useState<
-		Array<string>
-	>([]);
+	const [specialitiesSelected, setSelectedSpecialities] = useState(new Map());
 	const [specialityAndSkillsComp, setSpecialityAndSkillsComp] = useState<
 		Array<Record<string, number>>
 	>([{ id: 0 }]);
-	const { displaySnackMessage, profile } = useStore();
-
-	// const handleToggle = (value: number) => () => {
-	// 	const currentIndex = skillsChecked.indexOf(value);
-	// 	const newChecked = [...skillsChecked];
-	//
-	// 	if (currentIndex === -1) {
-	// 		newChecked.push(value);
-	// 	} else {
-	// 		newChecked.splice(currentIndex, 1);
-	// 	}
-	//
-	// 	setSkillsChecked(newChecked);
-	// };
-
-	// const handleSelectSpecialityChange = (event: SelectChangeEvent<typeof skillType>) => {
-	// 	const {
-	// 		target: { value },
-	// 	} = event;
-	// 	setSkillType(typeof value === "string" ? value.split(",") : value);
-	// };
+	const { displaySnackMessage } = useStore();
 
 	const { control, watch, handleSubmit } =
 		useForm<CreateProfileSpecialityInputSchema>({
@@ -71,6 +47,7 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		});
 
 	const specialism = watch("speciality");
+	const skills = watch("specialitySkills");
 
 	const allSpecialties = useMemo(
 		() =>
@@ -84,9 +61,9 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		allSpecialtiesData = JSON.parse(allSpecialties);
 	}
 
-	const { mutate: createProfile } = useMutation(
-		(profileSpeciality: CreateProfileSpecialityInputSchema) =>
-			createProfileFn(profileSpeciality),
+	const { mutate: updateProfile } = useMutation(
+		(profileSpeciality: { skills: string }) =>
+			updateProfileFn(profileSpeciality),
 		{
 			onMutate() {
 				setRequestLoading(true);
@@ -99,7 +76,6 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 			},
 			onError(error: any) {
 				setRequestLoading(false);
-				console.log("Class: , Function: onError, Line 43 error():", error);
 				if (Array.isArray((error as any).response.data.error)) {
 					(error as any).response.data.error.forEach((el: any) =>
 						displaySnackMessage({
@@ -117,12 +93,15 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		},
 	);
 
-	const onSubmit: SubmitHandler<CreateProfileSpecialityInputSchema> = (
-		values,
-	) => {
-		console.log("Class: , Function: onSubmit, Line 162 values():", values);
-		// createProfile(values);
+	const onSubmit = () => {
+		const skills = JSON.stringify(
+			Object.fromEntries(specialitiesSelected.entries()),
+		);
+		updateProfile({ skills });
 	};
+
+	const updateSpeciality = (key, value) =>
+		setSelectedSpecialities((map) => new Map(map.set(key, value)));
 
 	const handleAddSpecialityAndSkillsTextFields = () => {
 		setSpecialityAndSkillsComp((prevState) =>
@@ -131,19 +110,20 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		setSpeciality((prevState) =>
 			prevState.filter((item) => item.specialty !== specialism),
 		);
-		const filteredSpeciality = speciality.filter(
-			(item) => item.specialty === specialism,
-		);
-		setSelectedSpecialities((prevState) => [
-			...prevState,
-			filteredSpeciality[0].specialty,
-		]);
+		// const filteredSpeciality = speciality.filter(item => item.specialty === specialism)
+		setSelectedSpecialities((map) => new Map(map.set(specialism, skills)));
+		// updateSpeciality(specialism, skills)
+
+		// const obj = { `${key}`: filteredSpeciality[0].specialty }
+		// setSelectedSpecialities(prevState => Object.assign(prevState, obj))
 	};
 
-	const handleRemoveSpecialityAndSkillsTextFields = (id: number) =>
+	const handleRemoveSpecialityAndSkillsTextFields = (id: number) => {
 		setSpecialityAndSkillsComp((prevState) =>
 			prevState.filter((item) => item.id !== id),
 		);
+		// setSelectedSpecialities(map => map.delete(specialism))
+	};
 
 	return (
 		<Container maxWidth={720}>
@@ -190,7 +170,6 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 								>
 									<SpecialityAndSkillsTextFields
 										id={item.id}
-										name="speciality"
 										control={control}
 										label="Speciality"
 										allSpeciality={speciality}
@@ -213,25 +192,6 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 						</Button>
 					</Grid>
 				</Grid>
-				{/*<input type="submit" value="submit"/>*/}
-				{/*<LoadingButton*/}
-				{/*	variant="contained"*/}
-				{/*	type="submit"*/}
-				{/*	color="primary"*/}
-				{/*	size="large"*/}
-				{/*	loading={requestLoading}*/}
-				{/*	loadingPosition="end"*/}
-				{/*	// onClick={handleNext}*/}
-				{/*	// endIcon={*/}
-				{/*	// 	theme.direction === "rtl" ? (*/}
-				{/*	// 		<KeyboardArrowLeft />*/}
-				{/*	// 	) : (*/}
-				{/*	// 		<KeyboardArrowRight />*/}
-				{/*	// 	)*/}
-				{/*	// }*/}
-				{/*>*/}
-				{/*	{"Next"}*/}
-				{/*</LoadingButton>*/}
 				<ProfileBottomNavigation
 					loading={requestLoading}
 					nextPageUrl="/create-profile/bio"
