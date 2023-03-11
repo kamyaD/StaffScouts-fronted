@@ -25,7 +25,7 @@ const ProfileBottomNavigation = ({
 	const handleNext = () => (loading ? () => {} : push(nextPageUrl));
 
 	return (
-		<Box sx={{ minWidth: 500 }}>
+		<Box sx={{ minWidth: 500, position: "absolute", zIndex: 10 }}>
 			<Paper
 				sx={{
 					position: "fixed",

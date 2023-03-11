@@ -123,9 +123,11 @@ const CreateWorkPage: NextPageWithAuthAndLayout = () => {
 						/>
 					</Grid>
 				</Grid>
+				<ProfileBottomNavigation
+					nextPageUrl="/create-profile/portfolio"
+					nextPageTitle="Portfolio"
+				/>
 			</form>
-
-			<ProfileBottomNavigation nextPageUrl="/account" nextPageTitle="Finish" />
 		</Container>
 	);
 };

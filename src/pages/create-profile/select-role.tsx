@@ -1,10 +1,7 @@
 import Container from "@/components/Container";
 import { Minimal } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
-import useStore from "@/store/index";
 import fancyId from "@/utils/fancyId";
-import { profileValidationSchema } from "@/utils/profileValidationSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { MenuBookTwoTone, WorkTwoTone } from "@mui/icons-material";
 import {
 	Box,
@@ -19,14 +16,6 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import type { MouseEvent, ReactElement } from "react";
 import { useState } from "react";
-import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
-import type * as z from "zod";
-
-export type CreateProfileTitleInputSchema = Pick<
-	z.infer<typeof profileValidationSchema>,
-	"job_title"
->;
 
 const mock = [
 	{
@@ -49,64 +38,6 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 	const { push } = useRouter();
 
 	const [alignment, setAlignment] = useState("...");
-	const [requestLoading, setRequestLoading] = useState<boolean>(false);
-	const { displaySnackMessage, setProfile } = useStore();
-	const { handleSubmit, control } = useForm<CreateProfileTitleInputSchema>({
-		mode: "onChange",
-		resolver: zodResolver(profileValidationSchema),
-	});
-
-	// useEffect(() => {
-	// 	switch (alignment) {
-	// 		case "candidate":
-	// 			setActiveState("candidate");
-	// 			return;
-	// 		case "employer":
-	// 			setActiveState("employer");
-	// 			return;
-	// 		default:
-	// 			setActiveState("...");
-	// 			return;
-	// 	}
-	// }, [alignment]);
-
-	// const { mutate: createProfile } = useMutation(
-	// 	(profileTitle: CreateProfileTitleInputSchema) =>
-	// 		createProfileFn(profileTitle),
-	// 	{
-	// 		onMutate() {
-	// 			setRequestLoading(true);
-	// 		},
-	// 		onSuccess() {
-	// 			setRequestLoading(false);
-	// 			displaySnackMessage({
-	// 				message: "Profile title updated successful.",
-	// 			});
-	// 		},
-	// 		onError(error: any) {
-	// 			setRequestLoading(false);
-	// 			console.log("Class: , Function: onError, Line 43 error():", error);
-	// 			if (Array.isArray((error as any).response.data.error)) {
-	// 				(error as any).response.data.error.forEach((el: any) =>
-	// 					displaySnackMessage({
-	// 						message: el.message,
-	// 						severity: "error",
-	// 					}),
-	// 				);
-	// 			} else {
-	// 				displaySnackMessage({
-	// 					message: (error as any).response.data.message,
-	// 					severity: "error",
-	// 				});
-	// 			}
-	// 		},
-	// 	},
-	// );
-
-	const onSubmit: SubmitHandler<CreateProfileTitleInputSchema> = (values) => {
-		console.log("Class: , Function: onSubmit, Line 64 values():", values);
-		setProfile(values);
-	};
 
 	const handleAlignment = (
 		event: MouseEvent<HTMLElement>,
@@ -116,18 +47,8 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 		window.localStorage.setItem("professionalLevel", newAlignment);
 	};
 
-	const handlePushToDashboardViews = async () => {
-		switch (alignment) {
-			case "Graduate / Professional":
-				await push("/create-profile/g/speciality");
-				return;
-			case "Skilled / Semi-skilled Workers":
-				await push("/create-profile/s/speciality");
-				return;
-			default:
-				return;
-		}
-	};
+	const handlePushToDashboardViews = async () =>
+		await push("/create-profile/speciality");
 
 	return (
 		<Container width={800} marginTop={16}>

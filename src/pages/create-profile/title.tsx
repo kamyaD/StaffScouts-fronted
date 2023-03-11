@@ -73,7 +73,7 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 					fontWeight: 700,
 				}}
 			>
-				Add a title to tell us what you do.
+				Tell us about yourself.
 			</Typography>
 
 			<form
@@ -90,7 +90,7 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 								fontWeight: 500,
 							}}
 						>
-							Stand out by describing your expertise in your own words.
+							Stand out by describing yourself and personal details.
 						</Typography>
 						<FormInputText
 							autoFocus
@@ -101,6 +101,28 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 							control={control}
 							label="Title"
 							placeholder="Example: Customer service executive"
+							type="text"
+						/>
+						<FormInputText
+							autoFocus
+							required
+							name="website"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="Website"
+							placeholder="Example: https://my-website.com"
+							type="text"
+						/>
+						<FormInputText
+							autoFocus
+							required
+							name="country"
+							margin="dense"
+							size="medium"
+							control={control}
+							label="Country"
+							placeholder=""
 							type="text"
 						/>
 					</Grid>
