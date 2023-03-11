@@ -7,14 +7,13 @@ import {
 	Chip,
 	Grid,
 	IconButton,
-	TextField
+	TextField,
 } from "@mui/material";
 import { Fragment } from "react";
 import { Controller } from "react-hook-form";
 
 interface Props {
 	id: number;
-	name: string;
 	control: any;
 	label: string;
 	allSpeciality: any;
@@ -29,7 +28,6 @@ const checkedIcon = <CheckBox fontSize="small" />;
 const SpecialityAndSkillsTextFields = ({
 	id,
 	control,
-	name,
 	label,
 	allSpeciality,
 	specialism,
@@ -41,7 +39,7 @@ const SpecialityAndSkillsTextFields = ({
 		<Fragment>
 			<Grid item xs={11}>
 				<Controller
-					name={name}
+					name="speciality"
 					control={control}
 					render={({ field: { onChange }, fieldState: { error } }) => (
 						<Autocomplete
@@ -86,6 +84,7 @@ const SpecialityAndSkillsTextFields = ({
 							// freeSolo
 							onChange={(_, data) => onChange(data)}
 							getOptionLabel={(option) => option}
+							isOptionEqualToValue={(option, value) => option === value}
 							// value={value || null}
 							renderTags={(
 								value: string[],

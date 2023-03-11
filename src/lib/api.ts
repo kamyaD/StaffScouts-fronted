@@ -10,7 +10,7 @@ import type {
 	IUserResponse,
 	JobInterestedDTO,
 } from "./types";
-import { IProfileResponse } from "./types";
+import type { IProfileResponse } from "./types";
 
 const BASE_URL = "/";
 

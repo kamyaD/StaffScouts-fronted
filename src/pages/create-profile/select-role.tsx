@@ -17,8 +17,8 @@ import {
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import type { ReactElement } from "react";
-import { MouseEvent, useState } from "react";
+import type { MouseEvent, ReactElement } from "react";
+import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
@@ -55,11 +55,6 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 		mode: "onChange",
 		resolver: zodResolver(profileValidationSchema),
 	});
-
-	console.log(
-		"Class: , Function: CreateRolePage, Line 59 alignment():",
-		alignment,
-	);
 
 	// useEffect(() => {
 	// 	switch (alignment) {
@@ -118,15 +113,16 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 		newAlignment: string,
 	) => {
 		setAlignment(newAlignment);
+		window.localStorage.setItem("professionalLevel", newAlignment);
 	};
 
 	const handlePushToDashboardViews = async () => {
 		switch (alignment) {
 			case "Graduate / Professional":
-				await push("/create-profile/professional-skills");
+				await push("/create-profile/g/speciality");
 				return;
 			case "Skilled / Semi-skilled Workers":
-				await push("/create-profile/general-skills");
+				await push("/create-profile/s/speciality");
 				return;
 			default:
 				return;
@@ -178,26 +174,6 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 								alignItems="flex-start"
 								width={200}
 							>
-								{/*<Stack*/}
-								{/*	direction="row"*/}
-								{/*	justifyContent="space-between"*/}
-								{/*	alignItems="flex-start"*/}
-								{/*	spacing={4}*/}
-								{/*	marginBottom={4}*/}
-								{/*	width={200}*/}
-								{/*>*/}
-								{/*	<Box*/}
-								{/*		component={Avatar}*/}
-								{/*		width={50}*/}
-								{/*		height={50}*/}
-								{/*		// marginBottom={2}*/}
-								{/*		bgcolor={theme.palette.primary.main}*/}
-								{/*		color={theme.palette.background.paper}*/}
-								{/*	>*/}
-								{/*		{item.icon}*/}
-								{/*	</Box>*/}
-								{/*</Stack>*/}
-
 								<Stack
 									direction="column"
 									justifyContent="space-around"
@@ -231,8 +207,7 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 						disabled={alignment === "..." || alignment === null}
 						onClick={handlePushToDashboardViews}
 						endIcon={
-							alignment !== "..." ||
-							(alignment === null && (
+							!(alignment === "..." || alignment === null) ? (
 								<Box
 									component="svg"
 									xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +224,7 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 										d="M17 8l4 4m0 0l-4 4m4-4H3"
 									/>
 								</Box>
-							))
+							) : null
 						}
 					>
 						{`Proceed as a ${

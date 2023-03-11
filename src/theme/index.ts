@@ -2,7 +2,7 @@ import type { Theme } from "@mui/material";
 import { responsiveFontSizes } from "@mui/material";
 import type { ComponentsOverrides } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
-import { Inter } from "@next/font/google";
+import { Inter } from "next/font/google";
 import type { CSSProperties } from "react";
 
 import { dark, light } from "./palette";
