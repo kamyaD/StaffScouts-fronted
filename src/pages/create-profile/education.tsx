@@ -1,30 +1,84 @@
 import Container from "@/components/Container";
-import { FormInputText } from "@/components/FormInput";
+import EducationTextFields from "@/components/EducationTextFields";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
 import { Minimal } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
-import fancyId from "@/utils/fancyId";
+import isBrowser from "@/utils/isBrowser";
 import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
-import { MenuItem } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Button, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import type { ReactElement } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const educationLevel = [
-	"High school certificate",
-	"Certificate",
+const graduateEducationLevel = [
 	"Diploma",
-	"Advanced diploma",
 	"Bachelors degree",
 	"Masters degree",
-	"PHD",
+	"Doctorate Degree",
 ];
 
-const CreateBioPage: NextPageWithAuthAndLayout = () => {
+const semiSkilledEducationLevel = [
+	"Primary Education - Partial",
+	"Primary Education - Complete",
+	"Secondary School - Partial",
+	"Secondary School - Complete",
+	"Certificate",
+	"Diploma",
+	"Degree",
+];
+
+const trainingType = [
+	"Untrained",
+	"Trained On the Job",
+	"Apprenticeship",
+	"Vocational Training/Certification/Licensing",
+];
+
+const CreateEducationPage: NextPageWithAuthAndLayout = () => {
+	const [educationComponent, setEducationComponent] = useState<
+		Array<Record<string, number>>
+	>([{ id: 0 }]);
+	const [fromDate, setFromDate] = useState<Dayjs | null>(dayjs("2022-04-17"));
+	const [toDate, setToDate] = useState<Dayjs | null>(dayjs("2022-04-17"));
+
+	const professionalLevel = isBrowser
+		? window.localStorage.getItem("professionalLevel")
+		: "";
+	const educationLevel =
+		professionalLevel === "Graduate / Professional"
+			? graduateEducationLevel
+			: semiSkilledEducationLevel;
+
 	const { control } = useForm<RegisterInputSchema>({
 		mode: "onChange",
 	});
+
+	const handleAddEducationTextFields = () => {
+		setEducationComponent((prevState) =>
+			prevState.concat({ id: prevState[0].id++ }),
+		);
+		// setSpeciality((prevState) =>
+		// 	prevState.filter((item) => item.specialty !== specialism),
+		// );
+		// // const filteredSpeciality = speciality.filter(item => item.specialty === specialism)
+		// setSelectedSpecialities((map) => new Map(map.set(specialism, skills)));
+		// updateSpeciality(specialism, skills)
+
+		// const obj = { `${key}`: filteredSpeciality[0].specialty }
+		// setSelectedSpecialities(prevState => Object.assign(prevState, obj))
+	};
+
+	const handleRemoveEducationTextFields = (id: number) => {
+		setEducationComponent((prevState) =>
+			prevState.filter((item) => item.id !== id),
+		);
+		// setSelectedSpecialities(map => map.delete(specialism))
+	};
 
 	return (
 		<Container maxWidth={720}>
@@ -49,64 +103,77 @@ const CreateBioPage: NextPageWithAuthAndLayout = () => {
 						>
 							The level of education you have achieved
 						</Typography>
-						<FormInputText
-							name="company"
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Institution name"
-							type="text"
-						/>
-						<FormInputText
-							select
-							autoFocus={false}
-							margin="dense"
-							name="userType"
-							placeholder="Professional or General Technical workers"
-							size="medium"
-							control={control}
-							label="Education level"
-							type="text"
-						>
-							{educationLevel.map((item: string) => (
-								<MenuItem key={fancyId()} value={item}>
-									{item}
-								</MenuItem>
+					</Grid>
+
+					{/*<Grid item xs={11}>*/}
+					{/*	<FormInputText*/}
+					{/*		select*/}
+					{/*		autoFocus={false}*/}
+					{/*		margin="dense"*/}
+					{/*		name="training_type"*/}
+					{/*		placeholder=""*/}
+					{/*		size="medium"*/}
+					{/*		control={control}*/}
+					{/*		label="Training type"*/}
+					{/*		type="text"*/}
+					{/*	>*/}
+					{/*		{trainingType.map((item: string) => (*/}
+					{/*			<MenuItem key={fancyId()} value={item}>*/}
+					{/*				{item}*/}
+					{/*			</MenuItem>*/}
+					{/*		))}*/}
+					{/*	</FormInputText>*/}
+					{/*</Grid>*/}
+
+					<Grid item xs={12}>
+						{educationComponent
+							.slice()
+							.sort((a, b) => a.id - b.id)
+							.map((item) => (
+								<Stack
+									direction="row"
+									alignItems="stretch"
+									spacing={2}
+									key={item.id}
+									marginBottom={4}
+								>
+									<EducationTextFields
+										id={item.id}
+										control={control}
+										educationLevel={educationLevel}
+										handleDelete={handleRemoveEducationTextFields}
+										fromDate={fromDate}
+										setFromDate={setFromDate}
+										setToDate={setToDate}
+										toDate={toDate}
+									/>
+								</Stack>
 							))}
-						</FormInputText>
-						<FormInputText
-							name="company"
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Course"
-							type="text"
-						/>
-						<FormInputText
-							name="bio"
-							margin="dense"
-							size="medium"
-							control={control}
-							label="Activities"
-							placeholder=""
-							type="text"
-							multiline
-							rows={4}
-						/>
+					</Grid>
+
+					<Grid item xs={12}>
+						<Button
+							startIcon={<Add />}
+							variant="outlined"
+							onClick={handleAddEducationTextFields}
+							sx={{ fontWeight: "medium", color: "unset" }}
+						>
+							ADD EDUCATION LEVEL
+						</Button>
 					</Grid>
 				</Grid>
-			</form>
 
-			<ProfileBottomNavigation
-				nextPageUrl="/create-profile/work"
-				nextPageTitle="Work Experience"
-			/>
+				<ProfileBottomNavigation
+					nextPageUrl="/create-profile/work"
+					nextPageTitle="Work Experience"
+				/>
+			</form>
 		</Container>
 	);
 };
 
-CreateBioPage.getLayout = function getLayout(page: ReactElement) {
+CreateEducationPage.getLayout = function getLayout(page: ReactElement) {
 	return <Minimal>{page}</Minimal>;
 };
 
-export default CreateBioPage;
+export default CreateEducationPage;

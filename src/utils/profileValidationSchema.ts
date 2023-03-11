@@ -28,6 +28,10 @@ const validationSchema = z.object({
 		),
 	videoURL: z.optional(z.string()),
 	personal: z.string(),
+	education: z.string(),
+	institution: z.string(),
+	education_level: z.string(),
+	course: z.string(),
 });
 
 export const profileValidationSchema = validationSchema.partial();
