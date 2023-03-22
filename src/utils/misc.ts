@@ -12,4 +12,7 @@ const stringifyMap = (valueMap) => {
 	return JSON.stringify(Object.fromEntries(valueMap.entries()));
 };
 
-export { removeDuplicates, isArrayEmpty, stringifyMap };
+const isStringNullOrEmpty = (str: string): boolean =>
+	str == null || str.trim() === "";
+
+export { removeDuplicates, isArrayEmpty, stringifyMap, isStringNullOrEmpty };

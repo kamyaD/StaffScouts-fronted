@@ -26,12 +26,12 @@ export interface IUserResponse {
 	last_name: string;
 	username: string;
 	email: string;
-	bio: string;
-	profile_pic: string;
-	city: string;
-	country: string;
-	job_title: string;
-	availability_status: string;
+	bio?: string;
+	profile_pic?: string;
+	city?: string;
+	country?: string;
+	job_title?: string;
+	availability_status?: string;
 	is_employer?: boolean;
 	is_candidate?: boolean;
 	is_both_employer_and_candidate?: boolean;

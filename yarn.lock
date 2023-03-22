@@ -5507,6 +5507,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-select-country-list@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "react-select-country-list@npm:2.2.3"
+  checksum: 3cf76c661f1b9fd4ffded8747fad522aed3b2487dac2f8b9e17a0ed36023917c751621fcfd3cff7c564bf42cfcf1f16d92cdf3972042148f1fea99195ce76d94
+  languageName: node
+  linkType: hard
+
 "react-slick@npm:^0.29.0":
   version: 0.29.0
   resolution: "react-slick@npm:0.29.0"
@@ -5997,6 +6004,7 @@ __metadata:
     react-intersection-observer: ^9.4.3
     react-lazy-load-image-component: ^1.5.6
     react-redux: ^8.0.5
+    react-select-country-list: ^2.2.3
     react-slick: ^0.29.0
     rimraf: ^4.4.0
     slick-carousel: ^1.8.1

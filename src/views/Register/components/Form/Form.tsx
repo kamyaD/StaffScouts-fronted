@@ -124,7 +124,11 @@ function Form(): JSX.Element {
 
 	useEffect(() => {
 		if (isSubmitSuccessful) {
-			reset();
+			console.log(
+				"Class: Form, Function: , Line 127 isSubmitSuccessful():",
+				isSubmitSuccessful,
+			);
+			// reset();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isSubmitSuccessful]);

@@ -1,23 +1,24 @@
+import { isStringNullOrEmpty } from "@/utils/misc";
 import axios from "axios";
 import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import type { ICandidateProfile } from "../../../types";
+
 interface AuthResponse {
 	token: string;
-	id: string;
-	username: string;
-	profilePic: string;
+	profile: ICandidateProfile;
 }
 
 const assignRole = (user) => {
 	let role = "CANDIDATE";
 
-	if (user.isBothEmployerAndCandidate) {
+	if (user.is_both_employer_and_candidate) {
 		role = "BOTH";
-	} else if (user.isCandidate) {
+	} else if (user.is_candidate) {
 		role = "CANDIDATE";
-	} else if (user.isEmployer) {
+	} else if (user.is_employer) {
 		role = "EMPLOYER";
 	}
 
@@ -33,6 +34,7 @@ export const authOptions: NextAuthOptions = {
 				username: { label: "Username", type: "text" },
 				password: { label: "Password", type: "password" },
 			},
+			// @ts-expect-error
 			async authorize(credentials, req) {
 				const payload = {
 					username: credentials?.username,
@@ -63,14 +65,16 @@ export const authOptions: NextAuthOptions = {
 					...token,
 					// @ts-expect-error
 					accessToken: user.token,
-					id: user.id || "",
 					// @ts-expect-error
-					username: user.username || "",
+					id: user.profile.id || "",
 					// @ts-expect-error
-					picture: user.profilePic || "",
-					role: assignRole(user),
+					username: user.profile.user.username || "",
 					// @ts-expect-error
-					newUser: user.jobTitle === "",
+					picture: user.profile.user.profilePic || "",
+					// @ts-expect-error
+					role: assignRole(user.profile.user),
+					// @ts-expect-error
+					newUser: isStringNullOrEmpty(user.profile.job_title),
 				};
 			}
 

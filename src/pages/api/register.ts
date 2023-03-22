@@ -16,22 +16,22 @@ const handler: NextApiHandler = async (
 	} = req.body;
 
 	const body = {
-		email,
-		password,
-		password2: confirmPassword,
-		first_name: firstName,
-		last_name: lastName,
-		username: userName,
-		bio: "",
-		city: "",
-		country: "",
-		job_title: "",
-		availability_status: "",
-		is_employer: userType === "Employer",
-		is_candidate: userType === "Candidate",
+		user: {
+			email,
+			password,
+			password2: confirmPassword,
+			first_name: firstName,
+			last_name: lastName,
+			username: userName,
+		},
+		availability_status: "0",
+		is_employer: userType === "employer",
+		is_candidate: userType === "candidate",
 		is_both_employer_and_candidate: userType === "Both Candidate & Employer",
-		profile_pic:
-			"https://res.cloudinary.com/mashafrancis/image/upload/v1670917120/musings/illustrations/avatar.svg",
+		experiences_id: "1",
+		education_levels_id: "5",
+		// profile_pic:
+		// 	"https://res.cloudinary.com/mashafrancis/image/upload/v1670917120/musings/illustrations/avatar.svg",
 	};
 
 	try {

@@ -48,7 +48,7 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 	};
 
 	const handlePushToDashboardViews = async () =>
-		await push("/create-profile/speciality");
+		await push("/create-profile/title");
 
 	return (
 		<Container width={800} marginTop={16}>

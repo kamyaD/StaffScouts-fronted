@@ -22,6 +22,22 @@ interface ICandidates {
 	deleted_at: Date;
 }
 
+interface IUser {
+	id: string;
+	first_name: string;
+	last_name: string;
+	username: string;
+	email: string;
+	is_employer?: boolean;
+	is_candidate?: boolean;
+	is_both_employer_and_candidate?: boolean;
+}
+
+interface ICandidateProfile extends ICandidates {
+	id: string;
+	user: IUser;
+}
+
 interface Job {
 	id: number;
 	user_id: number;
@@ -73,4 +89,12 @@ interface PaginatedResults {
 	previous: string | null;
 }
 
-export { IJobs, Job, ICandidates, PaginatedResults, ContractType, Specialism };
+export {
+	IJobs,
+	Job,
+	ICandidates,
+	PaginatedResults,
+	ContractType,
+	Specialism,
+	ICandidateProfile,
+};

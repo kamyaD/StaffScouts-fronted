@@ -9,9 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import type { ReactElement } from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import countryList from "react-select-country-list";
 import type * as z from "zod";
 
 export type CreateProfileTitleInputSchema = Pick<
@@ -22,6 +23,12 @@ export type CreateProfileTitleInputSchema = Pick<
 const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 	const [requestLoading, setRequestLoading] = useState<boolean>(false);
 	const { displaySnackMessage, setProfile } = useStore();
+
+	const [contryValue, setCountryValue] = useState('')
+	const options = useMemo(() => countryList().getData(), [])
+
+	const handleCountriesChange = value => setCountryValue(value)
+
 	const { handleSubmit, control } = useForm<CreateProfileTitleInputSchema>({
 		mode: "onChange",
 		resolver: zodResolver(profileValidationSchema),
@@ -62,7 +69,7 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 
 	const onSubmit: SubmitHandler<CreateProfileTitleInputSchema> = (values) => {
 		console.log("Class: , Function: onSubmit, Line 64 values():", values);
-		setProfile(values);
+		// setProfile(values);
 	};
 
 	return (
