@@ -15,8 +15,8 @@ const validationSchema = z.object({
 		.nonempty({ message: "Kindly add at least one skill to your speciality" }),
 	personal_statement: z
 		.string()
-		.refine((value) => value.trim().split(/\s+/).length <= 10, {
-			message: "Personal statement should be less than 10 words",
+		.refine((value) => value.trim().split(/\s+/).length <= 500, {
+			message: "Personal statement should be less than 500 words",
 		})
 		.refine(
 			(value) => {

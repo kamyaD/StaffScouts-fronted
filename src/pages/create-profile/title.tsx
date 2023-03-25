@@ -30,10 +30,6 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 	});
 
 	const { loading, updateProfile, isSuccess } = useUpdateProfile();
-	console.log(
-		"Class: , Function: CreateTitlePage, Line 33 isSuccess():",
-		isSuccess,
-	);
 
 	const onSubmit: SubmitHandler<CreateProfileTitleInputSchema> = (values) => {
 		const customPersonal = {

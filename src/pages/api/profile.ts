@@ -46,7 +46,7 @@ const handler: NextApiHandler = async (
 					.then((data) => res.json(data));
 			case "GET":
 				return axios
-					.get(`/users/get-single-user/${session.user.id}/`, config)
+					.get(`candidate/profile/update/${session?.user?.id}`, config)
 					.then((response) => response.data)
 					.then((data) => res.json(data));
 		}

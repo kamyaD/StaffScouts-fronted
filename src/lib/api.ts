@@ -3,11 +3,10 @@ import type { RegisterInputSchema } from "@/views/Register/components/Form/Form"
 import axios from "axios";
 
 import type { CreateProfileTitleInputSchema } from "../pages/create-profile/title";
-import type { IJobs, Job, Specialism } from "../types";
+import type { ICandidateProfile, IJobs, Job, Specialism } from "../types";
 import type {
 	GenericResponse,
 	IJobInterestedResponse,
-	IProfileResponse,
 	IUserResponse,
 	JobInterestedDTO,
 } from "./types";
@@ -50,12 +49,12 @@ export const getMeFn = async (): Promise<IUserResponse> => {
 
 export const createProfileFn = async (
 	profile: CreateProfileTitleInputSchema,
-): Promise<IProfileResponse> => {
+): Promise<ICandidateProfile> => {
 	console.log(
 		"Class: , Function: createProfileFn, Line 62 profile():",
 		profile,
 	);
-	const response = await apiClient.post<IProfileResponse>(
+	const response = await apiClient.post<ICandidateProfile>(
 		`/api/profile`,
 		profile,
 	);
@@ -64,12 +63,12 @@ export const createProfileFn = async (
 
 export const updateProfileFn = async (
 	profile: ProfileInputSchema,
-): Promise<IProfileResponse> => {
+): Promise<ICandidateProfile> => {
 	console.log(
 		"Class: , Function: updateProfileFn, Line 69 profile():",
 		profile,
 	);
-	const response = await apiClient.put<IProfileResponse>(
+	const response = await apiClient.put<ICandidateProfile>(
 		`/api/profile`,
 		profile,
 	);

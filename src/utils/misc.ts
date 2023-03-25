@@ -15,4 +15,18 @@ const stringifyMap = (valueMap) => {
 const isStringNullOrEmpty = (str: string): boolean =>
 	str == null || str.trim() === "";
 
-export { removeDuplicates, isArrayEmpty, stringifyMap, isStringNullOrEmpty };
+const mutateStringObject = (
+	str: string,
+	obj: Record<string, string>,
+): string => {
+	const stringToObject = JSON.parse(str);
+	return JSON.stringify({ ...stringToObject, ...obj });
+};
+
+export {
+	removeDuplicates,
+	isArrayEmpty,
+	stringifyMap,
+	isStringNullOrEmpty,
+	mutateStringObject,
+};

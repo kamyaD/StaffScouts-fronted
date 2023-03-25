@@ -7,12 +7,14 @@ export type NextPageWithAuthAndLayout = NextPage & {
 };
 
 export interface IUser {
-	firstName: string;
-	lastName: string;
-	userName: string;
+	id: string;
+	first_name: string;
+	last_name: string;
+	username: string;
 	email: string;
-	password: string;
-	confirmPassword: string;
+	is_employer?: boolean;
+	is_candidate?: boolean;
+	is_both_employer_and_candidate?: boolean;
 }
 
 export interface GenericResponse {
@@ -38,7 +40,7 @@ export interface IUserResponse {
 }
 
 export interface IProfileResponse {
-	user: number;
+	user: IUser;
 	specialism_id: string;
 	experiences_id: number;
 	education_levels_id: number;
