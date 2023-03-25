@@ -36,7 +36,7 @@ const CreatePortfolioPage: NextPageWithAuthAndLayout = () => {
 
 	console.log(
 		"Class: , Function: CreatePortfolioPage, Line 37 imageUrls():",
-		imageUrls,
+		portfolioExperienceSelected,
 	);
 
 	useEffect(() => {

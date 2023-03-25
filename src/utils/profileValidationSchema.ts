@@ -16,6 +16,18 @@ const validationSchema = z.object({
 		})
 		.refine(
 			(value) => {
+				// regular expression to match email
+				const emailRegex = new RegExp(
+					/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
+					"gm",
+				);
+				// exclude strings that contain email
+				return !emailRegex.test(value);
+			},
+			{ message: "Cannot contain email in text" },
+		)
+		.refine(
+			(value) => {
 				// regular expression to match phone numbers
 				const phoneRegex =
 					/(\+\d{1,3}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}/g;
@@ -43,6 +55,7 @@ const validationSchema = z.object({
 	work_experience: z.string(),
 	project_title: z.string(),
 	project_description: z.string(),
+	portfolio: z.string(),
 });
 
 export const profileValidationSchema = validationSchema.partial();
