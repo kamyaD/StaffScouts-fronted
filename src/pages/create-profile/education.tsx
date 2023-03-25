@@ -1,19 +1,22 @@
 import Container from "@/components/Container";
 import EducationTextFields from "@/components/EducationTextFields";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
+import useUpdateProfile from "@/hooks/useUpdateProfile";
 import { Minimal } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
 import isBrowser from "@/utils/isBrowser";
-import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
-import { Add } from "@mui/icons-material";
+import { stringifyMap } from "@/utils/misc";
+import type { profileValidationSchema } from "@/utils/profileValidationSchema";
+import { AddCircle } from "@mui/icons-material";
 import { Button, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { ReactElement } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import type * as z from "zod";
 
 const graduateEducationLevel = [
 	"Diploma",
@@ -39,45 +42,82 @@ const trainingType = [
 	"Vocational Training/Certification/Licensing",
 ];
 
+type CreateProfileEducationInputSchema = z.infer<
+	typeof profileValidationSchema
+>;
+
 const CreateEducationPage: NextPageWithAuthAndLayout = () => {
 	const [educationComponent, setEducationComponent] = useState<
-		Array<Record<string, number>>
-	>([{ id: 0 }]);
-	const [fromDate, setFromDate] = useState<Dayjs | null>(dayjs("2022-04-17"));
-	const [toDate, setToDate] = useState<Dayjs | null>(dayjs("2022-04-17"));
+		Array<Record<string, any>>
+	>([{ id: 0, educationLevel: "" }]);
+	const [fromDate, setFromDate] = useState<Dayjs | null>(dayjs(""));
+	const [toDate, setToDate] = useState<Dayjs | null>(dayjs(""));
+	const [isCurrentSchool, setIsCurrentSchool] = useState(false);
+	const [educationLevelSelected, setEducationLevelSelected] = useState(
+		new Map<string, string[]>(),
+	);
+
+	const handleCurrentSchoolSelect = () =>
+		setIsCurrentSchool((prevState) => !prevState);
 
 	const professionalLevel = isBrowser
 		? window.localStorage.getItem("professionalLevel")
 		: "";
+
 	const educationLevel =
 		professionalLevel === "Graduate / Professional"
 			? graduateEducationLevel
 			: semiSkilledEducationLevel;
 
-	const { control } = useForm<RegisterInputSchema>({
-		mode: "onChange",
-	});
+	const { control, handleSubmit, watch } =
+		useForm<CreateProfileEducationInputSchema>({
+			mode: "onChange",
+		});
+
+	useEffect(() => {
+		const subscription = watch((value, { name }) => {
+			setEducationLevelSelected(
+				(prevMap) => new Map(prevMap.set(name, value[name])),
+			);
+		});
+
+		return () => subscription.unsubscribe();
+	}, [watch]);
+
+	const { loading, updateProfile, isSuccess } = useUpdateProfile();
+
+	const onSubmit = () => {
+		const education = [];
+
+		if (
+			educationComponent.length === 1 &&
+			educationLevelSelected.has("institution")
+		) {
+			education.push(JSON.parse(stringifyMap(educationLevelSelected)));
+		}
+
+		educationComponent.map((item) => {
+			if (item.educationLevel !== "") {
+				education.push(JSON.parse(item.educationLevel));
+			}
+		});
+
+		updateProfile({ education: JSON.stringify(education) });
+	};
 
 	const handleAddEducationTextFields = () => {
 		setEducationComponent((prevState) =>
-			prevState.concat({ id: prevState[0].id++ }),
+			prevState.concat({
+				id: prevState[0].id++ as number,
+				educationLevel: stringifyMap(educationLevelSelected),
+			}),
 		);
-		// setSpeciality((prevState) =>
-		// 	prevState.filter((item) => item.specialty !== specialism),
-		// );
-		// // const filteredSpeciality = speciality.filter(item => item.specialty === specialism)
-		// setSelectedSpecialities((map) => new Map(map.set(specialism, skills)));
-		// updateSpeciality(specialism, skills)
-
-		// const obj = { `${key}`: filteredSpeciality[0].specialty }
-		// setSelectedSpecialities(prevState => Object.assign(prevState, obj))
 	};
 
 	const handleRemoveEducationTextFields = (id: number) => {
 		setEducationComponent((prevState) =>
 			prevState.filter((item) => item.id !== id),
 		);
-		// setSelectedSpecialities(map => map.delete(specialism))
 	};
 
 	return (
@@ -91,7 +131,11 @@ const CreateEducationPage: NextPageWithAuthAndLayout = () => {
 				Education experience
 			</Typography>
 
-			<form>
+			<form
+				name="profile-speciality"
+				method="post"
+				onSubmit={handleSubmit(onSubmit)}
+			>
 				<Grid container spacing={4} marginTop={2}>
 					<Grid item xs={12}>
 						<Typography
@@ -146,6 +190,8 @@ const CreateEducationPage: NextPageWithAuthAndLayout = () => {
 										setFromDate={setFromDate}
 										setToDate={setToDate}
 										toDate={toDate}
+										handleCurrentSchoolSelect={handleCurrentSchoolSelect}
+										isCurrentSchool={isCurrentSchool}
 									/>
 								</Stack>
 							))}
@@ -153,8 +199,8 @@ const CreateEducationPage: NextPageWithAuthAndLayout = () => {
 
 					<Grid item xs={12}>
 						<Button
-							startIcon={<Add />}
-							variant="outlined"
+							startIcon={<AddCircle fontSize="large" />}
+							variant="contained"
 							onClick={handleAddEducationTextFields}
 							sx={{ fontWeight: "medium", color: "unset" }}
 						>
@@ -164,6 +210,8 @@ const CreateEducationPage: NextPageWithAuthAndLayout = () => {
 				</Grid>
 
 				<ProfileBottomNavigation
+					isSuccess={isSuccess}
+					loading={loading}
 					nextPageUrl="/create-profile/work"
 					nextPageTitle="Work Experience"
 				/>

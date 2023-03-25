@@ -34,6 +34,8 @@ const validationSchema = z.object({
 	institution: z.string(),
 	education_level: z.string(),
 	course: z.string(),
+	from_date: z.string(),
+	to_date: z.string(),
 });
 
 export const profileValidationSchema = validationSchema.partial();

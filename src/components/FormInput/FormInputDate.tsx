@@ -1,6 +1,5 @@
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Controller } from "react-hook-form";
 
 import type { FormInputProps } from "./FormInputProps";
@@ -16,7 +15,8 @@ function FormInputDate({ name, control, label, ...rest }: FormInputProps) {
 					fieldState: { error },
 					formState,
 				}) => (
-					<DatePicker
+					<MobileDatePicker
+						{...rest}
 						label={label}
 						value={value}
 						onChange={onChange}

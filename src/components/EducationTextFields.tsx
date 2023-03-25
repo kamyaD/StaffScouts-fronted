@@ -3,9 +3,7 @@ import fancyId from "@/utils/fancyId";
 import { CheckBox, CheckBoxOutlineBlank, Clear } from "@mui/icons-material";
 import {
 	Checkbox,
-	FormControl,
 	FormControlLabel,
-	FormLabel,
 	Grid,
 	IconButton,
 	MenuItem,
@@ -13,7 +11,6 @@ import {
 } from "@mui/material";
 import type { Dayjs } from "dayjs";
 import { Fragment } from "react";
-import { Controller } from "react-hook-form";
 
 interface Props {
 	id: number;
@@ -25,6 +22,9 @@ interface Props {
 	toDate: Dayjs | null;
 	setFromDate: any;
 	setToDate: any;
+	handleCurrentSchoolSelect: () => void;
+	isCurrentSchool: boolean;
+	handleInstitutionChange?: (e: any) => void;
 }
 
 const icon = <CheckBoxOutlineBlank fontSize="small" />;
@@ -40,12 +40,24 @@ const EducationTextFields = ({
 	toDate,
 	setFromDate,
 	setToDate,
+	handleCurrentSchoolSelect,
+	isCurrentSchool,
+	handleInstitutionChange,
 	...rest
 }: Props) => {
 	return (
 		<Fragment>
 			<Grid item xs={11}>
+				{/*<TextField*/}
+				{/*	name="institution"*/}
+				{/*	margin="dense"*/}
+				{/*	size="medium"*/}
+				{/*	label="Institution name"*/}
+				{/*	type="text"*/}
+				{/*	onChange={handleInstitutionChange}*/}
+				{/*/>*/}
 				<FormInputText
+					required
 					name="institution"
 					margin="dense"
 					size="medium"
@@ -54,6 +66,7 @@ const EducationTextFields = ({
 					type="text"
 				/>
 				<FormInputText
+					required
 					select
 					autoFocus={false}
 					margin="dense"
@@ -71,6 +84,7 @@ const EducationTextFields = ({
 					))}
 				</FormInputText>
 				<FormInputText
+					required
 					name="course"
 					margin="dense"
 					size="medium"
@@ -85,36 +99,52 @@ const EducationTextFields = ({
 					alignItems="center"
 					spacing={2}
 				>
-					<FormInputDate name="fromDate" control={control} label="From date" />
-					<FormInputDate name="toDate" control={control} label="To date" />
+					<FormInputDate
+						required
+						name="from_date"
+						disableFuture
+						control={control}
+						label="From date"
+						openTo="year"
+						views={["year", "month", "day"]}
+						format="LL"
+					/>
 
-					<FormControl size="small" variant="outlined">
-						<FormLabel component="legend">{label}</FormLabel>
-
-						<div>
-							<FormControlLabel
-								control={
-									<Controller
-										name="currentSchool"
-										control={control}
-										render={({}) => (
-											<Checkbox
-											// checked={selectedItems?.includes(option.value)}
-											// onChange={() => handleSelect(option.value)}
-											/>
-										)}
-									/>
-								}
-								label="Current school"
-							/>
-						</div>
-					</FormControl>
+					<FormInputDate
+						disabled={isCurrentSchool}
+						disableFuture
+						name="to_date"
+						control={control}
+						label="To date"
+						openTo="year"
+						views={["year", "month", "day"]}
+						format="LL"
+						// defaultValue={defaultValue}
+					/>
 
 					{/*<Checkbox*/}
 					{/*	label="Current school"*/}
 					{/*	sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}*/}
 					{/*/>*/}
 				</Stack>
+
+				<FormControlLabel
+					control={<Checkbox onChange={() => handleCurrentSchoolSelect()} />}
+					label="Current school"
+				/>
+
+				{/*<FormControl size="small" variant="outlined">*/}
+				{/*  <FormLabel component="legend">{label}</FormLabel>*/}
+
+				{/*  <div>*/}
+				{/*    <FormControlLabel*/}
+				{/*      <Checkbox*/}
+				{/*        onChange={() => handleCurrentSchoolSelect()}*/}
+				{/*        />*/}
+				{/*      // label="Current school"*/}
+				{/*    />*/}
+				{/*  </div>*/}
+				{/*</FormControl>*/}
 
 				{/*<LocalizationProvider dateAdapter={AdapterDayjs}>*/}
 				{/*	<Stack*/}
