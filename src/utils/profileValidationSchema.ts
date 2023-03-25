@@ -41,6 +41,8 @@ const validationSchema = z.object({
 	achievements: z.string(),
 	experiences_id: z.string(),
 	work_experience: z.string(),
+	project_title: z.string(),
+	project_description: z.string(),
 });
 
 export const profileValidationSchema = validationSchema.partial();

@@ -9,18 +9,25 @@ interface Props {
 	control: any;
 	label?: string;
 	handleDelete: (id: number) => void;
+	handlePortfolioImagesUploadChange: (url: string) => void;
+	handlePortfolioVideosUploadChange: (url: string) => void;
+	handlePortfolioDocumentsUploadChange: (url: string) => void;
 }
 
-const PortfolioTextFields = ({ id, control, handleDelete, ...rest }: Props) => {
-	const handlePhotoUploadChange = (url: string) => {
-		return url;
-	};
-
+const PortfolioTextFields = ({
+	id,
+	control,
+	handleDelete,
+	handlePortfolioVideosUploadChange,
+	handlePortfolioImagesUploadChange,
+	handlePortfolioDocumentsUploadChange,
+	...rest
+}: Props) => {
 	return (
 		<Fragment>
 			<Grid item xs={11}>
 				<FormInputText
-					name="projectTitle"
+					name="project_title"
 					margin="dense"
 					size="medium"
 					control={control}
@@ -28,7 +35,7 @@ const PortfolioTextFields = ({ id, control, handleDelete, ...rest }: Props) => {
 					type="text"
 				/>
 				<FormInputText
-					name="projectDescription"
+					name="project_description"
 					margin="dense"
 					size="medium"
 					control={control}
@@ -40,15 +47,15 @@ const PortfolioTextFields = ({ id, control, handleDelete, ...rest }: Props) => {
 				/>
 				<CloudinaryImageUpload
 					label="Project images"
-					onChange={handlePhotoUploadChange}
+					onChange={handlePortfolioImagesUploadChange}
 				/>
 				<CloudinaryImageUpload
 					label="Project videos"
-					onChange={handlePhotoUploadChange}
+					onChange={handlePortfolioVideosUploadChange}
 				/>
 				<CloudinaryImageUpload
 					label="Project documents"
-					onChange={handlePhotoUploadChange}
+					onChange={handlePortfolioDocumentsUploadChange}
 				/>
 			</Grid>
 			<Grid item xs={1}>

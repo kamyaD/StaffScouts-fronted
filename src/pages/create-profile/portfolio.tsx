@@ -1,77 +1,96 @@
 import Container from "@/components/Container";
 import PortfolioTextFields from "@/components/PortfolioTextFields";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
+import useUpdateProfile from "@/hooks/useUpdateProfile";
 import { Minimal } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
-import isBrowser from "@/utils/isBrowser";
-import type { RegisterInputSchema } from "@/views/Register/components/Form/Form";
-import { Add } from "@mui/icons-material";
+import { stringifyMap } from "@/utils/misc";
+import type { profileValidationSchema } from "@/utils/profileValidationSchema";
+import { AddCircle } from "@mui/icons-material";
 import { Button, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import type { Dayjs } from "dayjs";
-import dayjs from "dayjs";
 import type { ReactElement } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import type * as z from "zod";
 
-const graduateEducationLevel = [
-	"Diploma",
-	"Bachelors degree",
-	"Masters degree",
-	"Doctorate Degree",
-];
-
-const semiSkilledEducationLevel = [
-	"Primary Education - Partial",
-	"Primary Education - Complete",
-	"Secondary School - Partial",
-	"Secondary School - Complete",
-	"Certificate",
-	"Diploma",
-	"Degree",
-];
+type CreateProfilePortfolioInputSchema = z.infer<
+	typeof profileValidationSchema
+>;
 
 const CreatePortfolioPage: NextPageWithAuthAndLayout = () => {
-	const [educationComponent, setEducationComponent] = useState<
-		Array<Record<string, number>>
-	>([{ id: 0 }]);
-	const [fromDate, setFromDate] = useState<Dayjs | null>(dayjs("2022-04-17"));
-	const [toDate, setToDate] = useState<Dayjs | null>(dayjs("2022-04-17"));
+	const [imageUrls, setImageUrls] = useState<string>("");
+	const [videoUrls, setVideoUrls] = useState<string>("");
+	const [documentUrls, setDocumentUrls] = useState<string>("");
+	const [portfolioComponent, setPortfolioComponent] = useState<
+		Array<Record<string, any>>
+	>([{ id: 0, portfolioExperience: "" }]);
+	const [portfolioExperienceSelected, setPortfolioExperienceSelected] =
+		useState(new Map<string, string[]>());
 
-	const professionalLevel = isBrowser
-		? window.localStorage.getItem("professionalLevel")
-		: "";
-	const educationLevel =
-		professionalLevel === "Graduate / Professional"
-			? graduateEducationLevel
-			: semiSkilledEducationLevel;
+	const { control, watch, handleSubmit } =
+		useForm<CreateProfilePortfolioInputSchema>({
+			mode: "onChange",
+		});
 
-	const { control } = useForm<RegisterInputSchema>({
-		mode: "onChange",
-	});
+	console.log(
+		"Class: , Function: CreatePortfolioPage, Line 37 imageUrls():",
+		imageUrls,
+	);
 
-	const handleAddEducationTextFields = () => {
-		setEducationComponent((prevState) =>
-			prevState.concat({ id: prevState[0].id++ }),
-		);
-		// setSpeciality((prevState) =>
-		// 	prevState.filter((item) => item.specialty !== specialism),
-		// );
-		// // const filteredSpeciality = speciality.filter(item => item.specialty === specialism)
-		// setSelectedSpecialities((map) => new Map(map.set(specialism, skills)));
-		// updateSpeciality(specialism, skills)
+	useEffect(() => {
+		const subscription = watch((value, { name }) => {
+			setPortfolioExperienceSelected(
+				(prevMap) => new Map(prevMap.set(name, value[name])),
+			);
+		});
 
-		// const obj = { `${key}`: filteredSpeciality[0].specialty }
-		// setSelectedSpecialities(prevState => Object.assign(prevState, obj))
+		return () => subscription.unsubscribe();
+	}, [watch]);
+
+	const { loading, updateProfile, isSuccess } = useUpdateProfile();
+
+	const onSubmit = () => {
+		const portfolio = [];
+
+		if (
+			portfolioComponent.length === 1 &&
+			portfolioExperienceSelected.has("company")
+		) {
+			portfolio.push(JSON.parse(stringifyMap(portfolioExperienceSelected)));
+		}
+
+		portfolioComponent.map((item) => {
+			if (item.portfolioExperience !== "") {
+				portfolio.push(JSON.parse(item.portfolioExperience));
+			}
+		});
+
+		updateProfile({
+			portfolio: JSON.stringify(portfolio),
+		});
 	};
 
-	const handleRemoveEducationTextFields = (id: number) => {
-		setEducationComponent((prevState) =>
+	const handleAddPortfolioTextFields = () => {
+		setPortfolioComponent((prevState) =>
+			prevState.concat({
+				id: prevState[0].id++ as number,
+				portfolioExperience: stringifyMap(portfolioExperienceSelected),
+			}),
+		);
+	};
+
+	const handleRemovePortfolioTextFields = (id: number) => {
+		setPortfolioComponent((prevState) =>
 			prevState.filter((item) => item.id !== id),
 		);
-		// setSelectedSpecialities(map => map.delete(specialism))
 	};
+
+	const handlePortfolioDocumentsUploadChange = (url: string) =>
+		setDocumentUrls(url);
+	const handlePortfolioImagesUploadChange = (url: string) => setImageUrls(url);
+	const handlePortfolioVideosUploadChange = (url: string) => setVideoUrls(url);
 
 	return (
 		<Container maxWidth={720}>
@@ -84,7 +103,11 @@ const CreatePortfolioPage: NextPageWithAuthAndLayout = () => {
 				Portfolio
 			</Typography>
 
-			<form>
+			<form
+				name="profile-portfolio"
+				method="post"
+				onSubmit={handleSubmit(onSubmit)}
+			>
 				<Grid container spacing={4} marginTop={2}>
 					<Grid item xs={12}>
 						<Typography
@@ -99,28 +122,8 @@ const CreatePortfolioPage: NextPageWithAuthAndLayout = () => {
 						</Typography>
 					</Grid>
 
-					{/*<Grid item xs={11}>*/}
-					{/*	<FormInputText*/}
-					{/*		select*/}
-					{/*		autoFocus={false}*/}
-					{/*		margin="dense"*/}
-					{/*		name="training_type"*/}
-					{/*		placeholder=""*/}
-					{/*		size="medium"*/}
-					{/*		control={control}*/}
-					{/*		label="Training type"*/}
-					{/*		type="text"*/}
-					{/*	>*/}
-					{/*		{trainingType.map((item: string) => (*/}
-					{/*			<MenuItem key={fancyId()} value={item}>*/}
-					{/*				{item}*/}
-					{/*			</MenuItem>*/}
-					{/*		))}*/}
-					{/*	</FormInputText>*/}
-					{/*</Grid>*/}
-
 					<Grid item xs={12}>
-						{educationComponent
+						{portfolioComponent
 							.slice()
 							.sort((a, b) => a.id - b.id)
 							.map((item) => (
@@ -134,7 +137,16 @@ const CreatePortfolioPage: NextPageWithAuthAndLayout = () => {
 									<PortfolioTextFields
 										id={item.id}
 										control={control}
-										handleDelete={handleRemoveEducationTextFields}
+										handleDelete={handleRemovePortfolioTextFields}
+										handlePortfolioDocumentsUploadChange={
+											handlePortfolioDocumentsUploadChange
+										}
+										handlePortfolioImagesUploadChange={
+											handlePortfolioImagesUploadChange
+										}
+										handlePortfolioVideosUploadChange={
+											handlePortfolioVideosUploadChange
+										}
 									/>
 								</Stack>
 							))}
@@ -142,9 +154,9 @@ const CreatePortfolioPage: NextPageWithAuthAndLayout = () => {
 
 					<Grid item xs={12}>
 						<Button
-							startIcon={<Add />}
-							variant="outlined"
-							onClick={handleAddEducationTextFields}
+							startIcon={<AddCircle fontSize="large" />}
+							variant="contained"
+							onClick={handleAddPortfolioTextFields}
 							sx={{ fontWeight: "medium", color: "unset" }}
 						>
 							ADD PORTFOLIO
@@ -153,7 +165,9 @@ const CreatePortfolioPage: NextPageWithAuthAndLayout = () => {
 				</Grid>
 
 				<ProfileBottomNavigation
-					nextPageUrl="/create-profile/work"
+					isSuccess={isSuccess}
+					loading={loading}
+					nextPageUrl="/profile"
 					nextPageTitle="Finish"
 				/>
 			</form>
