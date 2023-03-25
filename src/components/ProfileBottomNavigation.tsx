@@ -9,12 +9,14 @@ interface Props {
 	nextPageUrl: string;
 	nextPageTitle?: string;
 	loading?: boolean;
+	isSuccess?: boolean;
 }
 
 const ProfileBottomNavigation = ({
 	nextPageUrl,
 	nextPageTitle,
 	loading,
+	isSuccess,
 }: Props): JSX.Element => {
 	const theme = useTheme();
 	const { push, back } = useRouter();
@@ -22,7 +24,8 @@ const ProfileBottomNavigation = ({
 	const linkPath = pathname.split("/").at(-1);
 
 	const handleBack = () => back();
-	const handleNext = () => (loading ? () => {} : push(nextPageUrl));
+	const handleNext = () =>
+		loading && isSuccess ? () => {} : push(nextPageUrl);
 
 	return (
 		<Box sx={{ minWidth: 500, position: "absolute", zIndex: 10 }}>
@@ -46,7 +49,7 @@ const ProfileBottomNavigation = ({
 					alignItems="center"
 					spacing={2}
 				>
-					{linkPath !== "title" ? (
+					{linkPath !== "titles" ? (
 						<Button
 							variant="contained"
 							onClick={handleBack}
@@ -70,7 +73,7 @@ const ProfileBottomNavigation = ({
 						size="large"
 						loading={loading}
 						loadingPosition="end"
-						// onClick={handleNext}
+						onClick={handleNext}
 						endIcon={
 							theme.direction === "rtl" ? (
 								<KeyboardArrowLeft />

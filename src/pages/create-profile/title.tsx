@@ -4,9 +4,9 @@ import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
 import useUpdateProfile from "@/hooks/useUpdateProfile";
 import { Minimal } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
-import fancyId from "@/utils/fancyId";
 import { profileValidationSchema } from "@/utils/profileValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MenuItem } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import type { ReactElement } from "react";
@@ -29,7 +29,11 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 		resolver: zodResolver(profileValidationSchema),
 	});
 
-	const { loading, updateProfile } = useUpdateProfile();
+	const { loading, updateProfile, isSuccess } = useUpdateProfile();
+	console.log(
+		"Class: , Function: CreateTitlePage, Line 33 isSuccess():",
+		isSuccess,
+	);
 
 	const onSubmit: SubmitHandler<CreateProfileTitleInputSchema> = (values) => {
 		const customPersonal = {
@@ -92,30 +96,30 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 							type="text"
 						/>
 						<FormInputText
-							required
 							select
 							name="country"
 							margin="dense"
-							placeholder=""
 							size="medium"
 							control={control}
 							label="Country"
+							defaultValue="Kenya"
 							type="text"
-							SelectProps={{
-								native: true,
-							}}
+							// SelectProps={{
+							// 	native: true,
+							// }}
 						>
 							{options.map((option) => (
-								<option key={fancyId()} value={option.label}>
+								<MenuItem key={option.label} value={option.label}>
 									{option.label}
-								</option>
+								</MenuItem>
 							))}
 						</FormInputText>
 					</Grid>
 				</Grid>
 				<ProfileBottomNavigation
+					isSuccess={isSuccess}
 					loading={loading}
-					nextPageUrl="/create-profile/skills"
+					nextPageUrl="/create-profile/speciality"
 					nextPageTitle="Share your skills"
 				/>
 			</form>

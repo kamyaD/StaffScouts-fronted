@@ -74,7 +74,7 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		allSpecialtiesData = JSON.parse(allSpecialties);
 	}
 
-	const { loading, updateProfile } = useUpdateProfile();
+	const { loading, updateProfile, isSuccess } = useUpdateProfile();
 
 	const onSubmit = () => {
 		const skills = stringifyMap(specialitiesSelected);
@@ -194,6 +194,7 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 					</Grid>
 				</Grid>
 				<ProfileBottomNavigation
+					isSuccess={isSuccess}
 					loading={loading}
 					nextPageUrl="/create-profile/bio"
 					nextPageTitle="Add your bio"

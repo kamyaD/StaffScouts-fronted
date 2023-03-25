@@ -7,7 +7,11 @@ import { useMutation } from "@tanstack/react-query";
 export default function useUpdateProfile() {
 	const { displaySnackMessage } = useStore();
 
-	const { mutate: updateProfile, status } = useMutation(
+	const {
+		mutate: updateProfile,
+		status,
+		isSuccess,
+	} = useMutation(
 		(payload: Partial<IProfileResponse>) => updateProfileFn(payload),
 		{
 			onSuccess() {
@@ -37,6 +41,7 @@ export default function useUpdateProfile() {
 		loading: status === "loading",
 		status,
 		updateProfile,
+		isSuccess,
 	};
 }
 
