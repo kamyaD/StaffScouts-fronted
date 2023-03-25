@@ -132,7 +132,7 @@ const CreateEducationPage: NextPageWithAuthAndLayout = () => {
 			</Typography>
 
 			<form
-				name="profile-speciality"
+				name="profile-education"
 				method="post"
 				onSubmit={handleSubmit(onSubmit)}
 			>

@@ -24,7 +24,6 @@ interface Props {
 	setToDate: any;
 	handleCurrentSchoolSelect: () => void;
 	isCurrentSchool: boolean;
-	handleInstitutionChange?: (e: any) => void;
 }
 
 const icon = <CheckBoxOutlineBlank fontSize="small" />;
@@ -42,20 +41,11 @@ const EducationTextFields = ({
 	setToDate,
 	handleCurrentSchoolSelect,
 	isCurrentSchool,
-	handleInstitutionChange,
 	...rest
 }: Props) => {
 	return (
 		<Fragment>
 			<Grid item xs={11}>
-				{/*<TextField*/}
-				{/*	name="institution"*/}
-				{/*	margin="dense"*/}
-				{/*	size="medium"*/}
-				{/*	label="Institution name"*/}
-				{/*	type="text"*/}
-				{/*	onChange={handleInstitutionChange}*/}
-				{/*/>*/}
 				<FormInputText
 					required
 					name="institution"
@@ -119,64 +109,13 @@ const EducationTextFields = ({
 						openTo="year"
 						views={["year", "month", "day"]}
 						format="LL"
-						// defaultValue={defaultValue}
 					/>
-
-					{/*<Checkbox*/}
-					{/*	label="Current school"*/}
-					{/*	sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}*/}
-					{/*/>*/}
 				</Stack>
 
 				<FormControlLabel
 					control={<Checkbox onChange={() => handleCurrentSchoolSelect()} />}
 					label="Current school"
 				/>
-
-				{/*<FormControl size="small" variant="outlined">*/}
-				{/*  <FormLabel component="legend">{label}</FormLabel>*/}
-
-				{/*  <div>*/}
-				{/*    <FormControlLabel*/}
-				{/*      <Checkbox*/}
-				{/*        onChange={() => handleCurrentSchoolSelect()}*/}
-				{/*        />*/}
-				{/*      // label="Current school"*/}
-				{/*    />*/}
-				{/*  </div>*/}
-				{/*</FormControl>*/}
-
-				{/*<LocalizationProvider dateAdapter={AdapterDayjs}>*/}
-				{/*	<Stack*/}
-				{/*		direction="row"*/}
-				{/*		justifyContent="center"*/}
-				{/*		alignItems="center"*/}
-				{/*		spacing={2}*/}
-				{/*	>*/}
-				{/*		<DatePicker*/}
-				{/*			label="From date"*/}
-				{/*			value={fromDate}*/}
-				{/*			onChange={(newValue) => setFromDate(newValue)}*/}
-				{/*		/>*/}
-				{/*		<DatePicker*/}
-				{/*			label="To date"*/}
-				{/*			value={toDate}*/}
-				{/*			onChange={(newValue) => setToDate(newValue)}*/}
-				{/*		/>*/}
-				{/*	</Stack>*/}
-				{/*</LocalizationProvider>*/}
-
-				{/*<FormInputText*/}
-				{/*	name="bio"*/}
-				{/*	margin="dense"*/}
-				{/*	size="medium"*/}
-				{/*	control={control}*/}
-				{/*	label="Activities"*/}
-				{/*	placeholder=""*/}
-				{/*	type="text"*/}
-				{/*	multiline*/}
-				{/*	rows={4}*/}
-				{/*/>*/}
 			</Grid>
 			<Grid item xs={1}>
 				{id > 0 ? (

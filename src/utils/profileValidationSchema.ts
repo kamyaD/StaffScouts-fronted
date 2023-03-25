@@ -1,10 +1,6 @@
 import * as z from "zod";
 
 const validationSchema = z.object({
-	job_title: z
-		.string()
-		.min(5, "Please enter a valid name")
-		.max(50, "Please enter a valid name"),
 	website: z.string(),
 	country: z.string(),
 	speciality: z.string(),
@@ -36,6 +32,15 @@ const validationSchema = z.object({
 	course: z.string(),
 	from_date: z.string(),
 	to_date: z.string(),
+	company: z.string(),
+	job_title: z
+		.string()
+		.min(5, "Please enter a valid name")
+		.max(50, "Please enter a valid name"),
+	job_description: z.string(),
+	achievements: z.string(),
+	experiences_id: z.string(),
+	work_experience: z.string(),
 });
 
 export const profileValidationSchema = validationSchema.partial();
