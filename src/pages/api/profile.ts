@@ -15,6 +15,8 @@ const handler: NextApiHandler = async (
 		},
 	};
 
+	console.log("Class: , Function: handler, Line 18 req.body():", req.body);
+
 	const body = {
 		user: session?.user?.id,
 		job_level: "Experienced Professional",
@@ -29,9 +31,17 @@ const handler: NextApiHandler = async (
 	if (!!session) {
 		switch (method) {
 			case "POST":
-				console.log("Class: , Function: handler, Line 22 body():", body);
 				return axios
 					.post(`/candidate/profile/create/`, body, config)
+					.then((response) => response.data)
+					.then((data) => res.json(data));
+			case "PUT":
+				return axios
+					.put(
+						`candidate/profile/update/${session?.user?.id}`,
+						req.body,
+						config,
+					)
 					.then((response) => response.data)
 					.then((data) => res.json(data));
 			case "GET":

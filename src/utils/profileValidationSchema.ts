@@ -5,6 +5,8 @@ const validationSchema = z.object({
 		.string()
 		.min(5, "Please enter a valid name")
 		.max(50, "Please enter a valid name"),
+	website: z.string(),
+	country: z.string(),
 	speciality: z.string(),
 	skills: z.string(),
 	specialitySkills: z

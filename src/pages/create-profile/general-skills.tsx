@@ -145,7 +145,6 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 			},
 			onError(error: any) {
 				setRequestLoading(false);
-				console.log("Class: , Function: onError, Line 43 error():", error);
 				if (Array.isArray((error as any).response.data.error)) {
 					(error as any).response.data.error.forEach((el: any) =>
 						displaySnackMessage({

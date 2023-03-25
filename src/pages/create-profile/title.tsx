@@ -1,15 +1,16 @@
 import Container from "@/components/Container";
 import { FormInputText } from "@/components/FormInput";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
+import useUpdateProfile from "@/hooks/useUpdateProfile";
 import { Minimal } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
-import useStore from "@/store/index";
+import fancyId from "@/utils/fancyId";
 import { profileValidationSchema } from "@/utils/profileValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import type { ReactElement } from "react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import countryList from "react-select-country-list";
@@ -17,59 +18,29 @@ import type * as z from "zod";
 
 export type CreateProfileTitleInputSchema = Pick<
 	z.infer<typeof profileValidationSchema>,
-	"job_title"
+	"job_title" | "country" | "website"
 >;
 
 const CreateTitlePage: NextPageWithAuthAndLayout = () => {
-	const [requestLoading, setRequestLoading] = useState<boolean>(false);
-	const { displaySnackMessage, setProfile } = useStore();
-
-	const [contryValue, setCountryValue] = useState('')
-	const options = useMemo(() => countryList().getData(), [])
-
-	const handleCountriesChange = value => setCountryValue(value)
+	const options = useMemo(() => countryList().getData(), []);
 
 	const { handleSubmit, control } = useForm<CreateProfileTitleInputSchema>({
 		mode: "onChange",
 		resolver: zodResolver(profileValidationSchema),
 	});
 
-	// const { mutate: createProfile } = useMutation(
-	// 	(profileTitle: CreateProfileTitleInputSchema) =>
-	// 		createProfileFn(profileTitle),
-	// 	{
-	// 		onMutate() {
-	// 			setRequestLoading(true);
-	// 		},
-	// 		onSuccess() {
-	// 			setRequestLoading(false);
-	// 			displaySnackMessage({
-	// 				message: "Profile title updated successful.",
-	// 			});
-	// 		},
-	// 		onError(error: any) {
-	// 			setRequestLoading(false);
-	// 			console.log("Class: , Function: onError, Line 43 error():", error);
-	// 			if (Array.isArray((error as any).response.data.error)) {
-	// 				(error as any).response.data.error.forEach((el: any) =>
-	// 					displaySnackMessage({
-	// 						message: el.message,
-	// 						severity: "error",
-	// 					}),
-	// 				);
-	// 			} else {
-	// 				displaySnackMessage({
-	// 					message: (error as any).response.data.message,
-	// 					severity: "error",
-	// 				});
-	// 			}
-	// 		},
-	// 	},
-	// );
+	const { loading, updateProfile } = useUpdateProfile();
 
 	const onSubmit: SubmitHandler<CreateProfileTitleInputSchema> = (values) => {
-		console.log("Class: , Function: onSubmit, Line 64 values():", values);
-		// setProfile(values);
+		const customPersonal = {
+			country: values.country,
+			website: values.website,
+		};
+		const payload = {
+			job_title: values.job_title,
+			personal: JSON.stringify(customPersonal),
+		};
+		updateProfile(payload);
 	};
 
 	return (
@@ -111,7 +82,6 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 							type="text"
 						/>
 						<FormInputText
-							autoFocus
 							required
 							name="website"
 							margin="dense"
@@ -122,20 +92,29 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 							type="text"
 						/>
 						<FormInputText
-							autoFocus
 							required
+							select
 							name="country"
 							margin="dense"
+							placeholder=""
 							size="medium"
 							control={control}
 							label="Country"
-							placeholder=""
 							type="text"
-						/>
+							SelectProps={{
+								native: true,
+							}}
+						>
+							{options.map((option) => (
+								<option key={fancyId()} value={option.label}>
+									{option.label}
+								</option>
+							))}
+						</FormInputText>
 					</Grid>
 				</Grid>
 				<ProfileBottomNavigation
-					loading={requestLoading}
+					loading={loading}
 					nextPageUrl="/create-profile/skills"
 					nextPageTitle="Share your skills"
 				/>
