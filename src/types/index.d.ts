@@ -3,6 +3,7 @@ type IJobs = Array<Job>;
 interface ICandidates {
 	id: number;
 	user_id: number;
+	profile_pic: string;
 	specialism_id: string;
 	experiences_id: number;
 	education_levels_id: number;

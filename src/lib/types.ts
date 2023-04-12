@@ -59,7 +59,7 @@ export interface IProfileResponse {
 }
 
 export interface IUserProfile {
-	id: string;
+	id: number;
 	first_name: string;
 	last_name: string;
 	username: string;

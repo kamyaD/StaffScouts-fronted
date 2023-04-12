@@ -26,7 +26,7 @@ const JobsListing = ({ jobs }: { jobs?: IJobs }): JSX.Element => {
 					<UserJobCardSkeleton />
 				</>
 			) : (
-				jobs?.results.map((job) => <UserJobCard key={fancyId()} job={job} />)
+				jobs?.map((job) => <UserJobCard key={fancyId()} job={job} />)
 			)}
 		</Grid>
 	);

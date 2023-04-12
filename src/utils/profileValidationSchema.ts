@@ -51,11 +51,12 @@ const validationSchema = z.object({
 		.max(50, "Please enter a valid name"),
 	job_description: z.string(),
 	achievements: z.string(),
-	experiences_id: z.string(),
+	experiences_id: z.number(),
 	work_experience: z.string(),
 	project_title: z.string(),
 	project_description: z.string(),
 	portfolio: z.string(),
+	profile_pic: z.string(),
 });
 
 export const profileValidationSchema = validationSchema.partial();

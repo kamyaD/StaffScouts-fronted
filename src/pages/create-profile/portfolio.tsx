@@ -34,11 +34,6 @@ const CreatePortfolioPage: NextPageWithAuthAndLayout = () => {
 			mode: "onChange",
 		});
 
-	console.log(
-		"Class: , Function: CreatePortfolioPage, Line 37 imageUrls():",
-		portfolioExperienceSelected,
-	);
-
 	useEffect(() => {
 		const subscription = watch((value, { name }) => {
 			setPortfolioExperienceSelected(

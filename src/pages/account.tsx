@@ -1,6 +1,5 @@
 import { env } from "@/env/server.mjs";
 import { Main } from "@/layouts/index";
-import type { IUserProfile } from "@/lib/types";
 import type {
 	GetServerSideProps,
 	GetServerSidePropsContext,
@@ -10,6 +9,7 @@ import { getServerSession } from "next-auth/next";
 import type { ReactElement } from "react";
 import AccountSettingsView from "views/AccountSettingsView";
 
+import type { ICandidateProfile } from "../types";
 import { authOptions } from "./api/auth/[...nextauth]";
 
 export const getServerSideProps: GetServerSideProps = async ({
@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 const AccountSettingsPage: InferGetServerSidePropsType<
 	typeof getServerSideProps
-> = ({ user }: { user: IUserProfile }): JSX.Element => {
+> = ({ user }: { user: ICandidateProfile }): JSX.Element => {
 	return <AccountSettingsView user={user} />;
 };
 

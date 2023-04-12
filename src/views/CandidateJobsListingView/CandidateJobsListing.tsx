@@ -32,7 +32,7 @@ const CandidateJobsListing = (): JSX.Element => {
 			<Container>
 				<SidebarFilters
 					specialisms={specialisms}
-					jobsCount={jobs?.count as number}
+					jobsCount={jobs?.length as number}
 				>
 					<JobsListing jobs={jobs} />
 				</SidebarFilters>

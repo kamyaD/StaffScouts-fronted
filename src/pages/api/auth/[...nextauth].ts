@@ -80,7 +80,6 @@ export const authOptions: NextAuthOptions = {
 
 			return token;
 		},
-		// @ts-expect-error
 		async session({ session, token }) {
 			return {
 				...session,

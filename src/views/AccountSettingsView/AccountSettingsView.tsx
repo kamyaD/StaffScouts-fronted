@@ -1,5 +1,4 @@
 import { MenuTab, MenuTabs } from "@/components/MenuTabs";
-import type { IUserProfile } from "@/lib/types";
 import useStore from "@/store/index";
 import { AllOutTwoTone, SecurityTwoTone } from "@mui/icons-material";
 import { Box, Card, Grid, Typography, useMediaQuery } from "@mui/material";
@@ -10,6 +9,7 @@ import { createElement, useEffect, useState } from "react";
 
 import Container from "../../components/Container";
 import TabPanel from "../../components/TabPanel";
+import type { ICandidateProfile } from "../../types";
 import { General, Security } from "./components";
 
 export interface MenuComponentProps {
@@ -19,7 +19,11 @@ export interface MenuComponentProps {
 	id: string;
 }
 
-function AccountSettingsView({ user }: { user: IUserProfile }): JSX.Element {
+function AccountSettingsView({
+	user,
+}: {
+	user: ICandidateProfile;
+}): JSX.Element {
 	const { setAuthUser } = useStore();
 
 	useEffect(() => {

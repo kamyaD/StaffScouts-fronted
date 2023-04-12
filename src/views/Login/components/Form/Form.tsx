@@ -66,7 +66,7 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 		}
 
 		if (!session?.user.newUser && session?.user.token) {
-			push("account");
+			push("profile");
 		}
 	}, [session?.user?.newUser, session?.user.token]);
 

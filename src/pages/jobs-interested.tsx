@@ -34,16 +34,14 @@ const ContingencyHiringPage = ({ contractTypes }: Props) => {
 
 	const contract = contractTypes?.results,
 		contractObject = contract?.reduce(
-			// @ts-expect-error
 			(r, { id, contract_types_name }) => ((r[id] = contract_types_name), r),
 			{},
 		);
 
-	const modifiedJobs = allJobs?.results?.map((job) => {
+	const modifiedJobs = allJobs?.map((job) => {
 		return {
 			...job,
-			// @ts-expect-error
-			contract_type_id: contractObject[job.contract_type_id as string],
+			contract_type_id: contractObject[job.contract_type_id],
 		};
 	});
 

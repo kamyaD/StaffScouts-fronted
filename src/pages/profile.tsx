@@ -1,5 +1,6 @@
 import { env } from "@/env/server.mjs";
 import { Main } from "@/layouts/index";
+import Profile from "@/views/Profile/Profile";
 import type {
 	GetServerSideProps,
 	GetServerSidePropsContext,
@@ -32,23 +33,18 @@ export const getServerSideProps: GetServerSideProps = async ({
 	};
 };
 
-const AccountSettingsPage: InferGetServerSidePropsType<
-	typeof getServerSideProps
-> = ({ user }: { user: ICandidateProfile }): JSX.Element => {
-	return (
-		<div>
-			<h1>{user.user.first_name}</h1>
-			<h1>{user.user.username}</h1>
-			<h3>{user.personal_statement}</h3>
-			<h3>{user.experience}</h3>
-		</div>
-	);
+const ProfilePage: InferGetServerSidePropsType<typeof getServerSideProps> = ({
+	user,
+}: {
+	user: ICandidateProfile;
+}): JSX.Element => {
+	return <Profile user={user} />;
 };
 
-AccountSettingsPage.auth = true;
+ProfilePage.auth = true;
 
-AccountSettingsPage.getLayout = function getLayout(page: ReactElement) {
+ProfilePage.getLayout = function getLayout(page: ReactElement) {
 	return <Main>{page}</Main>;
 };
 
-export default AccountSettingsPage;
+export default ProfilePage;

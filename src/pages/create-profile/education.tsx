@@ -96,7 +96,7 @@ const CreateEducationPage: NextPageWithAuthAndLayout = () => {
 			education.push(JSON.parse(stringifyMap(educationLevelSelected)));
 		}
 
-		educationComponent.map((item) => {
+		educationComponent.forEach((item) => {
 			if (item.educationLevel !== "") {
 				education.push(JSON.parse(item.educationLevel));
 			}
@@ -108,7 +108,7 @@ const CreateEducationPage: NextPageWithAuthAndLayout = () => {
 	const handleAddEducationTextFields = () => {
 		setEducationComponent((prevState) =>
 			prevState.concat({
-				id: prevState[0].id++ as number,
+				id: prevState[0].id++,
 				educationLevel: stringifyMap(educationLevelSelected),
 			}),
 		);

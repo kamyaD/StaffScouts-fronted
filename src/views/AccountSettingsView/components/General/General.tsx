@@ -1,7 +1,6 @@
 import { FormInputText } from "@/components/FormInput";
 import ImageUpload from "@/components/ImageUpload";
 import { updateProfileFn } from "@/lib/api";
-import type { IUserProfile } from "@/lib/types";
 import useStore from "@/store/index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
@@ -12,6 +11,8 @@ import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+
+import type { ICandidateProfile } from "../../../../types";
 
 const validationSchema = z.object({
 	first_name: z
@@ -48,7 +49,7 @@ const validationSchema = z.object({
 
 export type GeneralProfileInputSchema = z.infer<typeof validationSchema>;
 
-function General({ user }: { user: IUserProfile }): JSX.Element {
+function General({ user }: { user: Partial<ICandidateProfile> }): JSX.Element {
 	const [requestLoading, setRequestLoading] = useState<boolean>(false);
 	const { displaySnackMessage } = useStore();
 	const { handleSubmit, control } = useForm<GeneralProfileInputSchema>({

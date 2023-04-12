@@ -1,5 +1,7 @@
-import type { IProfileResponse, IUserResponse } from "@/lib/types";
+import type { IProfileResponse } from "@/lib/types";
 import { create } from "zustand";
+
+import type { ICandidateProfile } from "../types";
 
 export type Severity = "success" | "error";
 
@@ -9,9 +11,9 @@ export interface SnackMessage {
 }
 
 type Store = {
-	authUser: IUserResponse | null;
+	authUser: Partial<ICandidateProfile> | null;
 	requestLoading: boolean;
-	setAuthUser: (user: IUserResponse | null) => void;
+	setAuthUser: (user: Partial<ICandidateProfile> | null) => void;
 	setRequestLoading: (isLoading: boolean) => void;
 	snack: SnackMessage;
 	displaySnackMessage: (snack: SnackMessage) => void;

@@ -67,7 +67,7 @@ const ImageUpload = ({ name, control }: ImageUploadProps) => {
 
 					const userResponse = await updateProfileFn({
 						...authUser,
-						profile_pic: data.secure_url,
+						profile_pic: data?.secure_url as string,
 					});
 
 					setAuthUser(userResponse);
@@ -118,7 +118,10 @@ const ImageUpload = ({ name, control }: ImageUploadProps) => {
 								multiple={false}
 								accept="image/jpg, image/png, image/jpeg"
 							/>
-							<Avatar src={authUser?.profile_pic} className={classes.avatar} />
+							<Avatar
+								src={authUser?.profile_pic as string}
+								className={classes.avatar}
+							/>
 						</IconButton>
 						{store.uploadingImage && (
 							<CircularProgress

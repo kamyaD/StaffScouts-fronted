@@ -65,7 +65,7 @@ const CreateRolePage: NextPageWithAuthAndLayout = () => {
 							fontWeight: 700,
 						}}
 					>
-						Select the professional level you are at.
+						Select work category
 					</Typography>
 				</Box>
 				<ToggleButtonGroup

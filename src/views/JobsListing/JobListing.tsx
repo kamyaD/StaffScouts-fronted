@@ -18,16 +18,14 @@ import { useState } from "react";
 
 import Container from "../../components/Container";
 import JobCard from "../../components/JobCard";
-import type { ContractType, IJobs, Job, PaginatedResults } from "../../types";
+import type { ContractType, IJobs, Job } from "../../types";
 import fancyId from "../../utils/fancyId";
 
 const JOBS_PER_PAGE = 10;
 
 export interface JobListingProps {
 	allJobs: IJobs;
-	contractTypes: {
-		results: ContractType[];
-	} & PaginatedResults;
+	contractTypes: ContractType[];
 }
 
 function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
@@ -49,7 +47,7 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 			{ refreshInterval: 120_000, fallbackData: allJobs },
 		);
 
-	const initialDisplayJobs = jobs?.results;
+	const initialDisplayJobs = jobs;
 
 	if (!jobs) {
 		return <div>Loading</div>;
@@ -70,7 +68,7 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 			? initialDisplayJobs
 			: filteredJobs;
 
-	const contract = contractTypes?.results,
+	const contract = contractTypes,
 		contractObject = contract?.reduce(
 			(r, { id, contract_types_name }) => ((r[id] = contract_types_name), r),
 			{},
@@ -193,9 +191,7 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 						))}
 						<Grid item container justifyContent="center" xs={12}>
 							<Pagination
-								count={
-									(jobs?.count as number) / (jobs?.results.length as number)
-								}
+								count={jobs?.length as number}
 								page={page}
 								variant="outlined"
 								color="primary"
