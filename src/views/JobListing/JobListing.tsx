@@ -14,6 +14,7 @@ import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import type { AxiosError } from "axios";
+import type { ChangeEvent } from "react";
 import { useState } from "react";
 
 import Container from "../../components/Container";
@@ -30,11 +31,15 @@ export interface JobListingProps {
 
 function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 	const [searchValue, setSearchValue] = useState<string>("");
-	const [page, setPage] = useState<number>(1);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const theme = useTheme();
 	const isMd = useMediaQuery(theme.breakpoints.up("md"), {
 		defaultMatches: true,
 	});
+
+	const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
+		setCurrentPage(value);
+	};
 
 	const { data: jobs, error }: { data: IJobs | undefined; error?: AxiosError } =
 		useRequest(
@@ -81,6 +86,13 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 			contract_type_id: contractObject[job.contract_type_id as string],
 		};
 	});
+
+	const getPaginatedJobs = () => {
+		const startIndex = (currentPage - 1) * JOBS_PER_PAGE;
+		return modifiedJobs?.slice(startIndex, startIndex + JOBS_PER_PAGE);
+	};
+
+	const totalPages = Math.ceil(modifiedJobs?.length / JOBS_PER_PAGE);
 
 	return (
 		<>
@@ -186,16 +198,16 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 			<Container>
 				<Box>
 					<Grid container spacing={4}>
-						{modifiedJobs?.map((job: Job) => (
+						{getPaginatedJobs()?.map((job: Job) => (
 							<JobCard key={fancyId()} job={job} />
 						))}
 						<Grid item container justifyContent="center" xs={12}>
 							<Pagination
-								count={jobs?.length as number}
-								page={page}
-								variant="outlined"
+								count={totalPages}
+								page={currentPage}
+								size="large"
 								color="primary"
-								// onChange={handlePageChange}
+								onChange={handlePageChange}
 							/>
 						</Grid>
 					</Grid>

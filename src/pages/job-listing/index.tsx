@@ -1,7 +1,7 @@
 import { Main } from "@/layouts/index";
 import { getContractTypesFn, getJobsFn } from "@/lib/api";
-import JobsListingView from "@/views/JobsListing";
-import type { JobListingProps } from "@/views/JobsListing/JobListing";
+import JobListingView from "@/views/JobListing";
+import type { JobListingProps } from "@/views/JobListing/JobListing";
 import type { ReactElement } from "react";
 
 export const getStaticProps = async () => {
@@ -15,12 +15,12 @@ export const getStaticProps = async () => {
 	};
 };
 
-const JobsListingPage = ({ allJobs, contractTypes }: JobListingProps) => {
-	return <JobsListingView allJobs={allJobs} contractTypes={contractTypes} />;
+const JobListingPage = ({ allJobs, contractTypes }: JobListingProps) => {
+	return <JobListingView allJobs={allJobs} contractTypes={contractTypes} />;
 };
 
-JobsListingPage.getLayout = function getLayout(page: ReactElement) {
+JobListingPage.getLayout = function getLayout(page: ReactElement) {
 	return <Main>{page}</Main>;
 };
 
-export default JobsListingPage;
+export default JobListingPage;

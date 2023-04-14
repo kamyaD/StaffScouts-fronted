@@ -48,7 +48,7 @@ function Jobs({
 					<Grid item container justifyContent="center" xs={12}>
 						<Button
 							component={Link}
-							href="/jobs-listing"
+							href="/job-listing"
 							variant="contained"
 							size="large"
 							endIcon={
