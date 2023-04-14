@@ -10,13 +10,15 @@ const handler: NextApiHandler = async (
 		query: { id, url },
 	} = req;
 
+	const endpoint = `${process.env.API_URL}/${url}/${req.query.id}`;
+
 	try {
 		if (method !== "GET") {
 			res.status(404).end();
 		}
 
 		return axios
-			.get(`/${url}/${id}`)
+			.get(endpoint)
 			.then((response) => response.data)
 			.then((data) => res.json(data));
 	} catch (e: any) {

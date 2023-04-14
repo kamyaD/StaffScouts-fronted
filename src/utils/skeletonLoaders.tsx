@@ -9,7 +9,7 @@ export default function generateArray<T>(
 
 export const skeletonRows = (numberOfRows = 1) => {
 	return (
-		<Box sx={{ flex: 1 }}>
+		<Box sx={{ flex: 1, minWidth: 300 }}>
 			{[...Array(numberOfRows)].map((e, i) => (
 				<Skeleton key={i} animation="wave" />
 			))}

@@ -170,7 +170,7 @@ function JobCard({
 						<Button
 							variant="contained"
 							component={Link}
-							href={`/jobs-listing/${id}`}
+							href={`/job-listing/${id}`}
 							endIcon={
 								<Box
 									component="svg"
