@@ -37,7 +37,7 @@ function IndexView({ jobs, contractTypes }: HomeProps): JSX.Element {
 					<Reviews />
 				</Container>
 			</Box>
-			<Container>
+			<Container maxWidth={{ sm: 720, md: 960 }}>
 				<Jobs jobs={jobs} contractTypes={contractTypes} />
 			</Container>
 			<Box bgcolor="alternate.main">

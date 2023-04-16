@@ -44,13 +44,14 @@ function JobCard({
 	const theme = useTheme();
 
 	const jobDescription = Str(stripHtml(jobs_description).toString())
-		.limit(300, "...")
+		.limit(200, "...")
 		.get();
 
 	return (
-		<Grid item xs={12}>
+		<Grid item xs={12} sx={{ padding: "0 !important" }}>
 			<Box
 				component={Card}
+				padding={0}
 				width={1}
 				height={1}
 				borderRadius={0}
@@ -62,6 +63,11 @@ function JobCard({
 					backgroundImage: "none",
 					bgcolor: "transparent",
 					borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+					padding: 4,
+					":hover": {
+						bgcolor: alpha(theme.palette.primary.main, 0.1),
+						color: theme.palette.primary.dark,
+					},
 				}}
 			>
 				{/* <CardMedia */}
@@ -107,6 +113,7 @@ function JobCard({
 						display: "flex",
 						flexDirection: "column",
 						justifyContent: "center",
+						padding: 0,
 					}}
 				>
 					<Box display="flex" justifyContent="space-between">

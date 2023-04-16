@@ -44,10 +44,10 @@ function Hero(): JSX.Element {
 						</Typography>
 					</Typography>
 				</Box>
-				<Box marginBottom={3}>
+				<Box marginY={4}>
 					<Typography variant="h6" component="p" color="text.secondary">
 						Looking for work? Organize your search, stand out to employers, and
-						track your progress here. Let's get to work.
+						track your progress here. Let&apos;s get to work.
 					</Typography>
 				</Box>
 				<Box

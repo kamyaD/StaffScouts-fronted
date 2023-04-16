@@ -36,11 +36,22 @@ function Jobs({
 	return (
 		<Box>
 			<Box marginBottom={4}>
-				<Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
+				<Typography
+					variant="h4"
+					gutterBottom
+					sx={{ fontWeight: 700 }}
+					align="center"
+				>
 					Our latest jobs
 				</Typography>
 			</Box>
-			<Grid container spacing={4}>
+			<Grid
+				container
+				spacing={4}
+				marginY={4}
+				justifyContent="center"
+				alignItems="center"
+			>
 				{modifiedJobs.map((job) => (
 					<JobCard key={fancyId()} job={job} />
 				))}

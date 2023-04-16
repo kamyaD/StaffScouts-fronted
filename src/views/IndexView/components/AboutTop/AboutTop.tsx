@@ -32,6 +32,7 @@ function AboutTop(): JSX.Element {
 							component="p"
 							color="text.secondary"
 							gutterBottom
+							marginY={4}
 						>
 							For information and bookings, call +254 727 517 071 We&apos;ll
 							give you the best career advice for your growth.

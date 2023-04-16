@@ -56,6 +56,7 @@ function Process(): JSX.Element {
 					component="p"
 					color="text.secondary"
 					align="center"
+					marginY={4}
 				>
 					Fill out our standardized application on our platform.
 					<br />

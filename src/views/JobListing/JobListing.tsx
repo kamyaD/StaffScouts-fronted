@@ -195,7 +195,7 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 				</Container>
 			</Box>
 
-			<Container>
+			<Container maxWidth={{ sm: 720, md: 960 }}>
 				<Box>
 					<Grid container spacing={4}>
 						{getPaginatedJobs()?.map((job: Job) => (

@@ -25,7 +25,7 @@ const getTheme = (mode: string, themeToggler: () => void): Theme =>
 				fontFamily: [`Google Sans`, `Helvetica`, `Arial`, `sans-serif`].join(
 					",",
 				),
-				fontSize: 16,
+				fontSize: 14,
 				button: {
 					textTransform: "none",
 					fontWeight: "medium" as CSSProperties["fontWeight"],
