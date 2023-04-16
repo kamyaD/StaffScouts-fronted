@@ -1,12 +1,14 @@
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+
+import { authOptions } from "../auth/[...nextauth]";
 
 const handler: NextApiHandler = async (
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) => {
 	const { method } = req;
-	const session = await getSession({ req });
+	const session = await getServerSession(req, res, authOptions);
 
 	const config = {
 		headers: {

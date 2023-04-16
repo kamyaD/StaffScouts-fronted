@@ -1,25 +1,55 @@
 import Container from "@/components/Container";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
-import SpecialityAndSkillsTextFields from "@/components/SpecialityAndSkillsTextFields";
+import SpecialityAndSkillsTextFields
+	from "@/components/SpecialityAndSkillsTextFields";
+import { env } from "@/env/server.mjs";
 import useUpdateProfile from "@/hooks/useUpdateProfile";
 import { Minimal } from "@/layouts/index";
 import { getSpecialityFn } from "@/lib/api";
 import isBrowser from "@/utils/isBrowser";
-import { stringifyMap } from "@/utils/misc";
+import { objectToMap, stringifyMap } from "@/utils/misc";
 import { profileValidationSchema } from "@/utils/profileValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddCircle } from "@mui/icons-material";
 import { Button, Grid, Stack, Typography } from "@mui/material";
+import type { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth/next";
 import type { ReactElement } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
-export const getStaticProps = async () => {
+import { authOptions } from "../api/auth/[...nextauth]";
+
+// export const getStaticProps = async () => {
+// 	const [allSpeciality] = await Promise.all([getSpecialityFn()]);
+//
+// 	return {
+// 		props: {
+// 			allSpeciality,
+// 		},
+// 	};
+// };
+
+export const getServerSideProps: GetServerSideProps = async ({
+	req,
+	res,
+}: GetServerSidePropsContext) => {
+	const session = await getServerSession(req, res, authOptions);
+	const config = {
+		headers: {
+			Authorization: `Bearer ${session?.user?.token}`,
+		},
+	};
+	const url = `${env.API_URL}/candidate/profile/${session?.user.id}`;
+	const response = await fetch(url, config);
+	const user = await response.json();
+
 	const [allSpeciality] = await Promise.all([getSpecialityFn()]);
 
 	return {
 		props: {
+			userProfile: user,
 			allSpeciality,
 		},
 	};
@@ -29,7 +59,25 @@ type CreateProfileSpecialityInputSchema = z.infer<
 	typeof profileValidationSchema
 >;
 
-const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
+const CreateProfessionalSkillsPage = ({ allSpeciality, userProfile }) => {
+	const defaultSkills = userProfile?.skills
+		? JSON.parse(userProfile.skills)
+		: {};
+	const defaultSpecialism = Object.keys(defaultSkills);
+	const defaultSpecialityObject = { id: 0, specialism: "" };
+
+	const defaultSpecialismsObject = defaultSpecialism.reduce(
+		(acc, specialism, index) => {
+			acc[index] = {
+				...defaultSpecialityObject,
+				id: index,
+				specialism,
+			};
+			return acc;
+		},
+		{},
+	);
+
 	let allSpecialtiesData = [];
 	const professionalLevel = isBrowser
 		? window.localStorage.getItem("professionalLevel")
@@ -43,11 +91,12 @@ const CreateProfessionalSkillsPage = ({ allSpeciality }) => {
 		allSpeciality.filter((skills) => skills.type === skillType),
 	);
 	const [specialitiesSelected, setSelectedSpecialities] = useState(
-		new Map<string, string[]>(),
+		objectToMap(defaultSkills) || new Map<string, string[]>(),
 	);
+
 	const [specialityAndSkillsComp, setSpecialityAndSkillsComp] = useState<
 		Array<Record<string, number | string>>
-	>([{ id: 0, specialism: "" }]);
+	>(Object.values(defaultSpecialismsObject));
 
 	const [removedSpeciality, setRemovedSpeciality] = useState<
 		Set<Record<string, string>>
@@ -209,5 +258,7 @@ CreateProfessionalSkillsPage.getLayout = function getLayout(
 ) {
 	return <Minimal>{page}</Minimal>;
 };
+
+CreateProfessionalSkillsPage.auth = true;
 
 export default CreateProfessionalSkillsPage;

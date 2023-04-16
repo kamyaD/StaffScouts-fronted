@@ -1,4 +1,8 @@
-import { FormInputDate, FormInputText } from "@/components/FormInput";
+import {
+	FormInputDate,
+	FormInputText,
+	FormRichTextEditor,
+} from "@/components/FormInput";
 import { Clear } from "@mui/icons-material";
 import {
 	Checkbox,
@@ -58,18 +62,24 @@ const WorkExperienceTextFields = ({
 					label="Job Title"
 					type="text"
 				/>
-				<FormInputText
-					required
+				<FormRichTextEditor
 					name="job_description"
-					margin="dense"
-					size="medium"
 					control={control}
 					label="Job description"
-					placeholder=""
-					type="text"
-					multiline
-					rows={4}
 				/>
+
+				{/*<FormInputText*/}
+				{/*	required*/}
+				{/*	name="job_description"*/}
+				{/*	margin="dense"*/}
+				{/*	size="medium"*/}
+				{/*	control={control}*/}
+				{/*	label="Job description"*/}
+				{/*	placeholder=""*/}
+				{/*	type="text"*/}
+				{/*	multiline*/}
+				{/*	rows={4}*/}
+				{/*/>*/}
 				<FormInputText
 					name="achievements"
 					margin="dense"

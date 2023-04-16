@@ -1,32 +1,51 @@
 import Container from "@/components/Container";
 import { FormInputText } from "@/components/FormInput";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
+import { env } from "@/env/server.mjs";
 import useUpdateProfile from "@/hooks/useUpdateProfile";
 import { Minimal } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
 import { profileValidationSchema } from "@/utils/profileValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MenuItem } from "@mui/material";
+import { Autocomplete, Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import type { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth/next";
 import type { ReactElement } from "react";
 import { useMemo } from "react";
 import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import countryList from "react-select-country-list";
 import type * as z from "zod";
+
+import type { ICandidateProfile } from "../../types";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 export type CreateProfileTitleInputSchema = Pick<
 	z.infer<typeof profileValidationSchema>,
 	"job_title" | "country" | "website"
 >;
 
-const CreateTitlePage: NextPageWithAuthAndLayout = () => {
-	const options = useMemo(() => countryList().getData(), []);
+const CreateTitlePage: NextPageWithAuthAndLayout = ({
+	user,
+}: {
+	user: ICandidateProfile;
+}) => {
+	const countries = useMemo(() => countryList().getData(), []);
+	const personal = user?.personal ? JSON.parse(user.personal) : {};
+
+	const defaultValues = {
+		job_title: user?.job_title || "",
+		country: personal?.country || "",
+		website: personal?.website || "",
+	};
 
 	const { handleSubmit, control } = useForm<CreateProfileTitleInputSchema>({
 		mode: "onChange",
 		resolver: zodResolver(profileValidationSchema),
+		defaultValues,
 	});
 
 	const { loading, updateProfile, isSuccess } = useUpdateProfile();
@@ -82,7 +101,6 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 							type="text"
 						/>
 						<FormInputText
-							required
 							name="website"
 							margin="dense"
 							size="medium"
@@ -91,25 +109,38 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 							placeholder="Example: https://my-website.com"
 							type="text"
 						/>
-						<FormInputText
-							select
+
+						<Controller
 							name="country"
-							margin="dense"
-							size="medium"
 							control={control}
-							label="Country"
-							defaultValue="Kenya"
-							type="text"
-							// SelectProps={{
-							// 	native: true,
-							// }}
-						>
-							{options.map((option) => (
-								<MenuItem key={option.label} value={option.label}>
-									{option.label}
-								</MenuItem>
-							))}
-						</FormInputText>
+							render={({ field: { onChange }, fieldState: { error } }) => (
+								<Autocomplete
+									id="country-select"
+									onChange={(_, data) => onChange(data.label)}
+									options={countries}
+									defaultValue={countries.find(
+										(country) => country.label === personal?.country,
+									)}
+									autoHighlight
+									getOptionLabel={(option) => option?.label}
+									renderOption={(props, option) => (
+										<Box component="li" {...props}>
+											{option.label}
+										</Box>
+									)}
+									renderInput={(params) => (
+										<TextField
+											{...params}
+											label="Country"
+											margin="dense"
+											size="medium"
+											error={!!error}
+											helperText={error ? error.message : null}
+										/>
+									)}
+								/>
+							)}
+						/>
 					</Grid>
 				</Grid>
 				<ProfileBottomNavigation
@@ -125,6 +156,29 @@ const CreateTitlePage: NextPageWithAuthAndLayout = () => {
 
 CreateTitlePage.getLayout = function getLayout(page: ReactElement) {
 	return <Minimal>{page}</Minimal>;
+};
+
+CreateTitlePage.auth = true;
+
+export const getServerSideProps: GetServerSideProps = async ({
+	req,
+	res,
+}: GetServerSidePropsContext) => {
+	const session = await getServerSession(req, res, authOptions);
+	const config = {
+		headers: {
+			Authorization: `Bearer ${session?.user?.token}`,
+		},
+	};
+	const url = `${env.API_URL}/candidate/profile/${session?.user.id}`;
+	const response = await fetch(url, config);
+	const user = await response.json();
+
+	return {
+		props: {
+			user,
+		},
+	};
 };
 
 export default CreateTitlePage;

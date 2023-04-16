@@ -1,13 +1,15 @@
 import axios from "@/lib/axios";
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+
+import { authOptions } from "./auth/[...nextauth]";
 
 const handler: NextApiHandler = async (
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) => {
 	const { method } = req;
-	const session = await getSession({ req });
+	const session = await getServerSession(req, res, authOptions);
 
 	const config = {
 		headers: {
@@ -32,13 +34,17 @@ const handler: NextApiHandler = async (
 		switch (method) {
 			case "POST":
 				return axios
-					.post(`/candidate/profile/create/`, body, config)
+					.post(
+						`${process.env.API_URL}/candidate/profile/create/`,
+						body,
+						config,
+					)
 					.then((response) => response.data)
 					.then((data) => res.json(data));
 			case "PUT":
 				return axios
 					.put(
-						`candidate/profile/update/${session?.user?.id}`,
+						`${process.env.API_URL}/candidate/profile/update/${session?.user?.id}`,
 						req.body,
 						config,
 					)
@@ -46,7 +52,10 @@ const handler: NextApiHandler = async (
 					.then((data) => res.json(data));
 			case "GET":
 				return axios
-					.get(`candidate/profile/update/${session?.user?.id}`, config)
+					.get(
+						`${process.env.API_URL}/candidate/profile/${session?.user?.id}`,
+						config,
+					)
 					.then((response) => response.data)
 					.then((data) => res.json(data));
 		}

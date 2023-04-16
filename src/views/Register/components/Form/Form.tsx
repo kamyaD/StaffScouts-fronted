@@ -201,56 +201,51 @@ function Form(): JSX.Element {
 						{/*	</FormInputText>*/}
 						{/*</Grid>*/}
 
-						<Grid item xs={6}>
+						<Grid item xs={12} md={6}>
 							<FormInputText
 								required
 								name="firstName"
-								margin="dense"
 								size="medium"
 								control={control}
 								label="First name"
 								type="text"
 							/>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={12} md={6}>
 							<FormInputText
 								required
 								name="lastName"
-								margin="dense"
 								size="medium"
 								control={control}
 								label="Last name"
 								type="text"
 							/>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={12} md={6}>
 							<FormInputText
 								required
 								name="userName"
-								margin="dense"
 								size="medium"
 								control={control}
 								label="Username"
 								type="text"
 							/>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={12} md={6}>
 							<FormInputText
 								required
 								name="email"
-								margin="dense"
 								size="medium"
 								control={control}
 								label="Email"
 								type="email"
 							/>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={12} md={6}>
 							<FormInputText
 								required
 								name="password"
 								type={isPasswordHidden ? "text" : "password"}
-								margin="dense"
 								size="medium"
 								control={control}
 								label="Password"
@@ -267,12 +262,11 @@ function Form(): JSX.Element {
 								}}
 							/>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={12} md={6}>
 							<FormInputText
 								required
 								name="confirmPassword"
 								type={isConfirmPasswordHidden ? "text" : "password"}
-								margin="dense"
 								size="medium"
 								control={control}
 								label="Confirm password"

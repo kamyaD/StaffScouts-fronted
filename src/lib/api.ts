@@ -7,7 +7,6 @@ import type { ICandidateProfile, IJobs, Job, Specialism } from "../types";
 import type {
 	GenericResponse,
 	IJobInterestedResponse,
-	IUserResponse,
 	JobInterestedDTO,
 } from "./types";
 
@@ -42,8 +41,8 @@ export const signUpUserFn = async (user: RegisterInputSchema) => {
 //   return response.data;
 // };
 //
-export const getMeFn = async (): Promise<IUserResponse> => {
-	const response = await apiClient.get<IUserResponse>(`/api/me`);
+export const getMeFn = async (): Promise<ICandidateProfile> => {
+	const response = await apiClient.get<ICandidateProfile>(`/api/me`);
 	return response.data;
 };
 
@@ -91,6 +90,13 @@ export const getJobsFn = async (): Promise<IJobs> => {
 };
 
 export const getSpecialityFn = async (): Promise<Array<Specialism>> => {
+	const response = await apiClient.get<Array<Specialism>>(
+		`${process.env.API_URL}/jobs/list-specialism/`,
+	);
+	return response.data;
+};
+
+export const getUserProfileFn = async (): Promise<Array<Specialism>> => {
 	const response = await apiClient.get<Array<Specialism>>(
 		`${process.env.API_URL}/jobs/list-specialism/`,
 	);

@@ -82,7 +82,12 @@ function WorkExperienceCard({
 							{dayjsTime(to_date).format("MMMM DD YYYY ")}
 						</Typography>
 					</Box>
-					<Typography color="text.secondary">{job_description}</Typography>
+					<Typography
+						component={"p"}
+						dangerouslySetInnerHTML={{
+							__html: job_description,
+						}}
+					/>
 				</CardContent>
 			</Box>
 		</Grid>

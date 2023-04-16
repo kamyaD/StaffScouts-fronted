@@ -107,7 +107,6 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 						<FormInputText
 							required
 							name="username"
-							margin="dense"
 							size="medium"
 							control={control}
 							label="Username"
@@ -119,7 +118,6 @@ function Form({ csrfToken }: { csrfToken: string }): JSX.Element {
 							required
 							name="password"
 							type={isPasswordHidden ? "text" : "password"}
-							margin="dense"
 							size="medium"
 							control={control}
 							label="Password"

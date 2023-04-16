@@ -12,6 +12,9 @@ const stringifyMap = (valueMap) => {
 	return JSON.stringify(Object.fromEntries(valueMap.entries()));
 };
 
+const objectToMap = (obj: Record<string, string[]>): Map<string, string[]> =>
+	new Map(Object.entries(obj));
+
 const isStringNullOrEmpty = (str: string): boolean =>
 	str == null || str.trim() === "";
 
@@ -29,4 +32,5 @@ export {
 	stringifyMap,
 	isStringNullOrEmpty,
 	mutateStringObject,
+	objectToMap,
 };

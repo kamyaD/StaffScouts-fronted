@@ -1,6 +1,8 @@
 import axios from "@/lib/axios";
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+
+import { authOptions } from "../auth/[...nextauth]";
 
 const handler: NextApiHandler = async (
 	req: NextApiRequest,
@@ -11,7 +13,7 @@ const handler: NextApiHandler = async (
 		query: { id, url },
 		body,
 	} = req;
-	const session = await getSession({ req });
+	const session = await getServerSession(req, res, authOptions);
 
 	const config = {
 		headers: {

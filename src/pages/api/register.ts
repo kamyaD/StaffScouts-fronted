@@ -35,7 +35,7 @@ const handler: NextApiHandler = async (
 	};
 
 	try {
-		await axios.post("/users/register/", body);
+		await axios.post(`${process.env.API_URL}/users/register/`, body);
 		res.status(200).end();
 	} catch (e: any) {
 		res.status(400).send(e);

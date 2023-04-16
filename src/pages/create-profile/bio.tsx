@@ -1,7 +1,7 @@
 import Container from "@/components/Container";
 import { FormInputText } from "@/components/FormInput";
 import ProfileBottomNavigation from "@/components/ProfileBottomNavigation";
-import useRequest from "@/hooks/useRequest";
+import { env } from "@/env/server.mjs";
 import useUpdateProfile from "@/hooks/useUpdateProfile";
 import { Minimal } from "@/layouts/index";
 import type { NextPageWithAuthAndLayout } from "@/lib/types";
@@ -10,24 +10,54 @@ import { profileValidationSchema } from "@/utils/profileValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import type { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth/next";
 import type { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
 import type { ICandidateProfile } from "../../types";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 // const wordCount = sentence.trim().split(/\s+/).length;
 
+export const getServerSideProps: GetServerSideProps = async ({
+	req,
+	res,
+}: GetServerSidePropsContext) => {
+	const session = await getServerSession(req, res, authOptions);
+	const config = {
+		headers: {
+			Authorization: `Bearer ${session?.user?.token}`,
+		},
+	};
+	const url = `${env.API_URL}/candidate/profile/${session?.user.id}`;
+	const response = await fetch(url, config);
+	const user = await response.json();
+
+	return {
+		props: {
+			userProfile: user,
+		},
+	};
+};
+
 type CreateProfileBioInputSchema = z.infer<typeof profileValidationSchema>;
 
-const CreateBioPage: NextPageWithAuthAndLayout = () => {
-	const { data }: { data: ICandidateProfile } = useRequest({
-		url: "/api/profile",
-	});
+const CreateBioPage: NextPageWithAuthAndLayout = ({
+	userProfile,
+}: {
+	userProfile: ICandidateProfile;
+}) => {
+	const defaultValues = {
+		personal_statement: userProfile.personal_statement,
+		videoURL: JSON.parse(userProfile.personal).videoURL,
+	};
 
 	const { control, handleSubmit } = useForm<CreateProfileBioInputSchema>({
 		mode: "onChange",
 		resolver: zodResolver(profileValidationSchema),
+		defaultValues,
 	});
 
 	const { loading, updateProfile, isSuccess } = useUpdateProfile();
@@ -35,7 +65,7 @@ const CreateBioPage: NextPageWithAuthAndLayout = () => {
 	const onSubmit = (values) => {
 		const payload = {
 			personal_statement: values.personal_statement,
-			personal: mutateStringObject(data.personal, {
+			personal: mutateStringObject(userProfile.personal, {
 				videoURL: values.videoURL,
 			}),
 		};
@@ -77,7 +107,7 @@ const CreateBioPage: NextPageWithAuthAndLayout = () => {
 							placeholder="I am..."
 							type="text"
 							multiline
-							rows={4}
+							rows={7}
 						/>
 					</Grid>
 					<Grid item xs={12}>
