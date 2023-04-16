@@ -1,26 +1,21 @@
 import dayjsTime from "@/utils/dayjsTime";
 import stripHtml from "@/utils/stripHtml";
 // import stripHtml from "@/utils/stripHtml";
-import {
-	Bookmark,
-	Favorite,
-	LocationOn,
-	PaymentsOutlined,
-} from "@mui/icons-material";
+import { Bookmark, Favorite, LocationOn } from "@mui/icons-material";
 import {
 	Box,
 	Button,
 	Card,
 	CardContent,
-	Chip,
 	Grid,
 	IconButton,
+	Stack,
 	Tooltip,
 	Typography,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import Str from "@supercharge/strings";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 import type { Job } from "../../types";
 
@@ -47,8 +42,15 @@ function JobCard({
 		.limit(200, "...")
 		.get();
 
+	const { push } = useRouter();
+
 	return (
-		<Grid item xs={12} sx={{ padding: "0 !important" }}>
+		<Grid
+			item
+			xs={12}
+			sx={{ padding: "0 !important", cursor: "pointer", marginBottom: 1 }}
+			onClick={() => push(`/job-listing/${id}`)}
+		>
 			<Box
 				component={Card}
 				padding={0}
@@ -62,8 +64,9 @@ function JobCard({
 				sx={{
 					backgroundImage: "none",
 					bgcolor: "transparent",
-					borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-					padding: 4,
+					border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+					borderRadius: 2,
+					padding: 3,
 					":hover": {
 						bgcolor: alpha(theme.palette.primary.main, 0.1),
 						color: theme.palette.primary.dark,
@@ -113,7 +116,7 @@ function JobCard({
 						display: "flex",
 						flexDirection: "column",
 						justifyContent: "center",
-						padding: 0,
+						padding: "0 !important",
 					}}
 				>
 					<Box display="flex" justifyContent="space-between">
@@ -127,78 +130,71 @@ function JobCard({
 								</IconButton>
 							</Tooltip>
 							<Tooltip title="Save">
-								<IconButton aria-label="share">
+								<IconButton aria-label="bookmark">
 									<Bookmark />
 								</IconButton>
 							</Tooltip>
 						</Box>
 					</Box>
-					<Box marginY={1}>
-						<Box
-							component={Button}
-							variant="text"
+					<Stack
+						marginY={1}
+						direction="row"
+						justifyContent="flex-start"
+						alignItems="center"
+						spacing={2}
+					>
+						<Typography
+							variant="body2"
 							color="text.secondary"
-							startIcon={<LocationOn />}
-							sx={{ paddingY: 0, paddingX: 0 }}
+							sx={{ paddingY: 0, paddingRight: 1 }}
 						>
-							{`${city}, ${country}`}
-						</Box>
-						<Box
-							component={Button}
-							variant="text"
+							{contract_type_id}
+						</Typography>
+						{"|"}
+						<Typography
+							variant="body2"
 							color="text.secondary"
-							startIcon={<PaymentsOutlined />}
-							sx={{ paddingY: 0, paddingLeft: 2 }}
+							sx={{ paddingY: 0, paddingRight: 1 }}
 						>
-							{offered_salary}
-						</Box>
-					</Box>
-					<Typography color="text.secondary">{jobDescription}</Typography>
+							Est. Salary: {offered_salary}
+						</Typography>
+						{"|"}
+						<Typography
+							variant="body2"
+							color="text.secondary"
+							sx={{ paddingY: 0 }}
+						>
+							Posted: {dayjsTime(created_at).fromNow()}
+						</Typography>
+					</Stack>
+					<Typography variant="body1" color="text.primary">
+						{jobDescription}
+					</Typography>
 					<Box marginTop={2} display="flex" justifyContent="space-between">
-						<Box marginY={1}>
-							<Chip label={contract_type_id} />
-							<Chip
-								variant="outlined"
-								label={`Posted: ${dayjsTime(created_at).fromNow()}`}
-								sx={{
-									marginLeft: 2,
-								}}
-							/>
-							<Chip
-								variant="outlined"
-								label={`Deadline: ${dayjsTime(application_deadline).format(
-									"YYYY-MM-DD",
-								)}`}
-								sx={{
-									marginLeft: 2,
-								}}
-							/>
-						</Box>
-						<Button
-							variant="contained"
-							component={Link}
-							href={`/job-listing/${id}`}
-							endIcon={
-								<Box
-									component="svg"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									width={24}
-									height={24}
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M17 8l4 4m0 0l-4 4m4-4H3"
-									/>
-								</Box>
-							}
+						<Stack
+							marginY={0}
+							direction="row"
+							justifyContent="flex-start"
+							alignItems="center"
+							spacing={2}
 						>
-							Read More
-						</Button>
+							<Box
+								component={Button}
+								variant="text"
+								color="text.secondary"
+								startIcon={<LocationOn />}
+								sx={{ paddingY: 0, paddingX: 0 }}
+							>
+								{`${city}, ${country}`}
+							</Box>
+							<Typography
+								variant="body2"
+								color="text.secondary"
+								sx={{ paddingY: 0 }}
+							>
+								Deadline: {dayjsTime(application_deadline).format("YYYY-MM-DD")}
+							</Typography>
+						</Stack>
 					</Box>
 				</CardContent>
 			</Box>

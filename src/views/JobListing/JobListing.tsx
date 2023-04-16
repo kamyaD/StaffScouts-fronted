@@ -150,7 +150,9 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 										variant="subtitle2"
 										sx={{ whiteSpace: "nowrap" }}
 									>
-										{`${filteredJobs?.length} Results`}
+										{`${filteredJobs?.length} Job${
+											filteredJobs?.length > 1 ? "s" : ""
+										}`}
 									</Typography>
 									<Divider sx={{ height: 28, m: 1 }} orientation="vertical" />
 									<Button
@@ -174,7 +176,7 @@ function JobListing({ allJobs, contractTypes }: JobListingProps): JSX.Element {
 									height={1}
 									width={1}
 									maxWidth={{ xs: 600, md: "100%" }}
-									maxHeight={500}
+									maxHeight={400}
 								>
 									<Box
 										component="img"
