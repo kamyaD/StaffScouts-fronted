@@ -60,26 +60,39 @@ function Hero(): JSX.Element {
 						color="primary"
 						size="large"
 						fullWidth={!isMd}
-						endIcon={
-							<Box
-								component="svg"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								width={24}
-								height={24}
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M17 8l4 4m0 0l-4 4m4-4H3"
-								/>
-							</Box>
-						}
+						href="/job-listing"
+						// endIcon={
+						// 	<Box
+						// 		component="svg"
+						// 		xmlns="http://www.w3.org/2000/svg"
+						// 		fill="none"
+						// 		viewBox="0 0 24 24"
+						// 		stroke="currentColor"
+						// 		width={24}
+						// 		height={24}
+						// 	>
+						// 		<path
+						// 			strokeLinecap="round"
+						// 			strokeLinejoin="round"
+						// 			strokeWidth={2}
+						// 			d="M17 8l4 4m0 0l-4 4m4-4H3"
+						// 		/>
+						// 	</Box>
+						// }
 					>
-						Get started
+						Find me a job!
+					</Button>
+					<Button
+						variant="outlined"
+						sx={{
+							color: "text.primary",
+							marginLeft: { xs: 0, sm: 2 },
+						}}
+						size="large"
+						fullWidth={!isMd}
+						href="/profile"
+					>
+						I&apos;m hiring
 					</Button>
 				</Box>
 			</Box>

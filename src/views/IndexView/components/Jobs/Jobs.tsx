@@ -8,7 +8,7 @@ import Link from "next/link";
 import type { ContractType, Job } from "../../../../types";
 import fancyId from "../../../../utils/fancyId";
 
-const JobCard = dynamic(() => import("../../../../components/JobCard"), {
+const JobCard = dynamic(() => import("@/components/Cards/JobCard"), {
 	ssr: false,
 });
 

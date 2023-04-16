@@ -102,7 +102,7 @@ const ImageUpload = ({ name, control }: ImageUploadProps) => {
 				formState,
 			}) => (
 				<Tooltip title="Change photo" placement="top-end">
-					<Box sx={{ m: 10, position: "relative" }}>
+					<Box sx={{ position: "relative" }}>
 						<IconButton
 							color="primary"
 							aria-label="upload picture"

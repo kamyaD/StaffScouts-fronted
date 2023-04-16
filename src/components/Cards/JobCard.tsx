@@ -22,7 +22,7 @@ import { alpha, useTheme } from "@mui/material/styles";
 import Str from "@supercharge/strings";
 import Link from "next/link";
 
-import type { Job } from "../types";
+import type { Job } from "../../types";
 
 interface JobProps {
 	job: Job;

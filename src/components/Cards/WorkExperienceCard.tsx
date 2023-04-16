@@ -1,0 +1,95 @@
+import dayjsTime from "@/utils/dayjsTime";
+// import stripHtml from "@/utils/stripHtml";
+import { Edit } from "@mui/icons-material";
+import {
+	Box,
+	Card,
+	CardContent,
+	Grid,
+	IconButton,
+	Stack,
+	Tooltip,
+	Typography,
+} from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
+
+export interface IWorkExperience {
+	job_title: string;
+	job_description: string;
+	company: string;
+	from_date: string;
+	to_date: string;
+}
+
+interface WorkExperienceProps {
+	workExperience: IWorkExperience;
+}
+
+function WorkExperienceCard({
+	workExperience: { job_title, job_description, company, from_date, to_date },
+}: WorkExperienceProps): JSX.Element {
+	const theme = useTheme();
+
+	return (
+		<Grid item xs={12} sx={{ padding: "0 !important" }}>
+			<Box
+				component={Card}
+				padding={0}
+				width={1}
+				height={1}
+				borderRadius={0}
+				// borderBottom={1}
+				boxShadow={0}
+				display="flex"
+				flexDirection={{ xs: "column", md: "row" }}
+				sx={{
+					backgroundImage: "none",
+					bgcolor: "transparent",
+					borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+					padding: 0,
+					":hover": {
+						bgcolor: alpha(theme.palette.primary.main, 0.1),
+						color: theme.palette.primary.dark,
+					},
+				}}
+			>
+				<CardContent
+					sx={{
+						// width: { xs: 1, md: "80%" },
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "center",
+						padding: 0,
+					}}
+				>
+					<Stack
+						direction="row"
+						justifyContent="space-between"
+						alignItems="center"
+						spacing={2}
+					>
+						<Typography variant="h6" fontWeight={600}>
+							{job_title} | {company}
+						</Typography>
+						<Box>
+							<Tooltip title="Edit">
+								<IconButton aria-label="edit job">
+									<Edit />
+								</IconButton>
+							</Tooltip>
+						</Box>
+					</Stack>
+					<Box marginY={1}>
+						<Typography variant="body1">
+							{dayjsTime(from_date).format("MMMM DD YYYY ")} -{" "}
+							{dayjsTime(to_date).format("MMMM DD YYYY ")}
+						</Typography>
+					</Box>
+					<Typography color="text.secondary">{job_description}</Typography>
+				</CardContent>
+			</Box>
+		</Grid>
+	);
+}
+
+export default WorkExperienceCard;

@@ -1,23 +1,75 @@
+import type {
+	IWorkExperience,
+} from "@/components/Cards/WorkExperienceCard";
+import WorkExperienceCard from "@/components/Cards/WorkExperienceCard";
 import Container from "@/components/Container";
-import { Box, Card, Grid, Typography, useMediaQuery } from "@mui/material";
+import ImageUpload from "@/components/ImageUpload";
+import fancyId from "@/utils/fancyId";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+	Box,
+	Card,
+	Grid,
+	Stack,
+	Typography,
+	useMediaQuery,
+} from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+import { useSession } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 import type { ICandidateProfile } from "../../types";
+
+const validationSchema = z.object({
+	profile_pic: z
+		.string()
+		.min(1, "Photo is required")
+		.url("Photo URL is invalid"),
+});
+
+export type ProfileInputSchema = z.infer<typeof validationSchema>;
 
 const Profile = ({ user }: { user: ICandidateProfile }) => {
 	const theme = useTheme();
 	const isSm = useMediaQuery(theme.breakpoints.up("sm"), {
 		defaultMatches: true,
 	});
+	const { data: session } = useSession();
+
+	const { username, image } = session?.user || {
+		name: "Anonymous User",
+		image: "/img/avatar.svg",
+	};
+
+	const { handleSubmit, control } = useForm<ProfileInputSchema>({
+		resolver: zodResolver(validationSchema),
+		defaultValues: user,
+		mode: "onChange",
+	});
 
 	return (
-		<Box sx={{ overflowX: "hidden" }}>
-			<Box bgcolor="primary.main" paddingY={4}>
-				<Container>
-					<Typography variant="h4" fontWeight={700} gutterBottom>
-						{`${user?.user.first_name} ${user?.user.last_name}`}
-					</Typography>
-					<Typography variant="h6">{user.job_title}</Typography>
+		<Box sx={{ overflowX: "hidden" }} bgcolor="alternate.main">
+			<Box bgcolor="primary.main" paddingY={0}>
+				<Container paddingY={6}>
+					<Stack spacing={2} direction="row" alignItems="center">
+						<ImageUpload name="profile_pic" control={control} />
+						{/*<Avatar*/}
+						{/*	alt={username}*/}
+						{/*	src={image}*/}
+						{/*	aria-describedby="menu-popover"*/}
+						{/*	aria-controls="menu-popover"*/}
+						{/*	aria-haspopup="true"*/}
+						{/*	typeof="button"*/}
+						{/*	sizes={isSm ? "large" : "medium"}*/}
+						{/*/>*/}
+						<div>
+							<Typography variant="h4" fontWeight={700}>
+								{`${user?.user.first_name} ${user?.user.last_name}`}
+							</Typography>
+							<Typography variant="h6">{user.job_title}</Typography>
+						</div>
+					</Stack>
 				</Container>
 			</Box>
 			<Grid item xs={12} md={10}>
@@ -31,7 +83,9 @@ const Profile = ({ user }: { user: ICandidateProfile }) => {
 						}}
 					>
 						<>
-							<Typography variant="h6">Summary</Typography>
+							<Typography variant="h5" fontWeight={700}>
+								Summary
+							</Typography>
 							<Typography variant="body1">{user.personal_statement}</Typography>
 						</>
 					</Card>
@@ -45,8 +99,17 @@ const Profile = ({ user }: { user: ICandidateProfile }) => {
 						}}
 					>
 						<>
-							<Typography variant="h6">Experience</Typography>
-							<Typography variant="body1">{user.experience}</Typography>
+							<Typography variant="h5" fontWeight={700}>
+								Employment History
+							</Typography>
+							{JSON.parse(user.experience).map(
+								(experience: IWorkExperience) => (
+									<WorkExperienceCard
+										key={fancyId()}
+										workExperience={experience}
+									/>
+								),
+							)}
 						</>
 					</Card>
 					<Card
@@ -59,7 +122,9 @@ const Profile = ({ user }: { user: ICandidateProfile }) => {
 						}}
 					>
 						<>
-							<Typography variant="h6">Education</Typography>
+							<Typography variant="h5" fontWeight={700}>
+								Education
+							</Typography>
 							<Typography variant="body1">{user.education}</Typography>
 						</>
 					</Card>

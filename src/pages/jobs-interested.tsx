@@ -1,5 +1,5 @@
+import JobCard from "@/components/Cards/JobCard";
 import Container from "@/components/Container";
-import JobCard from "@/components/JobCard";
 import useRequest from "@/hooks/useRequest";
 import { Main } from "@/layouts/index";
 import { getContractTypesFn } from "@/lib/api";

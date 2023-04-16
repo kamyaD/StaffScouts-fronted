@@ -1,3 +1,4 @@
+import JobCard from "@/components/Cards/JobCard";
 import useRequest from "@/hooks/useRequest";
 import { Search } from "@mui/icons-material";
 import {
@@ -18,7 +19,6 @@ import type { ChangeEvent } from "react";
 import { useState } from "react";
 
 import Container from "../../components/Container";
-import JobCard from "../../components/JobCard";
 import type { ContractType, IJobs, Job } from "../../types";
 import fancyId from "../../utils/fancyId";
 
