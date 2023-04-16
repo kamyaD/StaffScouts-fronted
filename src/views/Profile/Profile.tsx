@@ -1,6 +1,5 @@
-import type {
-	IWorkExperience,
-} from "@/components/Cards/WorkExperienceCard";
+import EducationCard from "@/components/Cards/EducationCard";
+import type { IWorkExperience } from "@/components/Cards/WorkExperienceCard";
 import WorkExperienceCard from "@/components/Cards/WorkExperienceCard";
 import Container from "@/components/Container";
 import ImageUpload from "@/components/ImageUpload";
@@ -47,6 +46,11 @@ const Profile = ({ user }: { user: ICandidateProfile }) => {
 		defaultValues: user,
 		mode: "onChange",
 	});
+
+	console.log(
+		"Class: , Function: Profile, Line 51 JSON.parse(user.education)():",
+		JSON.parse(user.education),
+	);
 
 	return (
 		<Box sx={{ overflowX: "hidden" }} bgcolor="alternate.main">
@@ -125,7 +129,9 @@ const Profile = ({ user }: { user: ICandidateProfile }) => {
 							<Typography variant="h5" fontWeight={700}>
 								Education
 							</Typography>
-							<Typography variant="body1">{user.education}</Typography>
+							{JSON.parse(user.education).map((education: any) => (
+								<EducationCard key={fancyId()} education={education} />
+							))}
 						</>
 					</Card>
 				</Container>

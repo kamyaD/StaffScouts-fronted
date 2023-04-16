@@ -13,20 +13,20 @@ import {
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 
-export interface IWorkExperience {
-	job_title: string;
-	job_description: string;
-	company: string;
+export interface IEducation {
+	course: string;
+	institution: string;
+	education_level: string;
 	from_date: string;
 	to_date: string;
 }
 
 interface WorkExperienceProps {
-	workExperience: IWorkExperience;
+	education: IEducation;
 }
 
-function WorkExperienceCard({
-	workExperience: { job_title, job_description, company, from_date, to_date },
+function EducationCard({
+	education: { course, education_level, institution, from_date, to_date },
 }: WorkExperienceProps): JSX.Element {
 	const theme = useTheme();
 
@@ -66,7 +66,7 @@ function WorkExperienceCard({
 						width={1}
 					>
 						<Typography variant="h6" fontWeight={600}>
-							{job_title} | {company}
+							{course} | {institution}
 						</Typography>
 						<Box>
 							<Tooltip title="Edit">
@@ -82,11 +82,11 @@ function WorkExperienceCard({
 							{dayjsTime(to_date).format("MMMM DD YYYY ")}
 						</Typography>
 					</Box>
-					<Typography color="text.secondary">{job_description}</Typography>
+					<Typography color="text.secondary">{education_level}</Typography>
 				</CardContent>
 			</Box>
 		</Grid>
 	);
 }
 
-export default WorkExperienceCard;
+export default EducationCard;
