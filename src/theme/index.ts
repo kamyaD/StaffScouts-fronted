@@ -21,10 +21,10 @@ const getTheme = (mode: string, themeToggler: () => void): Theme =>
 			palette: mode === "light" ? light : dark,
 			shadows: shadows(mode),
 			typography: {
-				// fontFamily: '"Inter", sans-serif',
-				fontFamily: [`Google Sans`, `Helvetica`, `Arial`, `sans-serif`].join(
-					",",
-				),
+				fontFamily: '"Inter", sans-serif',
+				// fontFamily: [`Google Sans`, `Helvetica`, `Arial`, `sans-serif`].join(
+				// 	",",
+				// ),
 				fontSize: 14,
 				button: {
 					textTransform: "none",

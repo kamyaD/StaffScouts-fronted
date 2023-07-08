@@ -1,18 +1,17 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-/* eslint-disable react/no-unescaped-entities */
-import * as yup from "yup";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { FormInputText } from "../../../../components/FormInput";
 
-const validationSchema = yup.object({
-	username: yup.string().trim(),
-	password: yup.string().required("Please specify your password"),
+const validationSchema = z.object({
+	username: z.string().trim(),
+	password: z.string(),
 });
 
 type IFormInput = {
@@ -22,7 +21,7 @@ type IFormInput = {
 
 function Form(): JSX.Element {
 	const { handleSubmit, control, reset, formState } = useForm<IFormInput>({
-		resolver: yupResolver(validationSchema),
+		resolver: zodResolver(validationSchema),
 		// defaultValues: initialValues,
 		mode: "onChange",
 	});
